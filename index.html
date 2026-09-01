@@ -1,82 +1,904 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>탑텐 매장 대시보드</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>탑텐 매장관리 포털</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background: #f5f6f8;
+    * {
+      box-sizing: border-box;
     }
 
-    h1 {
-      margin-bottom: 20px;
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        Arial,
+        sans-serif;
+
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    /* =========================
+       상단 헤더
+    ========================= */
+
+    .header {
+      background: #111827;
+      color: white;
+      padding: 22px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .header-left p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .updated {
+      font-size: 12px;
+      color: #d1d5db;
+      white-space: nowrap;
+    }
+
+    /* =========================
+       전체 컨테이너
+    ========================= */
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    /* =========================
+       KPI 카드
+    ========================= */
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px 22px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e5e7eb;
+    }
+
+    .kpi-title {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 750;
+      letter-spacing: -0.8px;
+    }
+
+    .kpi-sub {
+      margin-top: 7px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    /* =========================
+       메인 패널
+    ========================= */
+
+    .panel {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 20px 22px;
+      border-bottom: 1px solid #e5e7eb;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .panel-title h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .panel-title p {
+      margin: 5px 0 0;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    /* =========================
+       검색창
+    ========================= */
+
+    .search-box {
+      width: 280px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .search-box input:focus {
+      border-color: #6b7280;
+      box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.10);
+    }
+
+    /* =========================
+       테이블
+    ========================= */
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
+      min-width: 900px;
       border-collapse: collapse;
-      background: white;
+      table-layout: auto;
     }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
+    thead {
+      background: #f9fafb;
     }
 
     th {
-      background: #111827;
-      color: white;
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4b5563;
+      text-align: center;
+      border-bottom: 1px solid #e5e7eb;
+
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    td {
+      padding: 15px 16px;
+      font-size: 14px;
+      color: #374151;
+      text-align: center;
+      border-bottom: 1px solid #f0f1f3;
+
+      white-space: nowrap;
+      word-break: keep-all;
+    }
+
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .store-name {
+      font-weight: 700;
+      text-align: left;
+      color: #111827;
+    }
+
+    /* =========================
+       증감 뱃지
+    ========================= */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 64px;
+      padding: 5px 8px;
+
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .badge-up {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .badge-down {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .badge-same {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    /* =========================
+       로딩 / 오류
+    ========================= */
+
+    .message {
+      padding: 50px;
+      text-align: center;
+      color: #6b7280;
+    }
+
+    /* =========================
+       하단
+    ========================= */
+
+    .footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 11px;
+      padding: 24px 0 6px;
+    }
+
+    /* =========================
+       모바일
+    ========================= */
+
+    @media (max-width: 900px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .header {
+        padding: 18px 20px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<h1>탑텐 매장 대시보드</h1>
+<header class="header">
 
-<table id="storeTable">
-  <thead></thead>
-  <tbody></tbody>
-</table>
+  <div class="header-left">
+    <h1>TOPTEN 매장관리 포털</h1>
+    <p>Store Management Dashboard</p>
+  </div>
+
+  <div class="updated" id="updatedTime">
+    데이터 불러오는 중...
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <!-- KPI -->
+
+  <section class="kpi-grid">
+
+    <div class="kpi-card">
+      <div class="kpi-title">전체 매장</div>
+      <div class="kpi-value" id="totalStores">-</div>
+      <div class="kpi-sub">등록 매장 기준</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">평균 1차 조건</div>
+      <div class="kpi-value" id="avgFirst">-</div>
+      <div class="kpi-sub">전체 매장 평균</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">평균 2차 조건</div>
+      <div class="kpi-value" id="avgSecond">-</div>
+      <div class="kpi-sub">전체 매장 평균</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">25년 평균 영업이익률</div>
+      <div class="kpi-value" id="avgProfit25">-</div>
+      <div class="kpi-sub">등록 매장 기준</div>
+    </div>
+
+  </section>
+
+
+  <!-- 매장 리스트 -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div class="panel-title">
+        <h2>매장 현황</h2>
+        <p>Excel StoreMaster 기준</p>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="매장명 검색"
+        >
+      </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>매장명</th>
+            <th>오픈일자</th>
+            <th>1차</th>
+            <th>2차</th>
+            <th>25년 영업이익률</th>
+            <th>24년 영업이익률</th>
+            <th>전년 대비</th>
+          </tr>
+        </thead>
+
+        <tbody id="storeBody">
+
+          <tr>
+            <td colspan="7" class="message">
+              데이터를 불러오는 중입니다.
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <div class="footer">
+    TOPTEN Store Management Portal
+  </div>
+
+</main>
+
 
 <script>
-fetch('./StoreMaster.json')
-  .then(response => response.json())
-  .then(data => {
-    const table = document.getElementById('storeTable');
-    const thead = table.querySelector('thead');
-    const tbody = table.querySelector('tbody');
 
-    if (!data || data.length === 0) {
-      tbody.innerHTML = '<tr><td>데이터가 없습니다.</td></tr>';
-      return;
+let storeData = [];
+
+
+/* =====================================
+   숫자 변환
+===================================== */
+
+function toNumber(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+    return null;
+  }
+
+  if (typeof value === "number") {
+    return value;
+  }
+
+  const cleaned =
+    String(value)
+      .replace(/,/g, "")
+      .replace(/%/g, "")
+      .trim();
+
+  const num = Number(cleaned);
+
+  if (isNaN(num)) {
+    return null;
+  }
+
+  /*
+    문자열이 "19%" 형태였다면
+    0.19로 변환
+  */
+
+  if (
+    String(value).includes("%")
+  ) {
+    return num / 100;
+  }
+
+  return num;
+
+}
+
+
+/* =====================================
+   퍼센트 표시
+===================================== */
+
+function formatPercent(value) {
+
+  const num = toNumber(value);
+
+  if (num === null) {
+    return "-";
+  }
+
+  let percent;
+
+  /*
+    Excel에서 19%는 보통 0.19
+    혹시 19로 들어와도 대응
+  */
+
+  if (Math.abs(num) <= 1) {
+    percent = num * 100;
+  } else {
+    percent = num;
+  }
+
+  return (
+    percent
+      .toFixed(1)
+      .replace(".0", "")
+    + "%"
+  );
+
+}
+
+
+/* =====================================
+   날짜 표시
+===================================== */
+
+function formatDate(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+    return "-";
+  }
+
+  /*
+    Excel 날짜 일련번호 대응
+    예: 44713
+  */
+
+  if (
+    typeof value === "number" ||
+    /^\d{5}$/.test(String(value))
+  ) {
+
+    const serial = Number(value);
+
+    if (
+      serial > 20000 &&
+      serial < 80000
+    ) {
+
+      const excelEpoch =
+        new Date(Date.UTC(1899, 11, 30));
+
+      const date =
+        new Date(
+          excelEpoch.getTime() +
+          serial * 86400000
+        );
+
+      return date
+        .toISOString()
+        .slice(0, 10);
     }
 
-    const columns = Object.keys(data[0]);
+  }
 
-    thead.innerHTML =
-      '<tr>' +
-      columns.map(col => `<th>${col}</th>`).join('') +
-      '</tr>';
 
-    data.forEach(row => {
-      const tr = document.createElement('tr');
+  /*
+    일반 날짜 문자열
+  */
 
-      tr.innerHTML =
-        columns.map(col => `<td>${row[col] ?? ''}</td>`).join('');
+  const date = new Date(value);
 
-      tbody.appendChild(tr);
-    });
-  })
-  .catch(error => {
-    console.error(error);
-    document.querySelector('#storeTable tbody').innerHTML =
-      '<tr><td>데이터를 불러오지 못했습니다.</td></tr>';
+  if (!isNaN(date.getTime())) {
+
+    const year = date.getFullYear();
+
+    const month =
+      String(date.getMonth() + 1)
+        .padStart(2, "0");
+
+    const day =
+      String(date.getDate())
+        .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+
+  }
+
+
+  /*
+    이미 YYYY-MM-DD면 그대로
+  */
+
+  return String(value);
+
+}
+
+
+/* =====================================
+   평균 계산
+===================================== */
+
+function getAverage(data, key) {
+
+  const values =
+    data
+      .map(item => toNumber(item[key]))
+      .filter(value => value !== null);
+
+  if (values.length === 0) {
+    return null;
+  }
+
+  const sum =
+    values.reduce(
+      (a, b) => a + b,
+      0
+    );
+
+  return sum / values.length;
+
+}
+
+
+/* =====================================
+   전년 대비 영업이익률
+===================================== */
+
+function getChangeBadge(row) {
+
+  const current =
+    toNumber(row["25년 영업이익률"]);
+
+  const previous =
+    toNumber(row["24년 영업이익률"]);
+
+  if (
+    current === null ||
+    previous === null
+  ) {
+    return `<span class="badge badge-same">-</span>`;
+  }
+
+  const diff =
+    (current - previous) * 100;
+
+  if (diff > 0.0001) {
+
+    return `
+      <span class="badge badge-up">
+        ▲ ${Math.abs(diff).toFixed(1)}%p
+      </span>
+    `;
+
+  }
+
+  if (diff < -0.0001) {
+
+    return `
+      <span class="badge badge-down">
+        ▼ ${Math.abs(diff).toFixed(1)}%p
+      </span>
+    `;
+
+  }
+
+  return `
+    <span class="badge badge-same">
+      동일
+    </span>
+  `;
+
+}
+
+
+/* =====================================
+   테이블 표시
+===================================== */
+
+function renderTable(data) {
+
+  const tbody =
+    document.getElementById("storeBody");
+
+  tbody.innerHTML = "";
+
+
+  if (data.length === 0) {
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" class="message">
+          검색 결과가 없습니다.
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+
+  data.forEach(row => {
+
+    const tr =
+      document.createElement("tr");
+
+
+    tr.innerHTML = `
+
+      <td class="store-name">
+        ${row["매장명"] ?? "-"}
+      </td>
+
+      <td>
+        ${formatDate(row["오픈일자"])}
+      </td>
+
+      <td>
+        ${formatPercent(row["1차"])}
+      </td>
+
+      <td>
+        ${formatPercent(row["2차"])}
+      </td>
+
+      <td>
+        ${formatPercent(row["25년 영업이익률"])}
+      </td>
+
+      <td>
+        ${formatPercent(row["24년 영업이익률"])}
+      </td>
+
+      <td>
+        ${getChangeBadge(row)}
+      </td>
+
+    `;
+
+
+    tbody.appendChild(tr);
+
   });
+
+}
+
+
+/* =====================================
+   KPI 표시
+===================================== */
+
+function renderKPI(data) {
+
+  document.getElementById(
+    "totalStores"
+  ).textContent =
+    data.length + "개";
+
+
+  const avgFirst =
+    getAverage(data, "1차");
+
+  const avgSecond =
+    getAverage(data, "2차");
+
+  const avgProfit25 =
+    getAverage(
+      data,
+      "25년 영업이익률"
+    );
+
+
+  document.getElementById(
+    "avgFirst"
+  ).textContent =
+    formatPercent(avgFirst);
+
+
+  document.getElementById(
+    "avgSecond"
+  ).textContent =
+    formatPercent(avgSecond);
+
+
+  document.getElementById(
+    "avgProfit25"
+  ).textContent =
+    formatPercent(avgProfit25);
+
+}
+
+
+/* =====================================
+   JSON 불러오기
+===================================== */
+
+fetch(
+  "./StoreMaster.json?ts=" +
+  new Date().getTime()
+)
+
+.then(response => {
+
+  if (!response.ok) {
+    throw new Error(
+      "JSON 파일을 불러오지 못했습니다."
+    );
+  }
+
+  return response.json();
+
+})
+
+.then(data => {
+
+  /*
+    배열 형태인지 확인
+  */
+
+  if (!Array.isArray(data)) {
+
+    throw new Error(
+      "JSON 데이터 형식이 배열이 아닙니다."
+    );
+
+  }
+
+
+  storeData = data;
+
+
+  renderKPI(storeData);
+
+  renderTable(storeData);
+
+
+  const now =
+    new Date();
+
+  document.getElementById(
+    "updatedTime"
+  ).textContent =
+    "조회 " +
+    now.toLocaleString("ko-KR");
+
+})
+
+.catch(error => {
+
+  console.error(error);
+
+  document.getElementById(
+    "storeBody"
+  ).innerHTML = `
+
+    <tr>
+      <td colspan="7" class="message">
+        데이터를 불러오지 못했습니다.<br>
+        StoreMaster.json 파일을 확인해주세요.
+      </td>
+    </tr>
+
+  `;
+
+});
+
+
+/* =====================================
+   매장 검색
+===================================== */
+
+document.getElementById(
+  "searchInput"
+)
+.addEventListener(
+  "input",
+  function () {
+
+    const keyword =
+      this.value
+        .trim()
+        .toLowerCase();
+
+
+    const filtered =
+      storeData.filter(row => {
+
+        const storeName =
+          String(
+            row["매장명"] ?? ""
+          )
+          .toLowerCase();
+
+        return storeName.includes(keyword);
+
+      });
+
+
+    renderTable(filtered);
+
+  }
+);
+
 </script>
+
 
 </body>
 </html>
