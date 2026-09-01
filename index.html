@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>탑텐 매장 대시보드</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f5f6f8;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background: #111827;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h1>탑텐 매장 대시보드</h1>
+
+<table id="storeTable">
+  <thead></thead>
+  <tbody></tbody>
+</table>
+
+<script>
+fetch('./스토어마스터.json')
+  .then(response => response.json())
+  .then(data => {
+    const table = document.getElementById('storeTable');
+    const thead = table.querySelector('thead');
+    const tbody = table.querySelector('tbody');
+
+    if (!data || data.length === 0) {
+      tbody.innerHTML = '<tr><td>데이터가 없습니다.</td></tr>';
+      return;
+    }
+
+    const columns = Object.keys(data[0]);
+
+    thead.innerHTML =
+      '<tr>' +
+      columns.map(col => `<th>${col}</th>`).join('') +
+      '</tr>';
+
+    data.forEach(row => {
+      const tr = document.createElement('tr');
+
+      tr.innerHTML =
+        columns.map(col => `<td>${row[col] ?? ''}</td>`).join('');
+
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(error => {
+    console.error(error);
+    document.querySelector('#storeTable tbody').innerHTML =
+      '<tr><td>데이터를 불러오지 못했습니다.</td></tr>';
+  });
+</script>
+
+</body>
+</html>
