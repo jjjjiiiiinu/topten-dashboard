@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>탑텐 매장관리 포털</title>
+  <title>TOPTEN 매장관리 포털</title>
 
   <style>
     * {
@@ -26,41 +26,48 @@
       color: #1f2937;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
     /* =========================
-       상단 헤더
+       HEADER
     ========================= */
 
     .header {
+      height: 92px;
+      padding: 0 30px;
       background: #111827;
       color: white;
-      padding: 22px 30px;
+
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
     }
 
-    .header-left h1 {
+    .header h1 {
       margin: 0;
       font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
     }
 
-    .header-left p {
+    .header p {
       margin: 6px 0 0;
-      font-size: 13px;
+      font-size: 12px;
       color: #9ca3af;
     }
 
-    .updated {
+    .updated-time {
       font-size: 12px;
       color: #d1d5db;
       white-space: nowrap;
     }
 
     /* =========================
-       전체 컨테이너
+       CONTAINER
     ========================= */
 
     .container {
@@ -70,7 +77,7 @@
     }
 
     /* =========================
-       KPI 카드
+       KPI
     ========================= */
 
     .kpi-grid {
@@ -82,10 +89,11 @@
 
     .kpi-card {
       background: white;
+      border: 1px solid #e5e7eb;
       border-radius: 14px;
       padding: 20px 22px;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-      border: 1px solid #e5e7eb;
+
+      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
     }
 
     .kpi-title {
@@ -96,7 +104,8 @@
 
     .kpi-value {
       font-size: 28px;
-      font-weight: 750;
+      font-weight: 800;
+      color: #111827;
       letter-spacing: -0.8px;
     }
 
@@ -107,31 +116,33 @@
     }
 
     /* =========================
-       메인 패널
+       PANEL
     ========================= */
 
     .panel {
       background: white;
-      border-radius: 14px;
       border: 1px solid #e5e7eb;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+      border-radius: 14px;
       overflow: hidden;
+
+      box-shadow: 0 3px 12px rgba(0,0,0,0.04);
     }
 
     .panel-header {
       padding: 20px 22px;
-      border-bottom: 1px solid #e5e7eb;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      justify-content: space-between;
+
+      gap: 20px;
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .panel-title h2 {
       margin: 0;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .panel-title p {
@@ -140,32 +151,28 @@
       color: #9ca3af;
     }
 
-    /* =========================
-       검색창
-    ========================= */
-
     .search-box {
       width: 280px;
-      position: relative;
     }
 
     .search-box input {
       width: 100%;
       padding: 10px 14px;
-      border-radius: 9px;
+
       border: 1px solid #d1d5db;
+      border-radius: 9px;
+
       outline: none;
-      font-size: 14px;
-      background: #fff;
+      background: white;
     }
 
     .search-box input:focus {
       border-color: #6b7280;
-      box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.10);
+      box-shadow: 0 0 0 3px rgba(107,114,128,0.1);
     }
 
     /* =========================
-       테이블
+       TABLE
     ========================= */
 
     .table-wrap {
@@ -175,7 +182,8 @@
 
     table {
       width: 100%;
-      min-width: 900px;
+      min-width: 950px;
+
       border-collapse: collapse;
       table-layout: auto;
     }
@@ -186,10 +194,13 @@
 
     th {
       padding: 14px 16px;
+
       font-size: 13px;
       font-weight: 700;
       color: #4b5563;
+
       text-align: center;
+
       border-bottom: 1px solid #e5e7eb;
 
       white-space: nowrap;
@@ -198,17 +209,25 @@
 
     td {
       padding: 15px 16px;
+
       font-size: 14px;
       color: #374151;
+
       text-align: center;
+
       border-bottom: 1px solid #f0f1f3;
 
       white-space: nowrap;
       word-break: keep-all;
     }
 
+    tbody tr {
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
     tbody tr:hover {
-      background: #f9fafb;
+      background: #f8fafc;
     }
 
     tbody tr:last-child td {
@@ -216,24 +235,33 @@
     }
 
     .store-name {
-      font-weight: 700;
-      text-align: left;
+      font-weight: 800;
       color: #111827;
+      text-align: left;
+    }
+
+    .click-hint {
+      display: block;
+      margin-top: 3px;
+      font-size: 10px;
+      color: #9ca3af;
+      font-weight: 400;
     }
 
     /* =========================
-       증감 뱃지
+       BADGES
     ========================= */
 
     .badge {
       display: inline-flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
 
-      min-width: 64px;
-      padding: 5px 8px;
+      min-width: 68px;
+      padding: 5px 9px;
 
       border-radius: 999px;
+
       font-size: 12px;
       font-weight: 700;
     }
@@ -253,8 +281,267 @@
       color: #6b7280;
     }
 
+    .history-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 28px;
+      height: 25px;
+      padding: 0 8px;
+
+      border-radius: 999px;
+
+      background: #eef2ff;
+      color: #4338ca;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
     /* =========================
-       로딩 / 오류
+       DETAIL DRAWER
+    ========================= */
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+
+      background: rgba(17,24,39,0.42);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition: 0.2s ease;
+
+      z-index: 1000;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .drawer {
+      position: fixed;
+
+      top: 0;
+      right: 0;
+
+      width: min(600px, 92vw);
+      height: 100vh;
+
+      background: white;
+
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+
+      z-index: 1001;
+
+      display: flex;
+      flex-direction: column;
+
+      box-shadow: -12px 0 40px rgba(0,0,0,0.18);
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 24px 26px;
+
+      background: #111827;
+      color: white;
+
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .drawer-header h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .drawer-header p {
+      margin: 6px 0 0;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+
+    .close-btn {
+      width: 36px;
+      height: 36px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background: rgba(255,255,255,0.08);
+      color: white;
+
+      cursor: pointer;
+
+      font-size: 20px;
+    }
+
+    .close-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .drawer-body {
+      padding: 24px 26px 50px;
+      overflow-y: auto;
+    }
+
+    /* =========================
+       CURRENT INFO
+    ========================= */
+
+    .section-title {
+      margin: 0 0 14px;
+
+      font-size: 15px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .current-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+
+      margin-bottom: 30px;
+    }
+
+    .info-card {
+      padding: 14px 15px;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+
+      background: #f9fafb;
+    }
+
+    .info-label {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .info-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    /* =========================
+       TIMELINE
+    ========================= */
+
+    .timeline {
+      position: relative;
+      margin-left: 7px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+
+      top: 8px;
+      bottom: 8px;
+      left: 7px;
+
+      width: 2px;
+      background: #e5e7eb;
+    }
+
+    .timeline-item {
+      position: relative;
+
+      padding-left: 34px;
+      padding-bottom: 25px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+
+      left: 0;
+      top: 5px;
+
+      width: 16px;
+      height: 16px;
+
+      border-radius: 50%;
+
+      background: #111827;
+      border: 4px solid white;
+
+      box-shadow: 0 0 0 2px #111827;
+    }
+
+    .timeline-date {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+
+    .timeline-type {
+      display: inline-block;
+
+      margin-bottom: 8px;
+      padding: 4px 8px;
+
+      background: #f3f4f6;
+      border-radius: 6px;
+
+      font-size: 11px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .timeline-change {
+      font-size: 17px;
+      font-weight: 800;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .timeline-detail {
+      padding: 12px 13px;
+
+      border-radius: 9px;
+      background: #f9fafb;
+
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .timeline-detail strong {
+      color: #111827;
+    }
+
+    .no-history {
+      padding: 30px 20px;
+      text-align: center;
+
+      border: 1px dashed #d1d5db;
+      border-radius: 10px;
+
+      color: #9ca3af;
+      font-size: 13px;
+    }
+
+    /* =========================
+       MESSAGE / FOOTER
     ========================= */
 
     .message {
@@ -263,24 +550,22 @@
       color: #6b7280;
     }
 
-    /* =========================
-       하단
-    ========================= */
-
     .footer {
+      padding: 26px 0 5px;
+
       text-align: center;
       color: #9ca3af;
+
       font-size: 11px;
-      padding: 24px 0 6px;
     }
 
     /* =========================
-       모바일
+       RESPONSIVE
     ========================= */
 
     @media (max-width: 900px) {
       .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0,1fr));
       }
 
       .panel-header {
@@ -290,10 +575,6 @@
 
       .search-box {
         width: 100%;
-      }
-
-      .header {
-        padding: 18px 20px;
       }
 
       .container {
@@ -307,23 +588,33 @@
       }
 
       .header {
-        align-items: flex-start;
+        height: auto;
+        padding: 20px;
         flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .current-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 
+
 <body>
 
 <header class="header">
 
-  <div class="header-left">
+  <div>
     <h1>TOPTEN 매장관리 포털</h1>
-    <p>Store Management Dashboard</p>
+    <p>Store & Contract Management Dashboard</p>
   </div>
 
-  <div class="updated" id="updatedTime">
+  <div
+    class="updated-time"
+    id="updatedTime"
+  >
     데이터 불러오는 중...
   </div>
 
@@ -338,32 +629,44 @@
 
     <div class="kpi-card">
       <div class="kpi-title">전체 매장</div>
-      <div class="kpi-value" id="totalStores">-</div>
+      <div
+        class="kpi-value"
+        id="totalStores"
+      >-</div>
       <div class="kpi-sub">등록 매장 기준</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-title">평균 1차 조건</div>
-      <div class="kpi-value" id="avgFirst">-</div>
+      <div
+        class="kpi-value"
+        id="avgFirst"
+      >-</div>
       <div class="kpi-sub">전체 매장 평균</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-title">평균 2차 조건</div>
-      <div class="kpi-value" id="avgSecond">-</div>
+      <div
+        class="kpi-value"
+        id="avgSecond"
+      >-</div>
       <div class="kpi-sub">전체 매장 평균</div>
     </div>
 
     <div class="kpi-card">
-      <div class="kpi-title">25년 평균 영업이익률</div>
-      <div class="kpi-value" id="avgProfit25">-</div>
+      <div class="kpi-title">25년 평균 영업이익율</div>
+      <div
+        class="kpi-value"
+        id="avgProfit25"
+      >-</div>
       <div class="kpi-sub">등록 매장 기준</div>
     </div>
 
   </section>
 
 
-  <!-- 매장 리스트 -->
+  <!-- STORE TABLE -->
 
   <section class="panel">
 
@@ -371,7 +674,9 @@
 
       <div class="panel-title">
         <h2>매장 현황</h2>
-        <p>Excel StoreMaster 기준</p>
+        <p>
+          매장명을 클릭하면 계약 히스토리를 확인할 수 있습니다.
+        </p>
       </div>
 
       <div class="search-box">
@@ -390,21 +695,27 @@
       <table>
 
         <thead>
+
           <tr>
             <th>매장명</th>
             <th>오픈일자</th>
             <th>1차</th>
             <th>2차</th>
-            <th>25년 영업이익률</th>
-            <th>24년 영업이익률</th>
+            <th>25년 영업이익율</th>
+            <th>24년 영업이익율</th>
             <th>전년 대비</th>
+            <th>히스토리</th>
           </tr>
+
         </thead>
 
         <tbody id="storeBody">
 
           <tr>
-            <td colspan="7" class="message">
+            <td
+              colspan="8"
+              class="message"
+            >
               데이터를 불러오는 중입니다.
             </td>
           </tr>
@@ -419,20 +730,124 @@
 
 
   <div class="footer">
-    TOPTEN Store Management Portal
+    TOPTEN Store & Contract Management Portal
   </div>
 
 </main>
 
 
+<!-- OVERLAY -->
+
+<div
+  class="drawer-overlay"
+  id="drawerOverlay"
+></div>
+
+
+<!-- DETAIL DRAWER -->
+
+<aside
+  class="drawer"
+  id="drawer"
+>
+
+  <div class="drawer-header">
+
+    <div>
+      <h2 id="detailStoreName">
+        매장 상세
+      </h2>
+
+      <p>
+        Contract History & Current Conditions
+      </p>
+    </div>
+
+    <button
+      class="close-btn"
+      id="closeDrawer"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="drawer-body">
+
+    <h3 class="section-title">
+      현재 정보
+    </h3>
+
+    <div
+      class="current-grid"
+      id="currentInfo"
+    ></div>
+
+
+    <h3 class="section-title">
+      계약 히스토리
+    </h3>
+
+    <div
+      class="timeline"
+      id="historyTimeline"
+    ></div>
+
+  </div>
+
+</aside>
+
+
 <script>
 
 let storeData = [];
+let historyData = [];
 
 
-/* =====================================
-   숫자 변환
-===================================== */
+/* ===================================
+   SAFE TEXT
+=================================== */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* ===================================
+   FIELD ALIASES
+=================================== */
+
+function getField(row, keys) {
+
+  for (const key of keys) {
+
+    if (
+      row &&
+      row[key] !== undefined &&
+      row[key] !== null &&
+      row[key] !== ""
+    ) {
+      return row[key];
+    }
+
+  }
+
+  return null;
+
+}
+
+
+/* ===================================
+   NUMBER
+=================================== */
 
 function toNumber(value) {
 
@@ -448,61 +863,50 @@ function toNumber(value) {
     return value;
   }
 
+  const text =
+    String(value).trim();
+
   const cleaned =
-    String(value)
+    text
       .replace(/,/g, "")
-      .replace(/%/g, "")
-      .trim();
+      .replace(/%/g, "");
 
-  const num = Number(cleaned);
+  const number =
+    Number(cleaned);
 
-  if (isNaN(num)) {
+  if (isNaN(number)) {
     return null;
   }
 
-  /*
-    문자열이 "19%" 형태였다면
-    0.19로 변환
-  */
-
-  if (
-    String(value).includes("%")
-  ) {
-    return num / 100;
+  if (text.includes("%")) {
+    return number / 100;
   }
 
-  return num;
+  return number;
 
 }
 
 
-/* =====================================
-   퍼센트 표시
-===================================== */
+/* ===================================
+   PERCENT
+=================================== */
 
 function formatPercent(value) {
 
-  const num = toNumber(value);
+  const num =
+    toNumber(value);
 
   if (num === null) {
     return "-";
   }
 
-  let percent;
-
-  /*
-    Excel에서 19%는 보통 0.19
-    혹시 19로 들어와도 대응
-  */
-
-  if (Math.abs(num) <= 1) {
-    percent = num * 100;
-  } else {
-    percent = num;
-  }
+  const result =
+    Math.abs(num) <= 1
+      ? num * 100
+      : num;
 
   return (
-    percent
+    result
       .toFixed(1)
       .replace(".0", "")
     + "%"
@@ -511,9 +915,43 @@ function formatPercent(value) {
 }
 
 
-/* =====================================
-   날짜 표시
-===================================== */
+/* ===================================
+   %P CHANGE
+=================================== */
+
+function formatPoint(value) {
+
+  const num =
+    toNumber(value);
+
+  if (num === null) {
+    return "-";
+  }
+
+  let point =
+    Math.abs(num) <= 1
+      ? num * 100
+      : num;
+
+  const sign =
+    point > 0
+      ? "+"
+      : "";
+
+  return (
+    sign +
+    point
+      .toFixed(1)
+      .replace(".0", "")
+    + "%p"
+  );
+
+}
+
+
+/* ===================================
+   DATE
+=================================== */
 
 function formatDate(value) {
 
@@ -525,119 +963,236 @@ function formatDate(value) {
     return "-";
   }
 
+  const stringValue =
+    String(value).trim();
+
+
   /*
-    Excel 날짜 일련번호 대응
-    예: 44713
+    Excel Serial Date
   */
 
-  if (
-    typeof value === "number" ||
-    /^\d{5}$/.test(String(value))
-  ) {
+  if (/^\d+(\.\d+)?$/.test(stringValue)) {
 
-    const serial = Number(value);
+    const serial =
+      Number(stringValue);
 
     if (
       serial > 20000 &&
       serial < 80000
     ) {
 
-      const excelEpoch =
-        new Date(Date.UTC(1899, 11, 30));
+      const epoch =
+        Date.UTC(
+          1899,
+          11,
+          30
+        );
 
       const date =
         new Date(
-          excelEpoch.getTime() +
+          epoch +
           serial * 86400000
         );
 
       return date
         .toISOString()
-        .slice(0, 10);
+        .slice(0,10);
     }
 
   }
 
 
   /*
-    일반 날짜 문자열
+    already formatted date
   */
 
-  const date = new Date(value);
+  if (
+    /^\d{4}-\d{2}-\d{2}$/
+      .test(stringValue)
+  ) {
+    return stringValue;
+  }
+
+
+  const date =
+    new Date(value);
 
   if (!isNaN(date.getTime())) {
 
-    const year = date.getFullYear();
+    const y =
+      date.getFullYear();
 
-    const month =
-      String(date.getMonth() + 1)
-        .padStart(2, "0");
+    const m =
+      String(
+        date.getMonth() + 1
+      ).padStart(2,"0");
 
-    const day =
-      String(date.getDate())
-        .padStart(2, "0");
+    const d =
+      String(
+        date.getDate()
+      ).padStart(2,"0");
 
-    return `${year}-${month}-${day}`;
-
+    return `${y}-${m}-${d}`;
   }
 
 
-  /*
-    이미 YYYY-MM-DD면 그대로
-  */
-
-  return String(value);
+  return stringValue;
 
 }
 
 
-/* =====================================
-   평균 계산
-===================================== */
+/* ===================================
+   AVERAGE
+=================================== */
 
-function getAverage(data, key) {
+function average(data, aliases) {
 
   const values =
     data
-      .map(item => toNumber(item[key]))
-      .filter(value => value !== null);
+      .map(row =>
+        toNumber(
+          getField(
+            row,
+            aliases
+          )
+        )
+      )
+      .filter(
+        value =>
+          value !== null
+      );
 
-  if (values.length === 0) {
+  if (!values.length) {
     return null;
   }
 
-  const sum =
+  return (
     values.reduce(
-      (a, b) => a + b,
+      (a,b) => a+b,
       0
-    );
-
-  return sum / values.length;
+    )
+    /
+    values.length
+  );
 
 }
 
 
-/* =====================================
-   전년 대비 영업이익률
-===================================== */
+/* ===================================
+   HISTORY FOR STORE
+=================================== */
 
-function getChangeBadge(row) {
+function getHistoryForStore(storeName) {
+
+  return historyData
+
+    .filter(row => {
+
+      const name =
+        getField(
+          row,
+          ["매장명"]
+        );
+
+      return (
+        String(name ?? "").trim()
+        ===
+        String(storeName ?? "").trim()
+      );
+
+    })
+
+    .sort((a,b) => {
+
+      const aDate =
+        excelDateToTime(
+          getField(
+            a,
+            ["변경일"]
+          )
+        );
+
+      const bDate =
+        excelDateToTime(
+          getField(
+            b,
+            ["변경일"]
+          )
+        );
+
+      return bDate - aDate;
+
+    });
+
+}
+
+
+/* ===================================
+   DATE SORT
+=================================== */
+
+function excelDateToTime(value) {
+
+  const formatted =
+    formatDate(value);
+
+  const time =
+    new Date(formatted)
+      .getTime();
+
+  return isNaN(time)
+    ? 0
+    : time;
+
+}
+
+
+/* ===================================
+   PROFIT CHANGE BADGE
+=================================== */
+
+function getProfitBadge(row) {
 
   const current =
-    toNumber(row["25년 영업이익률"]);
+    toNumber(
+      getField(
+        row,
+        [
+          "25년 영업이익율",
+          "25년 영업이익률"
+        ]
+      )
+    );
 
   const previous =
-    toNumber(row["24년 영업이익률"]);
+    toNumber(
+      getField(
+        row,
+        [
+          "24년 영업이익율",
+          "24년 영업이익률"
+        ]
+      )
+    );
+
 
   if (
     current === null ||
     previous === null
   ) {
-    return `<span class="badge badge-same">-</span>`;
+
+    return `
+      <span class="badge badge-same">
+        -
+      </span>
+    `;
+
   }
+
 
   const diff =
     (current - previous) * 100;
+
 
   if (diff > 0.0001) {
 
@@ -649,6 +1204,7 @@ function getChangeBadge(row) {
 
   }
 
+
   if (diff < -0.0001) {
 
     return `
@@ -659,6 +1215,7 @@ function getChangeBadge(row) {
 
   }
 
+
   return `
     <span class="badge badge-same">
       동일
@@ -668,23 +1225,28 @@ function getChangeBadge(row) {
 }
 
 
-/* =====================================
-   테이블 표시
-===================================== */
+/* ===================================
+   STORE TABLE
+=================================== */
 
 function renderTable(data) {
 
   const tbody =
-    document.getElementById("storeBody");
+    document.getElementById(
+      "storeBody"
+    );
 
   tbody.innerHTML = "";
 
 
-  if (data.length === 0) {
+  if (!data.length) {
 
     tbody.innerHTML = `
       <tr>
-        <td colspan="7" class="message">
+        <td
+          colspan="8"
+          class="message"
+        >
           검색 결과가 없습니다.
         </td>
       </tr>
@@ -697,41 +1259,112 @@ function renderTable(data) {
 
   data.forEach(row => {
 
+    const storeName =
+      getField(
+        row,
+        ["매장명"]
+      );
+
+
+    const history =
+      getHistoryForStore(
+        storeName
+      );
+
+
+    const profit25 =
+      getField(
+        row,
+        [
+          "25년 영업이익율",
+          "25년 영업이익률"
+        ]
+      );
+
+
+    const profit24 =
+      getField(
+        row,
+        [
+          "24년 영업이익율",
+          "24년 영업이익률"
+        ]
+      );
+
+
     const tr =
-      document.createElement("tr");
+      document.createElement(
+        "tr"
+      );
 
 
     tr.innerHTML = `
 
       <td class="store-name">
-        ${row["매장명"] ?? "-"}
+        ${escapeHtml(storeName ?? "-")}
+
+        <span class="click-hint">
+          클릭하여 상세보기
+        </span>
       </td>
 
       <td>
-        ${formatDate(row["오픈일자"])}
+        ${formatDate(
+          getField(
+            row,
+            ["오픈일자"]
+          )
+        )}
       </td>
 
       <td>
-        ${formatPercent(row["1차"])}
+        ${formatPercent(
+          getField(
+            row,
+            ["1차"]
+          )
+        )}
       </td>
 
       <td>
-        ${formatPercent(row["2차"])}
+        ${formatPercent(
+          getField(
+            row,
+            ["2차"]
+          )
+        )}
       </td>
 
       <td>
-        ${formatPercent(row["25년 영업이익률"])}
+        ${formatPercent(profit25)}
       </td>
 
       <td>
-        ${formatPercent(row["24년 영업이익률"])}
+        ${formatPercent(profit24)}
       </td>
 
       <td>
-        ${getChangeBadge(row)}
+        ${getProfitBadge(row)}
       </td>
 
+      <td>
+        <span class="history-count">
+          ${history.length}
+        </span>
+      </td>
     `;
+
+
+    tr.addEventListener(
+      "click",
+      () => {
+
+        openStoreDetail(
+          row
+        );
+
+      }
+    );
 
 
     tbody.appendChild(tr);
@@ -741,136 +1374,414 @@ function renderTable(data) {
 }
 
 
-/* =====================================
-   KPI 표시
-===================================== */
+/* ===================================
+   KPI
+=================================== */
 
-function renderKPI(data) {
+function renderKPI() {
 
   document.getElementById(
     "totalStores"
   ).textContent =
-    data.length + "개";
-
-
-  const avgFirst =
-    getAverage(data, "1차");
-
-  const avgSecond =
-    getAverage(data, "2차");
-
-  const avgProfit25 =
-    getAverage(
-      data,
-      "25년 영업이익률"
-    );
+    storeData.length + "개";
 
 
   document.getElementById(
     "avgFirst"
   ).textContent =
-    formatPercent(avgFirst);
+    formatPercent(
+      average(
+        storeData,
+        ["1차"]
+      )
+    );
 
 
   document.getElementById(
     "avgSecond"
   ).textContent =
-    formatPercent(avgSecond);
+    formatPercent(
+      average(
+        storeData,
+        ["2차"]
+      )
+    );
 
 
   document.getElementById(
     "avgProfit25"
   ).textContent =
-    formatPercent(avgProfit25);
+    formatPercent(
+      average(
+        storeData,
+        [
+          "25년 영업이익율",
+          "25년 영업이익률"
+        ]
+      )
+    );
 
 }
 
 
-/* =====================================
-   JSON 불러오기
-===================================== */
+/* ===================================
+   OPEN DETAIL
+=================================== */
 
-fetch(
-  "./StoreMaster.json?ts=" +
-  new Date().getTime()
-)
+function openStoreDetail(store) {
 
-.then(response => {
-
-  if (!response.ok) {
-    throw new Error(
-      "JSON 파일을 불러오지 못했습니다."
+  const storeName =
+    getField(
+      store,
+      ["매장명"]
     );
-  }
 
-  return response.json();
 
-})
+  document.getElementById(
+    "detailStoreName"
+  ).textContent =
+    storeName ?? "매장 상세";
 
-.then(data => {
 
   /*
-    배열 형태인지 확인
+    CURRENT INFO
   */
 
-  if (!Array.isArray(data)) {
-
-    throw new Error(
-      "JSON 데이터 형식이 배열이 아닙니다."
-    );
-
-  }
-
-
-  storeData = data;
-
-
-  renderKPI(storeData);
-
-  renderTable(storeData);
-
-
-  const now =
-    new Date();
-
   document.getElementById(
-    "updatedTime"
-  ).textContent =
-    "조회 " +
-    now.toLocaleString("ko-KR");
-
-})
-
-.catch(error => {
-
-  console.error(error);
-
-  document.getElementById(
-    "storeBody"
+    "currentInfo"
   ).innerHTML = `
 
-    <tr>
-      <td colspan="7" class="message">
-        데이터를 불러오지 못했습니다.<br>
-        StoreMaster.json 파일을 확인해주세요.
-      </td>
-    </tr>
+    <div class="info-card">
+
+      <div class="info-label">
+        오픈일자
+      </div>
+
+      <div class="info-value">
+        ${formatDate(
+          getField(
+            store,
+            ["오픈일자"]
+          )
+        )}
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-label">
+        현재 1차 조건
+      </div>
+
+      <div class="info-value">
+        ${formatPercent(
+          getField(
+            store,
+            ["1차"]
+          )
+        )}
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-label">
+        현재 2차 조건
+      </div>
+
+      <div class="info-value">
+        ${formatPercent(
+          getField(
+            store,
+            ["2차"]
+          )
+        )}
+      </div>
+
+    </div>
+
+
+    <div class="info-card">
+
+      <div class="info-label">
+        25년 영업이익율
+      </div>
+
+      <div class="info-value">
+        ${formatPercent(
+          getField(
+            store,
+            [
+              "25년 영업이익율",
+              "25년 영업이익률"
+            ]
+          )
+        )}
+      </div>
+
+    </div>
 
   `;
 
-});
+
+  /*
+    HISTORY
+  */
+
+  const items =
+    getHistoryForStore(
+      storeName
+    );
 
 
-/* =====================================
-   매장 검색
-===================================== */
+  renderHistory(
+    items
+  );
+
+
+  document.getElementById(
+    "drawerOverlay"
+  ).classList.add(
+    "open"
+  );
+
+
+  document.getElementById(
+    "drawer"
+  ).classList.add(
+    "open"
+  );
+
+}
+
+
+/* ===================================
+   HISTORY TIMELINE
+=================================== */
+
+function renderHistory(items) {
+
+  const timeline =
+    document.getElementById(
+      "historyTimeline"
+    );
+
+
+  if (!items.length) {
+
+    timeline.innerHTML = `
+      <div class="no-history">
+        등록된 계약 히스토리가 없습니다.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  timeline.innerHTML =
+    items.map(row => {
+
+
+      const before =
+        getField(
+          row,
+          ["변경전"]
+        );
+
+
+      const after =
+        getField(
+          row,
+          ["변경후"]
+        );
+
+
+      const change =
+        getField(
+          row,
+          ["증감"]
+        );
+
+
+      const type =
+        getField(
+          row,
+          [
+            "변경구분",
+            "구분"
+          ]
+        )
+        ?? "계약 변경";
+
+
+      const reason =
+        getField(
+          row,
+          ["사유"]
+        );
+
+
+      const note =
+        getField(
+          row,
+          ["비고"]
+        );
+
+
+      return `
+
+        <div class="timeline-item">
+
+          <div class="timeline-dot"></div>
+
+
+          <div class="timeline-date">
+            ${formatDate(
+              getField(
+                row,
+                ["변경일"]
+              )
+            )}
+          </div>
+
+
+          <div class="timeline-type">
+            ${escapeHtml(type)}
+          </div>
+
+
+          <div class="timeline-change">
+
+            ${formatPercent(before)}
+
+            &nbsp;→&nbsp;
+
+            ${formatPercent(after)}
+
+            ${
+              change !== null
+              &&
+              change !== undefined
+              &&
+              change !== ""
+                ? `&nbsp;
+                   <span style="
+                     font-size:13px;
+                     color:#6b7280;
+                   ">
+                     (${formatPoint(change)})
+                   </span>`
+                : ""
+            }
+
+          </div>
+
+
+          <div class="timeline-detail">
+
+            ${
+              reason
+                ? `
+                  <div>
+                    <strong>사유</strong>
+                    &nbsp;
+                    ${escapeHtml(reason)}
+                  </div>
+                `
+                : ""
+            }
+
+
+            ${
+              note
+                ? `
+                  <div>
+                    <strong>비고</strong>
+                    &nbsp;
+                    ${escapeHtml(note)}
+                  </div>
+                `
+                : ""
+            }
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* ===================================
+   CLOSE DRAWER
+=================================== */
+
+function closeDrawer() {
+
+  document.getElementById(
+    "drawerOverlay"
+  ).classList.remove(
+    "open"
+  );
+
+  document.getElementById(
+    "drawer"
+  ).classList.remove(
+    "open"
+  );
+
+}
+
+
+document.getElementById(
+  "closeDrawer"
+)
+.addEventListener(
+  "click",
+  closeDrawer
+);
+
+
+document.getElementById(
+  "drawerOverlay"
+)
+.addEventListener(
+  "click",
+  closeDrawer
+);
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if (event.key === "Escape") {
+      closeDrawer();
+    }
+
+  }
+);
+
+
+/* ===================================
+   SEARCH
+=================================== */
 
 document.getElementById(
   "searchInput"
 )
 .addEventListener(
   "input",
-  function () {
+  function() {
 
     const keyword =
       this.value
@@ -881,24 +1792,147 @@ document.getElementById(
     const filtered =
       storeData.filter(row => {
 
-        const storeName =
+        const name =
           String(
-            row["매장명"] ?? ""
+            getField(
+              row,
+              ["매장명"]
+            )
+            ?? ""
           )
           .toLowerCase();
 
-        return storeName.includes(keyword);
+        return name.includes(
+          keyword
+        );
 
       });
 
 
-    renderTable(filtered);
+    renderTable(
+      filtered
+    );
 
   }
 );
 
-</script>
 
+/* ===================================
+   LOAD DATA
+=================================== */
+
+async function loadData() {
+
+  try {
+
+    const timestamp =
+      Date.now();
+
+
+    const [
+      storeResponse,
+      historyResponse
+    ] =
+      await Promise.all([
+
+        fetch(
+          "./StoreMaster.json?ts=" +
+          timestamp
+        ),
+
+        fetch(
+          "./ContractHistory.json?ts=" +
+          timestamp
+        )
+
+      ]);
+
+
+    if (!storeResponse.ok) {
+      throw new Error(
+        "StoreMaster.json 불러오기 실패"
+      );
+    }
+
+
+    if (!historyResponse.ok) {
+      throw new Error(
+        "ContractHistory.json 불러오기 실패"
+      );
+    }
+
+
+    storeData =
+      await storeResponse.json();
+
+
+    historyData =
+      await historyResponse.json();
+
+
+    if (!Array.isArray(storeData)) {
+      throw new Error(
+        "StoreMaster 형식 오류"
+      );
+    }
+
+
+    if (!Array.isArray(historyData)) {
+      throw new Error(
+        "ContractHistory 형식 오류"
+      );
+    }
+
+
+    renderKPI();
+
+    renderTable(
+      storeData
+    );
+
+
+    document.getElementById(
+      "updatedTime"
+    ).textContent =
+      "조회 " +
+      new Date()
+        .toLocaleString(
+          "ko-KR"
+        );
+
+  }
+
+  catch(error) {
+
+    console.error(error);
+
+
+    document.getElementById(
+      "storeBody"
+    ).innerHTML = `
+
+      <tr>
+
+        <td
+          colspan="8"
+          class="message"
+        >
+          데이터를 불러오지 못했습니다.<br>
+          StoreMaster.json / ContractHistory.json을 확인해주세요.
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+}
+
+
+loadData();
+
+</script>
 
 </body>
 </html>
