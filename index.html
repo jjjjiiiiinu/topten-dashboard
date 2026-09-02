@@ -7,12 +7,14 @@
 <title>TOPTEN 매장관리 포털</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -32,19 +34,27 @@ select {
   font: inherit;
 }
 
+
+/* =========================
+   HEADER
+========================= */
+
 .header {
   background: #111827;
   color: white;
+
   padding: 20px 30px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   gap: 20px;
 }
 
 .header h1 {
   margin: 0;
+
   font-size: 24px;
   font-weight: 800;
   letter-spacing: -0.7px;
@@ -52,6 +62,7 @@ select {
 
 .header-sub {
   margin-top: 5px;
+
   font-size: 12px;
   color: #9ca3af;
 }
@@ -68,103 +79,148 @@ select {
 
 .updated {
   margin-top: 5px;
+
   font-size: 11px;
   color: #9ca3af;
 }
 
+
+/* =========================
+   MAIN
+========================= */
+
 .container {
-  max-width: 1650px;
+  max-width: 1700px;
+
   margin: 0 auto;
   padding: 26px;
 }
 
-.section-head {
+.section-title {
   margin-bottom: 14px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
 }
 
-.section-head h2 {
+.section-title h2 {
   margin: 0;
+
   font-size: 19px;
   font-weight: 800;
+
   color: #111827;
 }
 
-.section-head p {
+.section-title p {
   margin: 5px 0 0;
+
   font-size: 12px;
   color: #9ca3af;
 }
 
+
+/* =========================
+   KPI
+========================= */
+
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
   gap: 14px;
-  margin-bottom: 22px;
+
+  margin-bottom: 20px;
 }
 
 .kpi-card {
   background: white;
+
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 19px 20px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.035);
+
+  padding: 18px 20px;
+
+  box-shadow:
+    0 3px 12px rgba(0,0,0,0.035);
 }
 
 .kpi-label {
+  margin-bottom: 8px;
+
   font-size: 12px;
   color: #6b7280;
-  margin-bottom: 9px;
-  white-space: nowrap;
 }
 
 .kpi-value {
   font-size: 25px;
   font-weight: 800;
+
   color: #111827;
-  letter-spacing: -0.7px;
 }
 
 .kpi-foot {
-  margin-top: 7px;
-  font-size: 11px;
+  margin-top: 6px;
+
+  font-size: 10px;
   color: #9ca3af;
 }
 
+
+/* =========================
+   TOP 3 GRID
+========================= */
+
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.05fr 1.05fr 0.9fr;
+
+  grid-template-columns:
+    1.05fr
+    1.25fr
+    0.95fr;
+
   gap: 18px;
+
+  align-items: stretch;
+
   margin-bottom: 24px;
 }
 
 .card {
   background: white;
+
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.035);
+
   overflow: hidden;
+
+  box-shadow:
+    0 3px 12px rgba(0,0,0,0.035);
 }
 
 .card-head {
-  padding: 18px 20px;
+  padding: 17px 19px;
+
   border-bottom: 1px solid #e5e7eb;
 }
 
 .card-head h3 {
   margin: 0;
+
   font-size: 15px;
   font-weight: 800;
 }
 
 .card-head p {
   margin: 5px 0 0;
-  font-size: 11px;
+
+  font-size: 10px;
   color: #9ca3af;
 }
+
+
+/* =========================
+   LEFT : CHANNEL SUMMARY
+========================= */
 
 .summary-table-wrap {
   overflow-x: auto;
@@ -172,123 +228,139 @@ select {
 
 .summary-table {
   width: 100%;
+
   border-collapse: collapse;
-  min-width: 650px;
 }
 
 .summary-table th {
+  padding: 11px 9px;
+
   background: #f9fafb;
-  padding: 12px;
-  font-size: 11px;
-  color: #4b5563;
-  font-weight: 700;
-  white-space: nowrap;
+
   border-bottom: 1px solid #e5e7eb;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  color: #4b5563;
+
+  white-space: nowrap;
 }
 
 .summary-table td {
-  padding: 12px;
+  padding: 11px 9px;
+
   text-align: center;
-  font-size: 12px;
-  border-bottom: 1px solid #f1f2f4;
+
+  border-bottom: 1px solid #f0f1f3;
+
+  font-size: 11px;
+
   white-space: nowrap;
 }
 
-.summary-channel {
-  text-align: left !important;
-  font-weight: 700;
+.summary-table td:first-child {
+  text-align: left;
+
+  font-weight: 800;
 }
 
-.region-chart {
-  padding: 18px 20px 20px;
+.summary-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
-.region-row {
-  display: grid;
-  grid-template-columns: 65px 1fr 45px;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+
+/* =========================
+   LEFT : LEASE SUMMARY
+========================= */
+
+.lease-summary {
+  border-top: 1px solid #e5e7eb;
 }
 
-.region-name {
-  font-size: 12px;
-  font-weight: 700;
-  color: #374151;
+.lease-header {
+  padding: 15px 18px 10px;
 }
 
-.region-bar-bg {
-  height: 10px;
-  border-radius: 999px;
-  background: #eef1f5;
-  overflow: hidden;
+.lease-header strong {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 800;
 }
 
-.region-bar {
-  height: 100%;
-  border-radius: 999px;
-  background: #111827;
-}
+.lease-header span {
+  display: block;
 
-.region-count {
-  text-align: right;
-  font-size: 11px;
-  font-weight: 700;
-  color: #4b5563;
-}
+  margin-top: 4px;
 
-.lease-wrap {
-  padding: 18px;
+  font-size: 9px;
+  color: #9ca3af;
 }
 
 .total-deposit {
-  padding: 18px;
-  border-radius: 12px;
+  margin: 0 16px 12px;
+
+  padding: 15px 16px;
+
+  border-radius: 11px;
+
   background: #111827;
   color: white;
-  margin-bottom: 14px;
 }
 
 .total-deposit-label {
-  font-size: 11px;
+  margin-bottom: 5px;
+
+  font-size: 10px;
   color: #cbd5e1;
-  margin-bottom: 6px;
 }
 
 .total-deposit-value {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 25px;
+  font-weight: 900;
 }
 
 .lease-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 10px;
+
+  padding: 0 16px 16px;
 }
 
 .lease-box {
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 10px;
+
   overflow: hidden;
 }
 
 .lease-box-title {
-  padding: 12px 14px;
+  padding: 10px 12px;
+
   background: #f8fafc;
-  font-size: 12px;
-  font-weight: 800;
+
   border-bottom: 1px solid #e5e7eb;
+
+  font-size: 11px;
+  font-weight: 800;
 }
 
 .lease-list {
-  padding: 12px 14px;
+  padding: 10px 12px;
 }
 
 .lease-row {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 10px;
+
+  gap: 8px;
+
+  margin-bottom: 8px;
 }
 
 .lease-row:last-child {
@@ -296,32 +368,69 @@ select {
 }
 
 .lease-key {
-  font-size: 11px;
+  font-size: 10px;
   color: #6b7280;
 }
 
 .lease-val {
-  font-size: 12px;
+  text-align: right;
+
+  font-size: 11px;
   font-weight: 800;
+
   color: #111827;
+}
+
+
+/* =========================
+   CENTER : TOP 10
+========================= */
+
+.top10-head {
+  display: grid;
+
+  grid-template-columns:
+    38px
+    minmax(130px, 1fr)
+    82px
+    84px;
+
+  gap: 8px;
+
+  padding: 9px 16px;
+
+  background: #f9fafb;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  font-size: 9px;
+  color: #9ca3af;
+}
+
+.top10-head div:nth-child(3),
+.top10-head div:nth-child(4) {
   text-align: right;
 }
 
-.top10-card {
-  margin-bottom: 24px;
-}
-
 .top10-list {
-  padding: 8px 18px 14px;
+  padding: 0 16px 8px;
 }
 
 .rank-row {
   display: grid;
-  grid-template-columns: 48px 1fr 100px 85px;
-  align-items: center;
-  gap: 10px;
 
-  padding: 11px 0;
+  grid-template-columns:
+    38px
+    minmax(130px, 1fr)
+    82px
+    84px;
+
+  gap: 8px;
+
+  align-items: center;
+
+  min-height: 47px;
+
   border-bottom: 1px solid #f1f2f4;
 }
 
@@ -329,82 +438,205 @@ select {
   border-bottom: none;
 }
 
+.rank-row:hover {
+  background: #fafbfc;
+}
+
 .rank-badge {
-  width: 36px;
-  height: 36px;
+  width: 29px;
+  height: 29px;
+
   border-radius: 50%;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 900;
 }
 
-.rank-1 {
-  background: #fff7d6;
+.rank1 {
+  background: #fff6ce;
+
+  border: 1px solid #e6b800;
+
   color: #9a6700;
-  border: 2px solid #f1c453;
 }
 
-.rank-2 {
+.rank2 {
   background: #f3f4f6;
-  color: #5f6368;
-  border: 2px solid #c8cdd4;
+
+  border: 1px solid #aeb4bd;
+
+  color: #5b6470;
 }
 
-.rank-3 {
-  background: #fff1e6;
-  color: #9a4f16;
-  border: 2px solid #d89b6a;
+.rank3 {
+  background: #fff0e2;
+
+  border: 1px solid #d98c52;
+
+  color: #96501d;
 }
 
-.rank-other {
+.rank-normal {
   background: white;
-  color: #111827;
-  border: 2px dashed #9ca3af;
-  transform: rotate(-5deg);
+
+  border: 1px dashed #9ca3af;
+
+  color: #374151;
 }
 
 .rank-store {
-  font-size: 13px;
+  overflow: hidden;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  font-size: 11px;
   font-weight: 800;
+
   color: #111827;
 }
 
-.rank-sub {
+.rank-store-sub {
   display: block;
-  margin-top: 3px;
-  font-size: 10px;
+
+  margin-top: 2px;
+
+  font-size: 9px;
   font-weight: 400;
+
   color: #9ca3af;
 }
 
 .rank-sales {
   text-align: right;
-  font-size: 13px;
+
+  font-size: 11px;
   font-weight: 800;
+
+  color: #111827;
 }
 
-.rank-growth {
+/* 이익률 양수 빨강 */
+
+.profit-positive {
   text-align: right;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  color: #dc2626;
 }
+
+/* 이익률 음수 파랑 */
+
+.profit-negative {
+  text-align: right;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  color: #2563eb;
+}
+
+.profit-neutral {
+  text-align: right;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: #9ca3af;
+}
+
+
+/* =========================
+   RIGHT : REGION
+========================= */
+
+.region-chart {
+  padding: 16px 18px 18px;
+}
+
+.region-row {
+  display: grid;
+
+  grid-template-columns:
+    52px
+    1fr
+    38px;
+
+  gap: 8px;
+
+  align-items: center;
+
+  margin-bottom: 11px;
+}
+
+.region-row:last-child {
+  margin-bottom: 0;
+}
+
+.region-name {
+  font-size: 10px;
+  font-weight: 700;
+
+  color: #374151;
+}
+
+.region-bg {
+  height: 9px;
+
+  background: #eef1f5;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.region-bar {
+  height: 100%;
+
+  border-radius: 999px;
+
+  background: #111827;
+}
+
+.region-count {
+  text-align: right;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  color: #4b5563;
+}
+
+
+/* =========================
+   STORE PANEL
+========================= */
 
 .store-panel {
   background: white;
+
   border: 1px solid #e5e7eb;
   border-radius: 14px;
+
   overflow: hidden;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.035);
+
+  box-shadow:
+    0 3px 12px rgba(0,0,0,0.035);
 }
 
 .store-panel-head {
-  padding: 19px 20px;
+  padding: 18px 20px;
 
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
   gap: 15px;
 
   border-bottom: 1px solid #e5e7eb;
@@ -412,65 +644,79 @@ select {
 
 .store-panel-head h2 {
   margin: 0;
+
   font-size: 18px;
   font-weight: 800;
 }
 
 .store-panel-head p {
   margin: 5px 0 0;
-  font-size: 11px;
+
+  font-size: 10px;
   color: #9ca3af;
 }
 
-.filter-box {
+.filters {
   display: flex;
+
   gap: 8px;
 }
 
-.filter-box input,
-.filter-box select {
-  height: 39px;
-  padding: 0 12px;
+.filters input,
+.filters select {
+  height: 38px;
+
+  padding: 0 11px;
 
   border: 1px solid #d1d5db;
-  border-radius: 9px;
+  border-radius: 8px;
 
   background: white;
+
   outline: none;
-  font-size: 13px;
+
+  font-size: 12px;
 }
 
-.filter-box input {
-  width: 230px;
+.filters input {
+  width: 220px;
 }
 
 .table-wrap {
-  width: 100%;
   overflow-x: auto;
 }
 
 .store-table {
   width: 100%;
+
   min-width: 1250px;
+
   border-collapse: collapse;
 }
 
 .store-table th {
-  padding: 13px 12px;
-  font-size: 11px;
-  color: #4b5563;
+  padding: 12px 10px;
+
   background: #f9fafb;
-  font-weight: 700;
+
   border-bottom: 1px solid #e5e7eb;
+
+  font-size: 10px;
+
+  color: #4b5563;
+
   white-space: nowrap;
 }
 
 .store-table td {
-  padding: 13px 12px;
+  padding: 12px 10px;
+
   text-align: center;
-  font-size: 12px;
-  color: #374151;
+
   border-bottom: 1px solid #f0f1f3;
+
+  font-size: 11px;
+
   white-space: nowrap;
 }
 
@@ -484,39 +730,52 @@ select {
 
 .store-name {
   text-align: left !important;
+
   font-weight: 800;
-  color: #111827 !important;
+
+  color: #111827;
 }
 
 .sub-hint {
   display: block;
-  margin-top: 3px;
-  font-size: 9px;
+
+  margin-top: 2px;
+
+  font-size: 8px;
   font-weight: 400;
+
   color: #9ca3af;
 }
 
+
+/* =========================
+   BADGES
+========================= */
+
 .badge {
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 
-  min-width: 60px;
+  min-width: 58px;
+
   padding: 4px 7px;
 
   border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
+
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .up {
-  background: #ecfdf5;
-  color: #047857;
+  background: #fef2f2;
+  color: #dc2626;
 }
 
 .down {
-  background: #fef2f2;
-  color: #b91c1c;
+  background: #eff6ff;
+  color: #2563eb;
 }
 
 .neutral {
@@ -534,15 +793,24 @@ select {
   color: #c2410c;
 }
 
+
+/* =========================
+   DRAWER
+========================= */
+
 .overlay {
   position: fixed;
+
   inset: 0;
-  background: rgba(17,24,39,0.45);
+
+  background:
+    rgba(17,24,39,0.45);
 
   opacity: 0;
   visibility: hidden;
 
   z-index: 1000;
+
   transition: 0.2s;
 }
 
@@ -562,37 +830,46 @@ select {
 
   background: white;
 
-  transform: translateX(100%);
+  transform:
+    translateX(100%);
+
   transition: 0.25s;
 
   z-index: 1001;
-  box-shadow: -15px 0 40px rgba(0,0,0,.18);
 
   display: flex;
   flex-direction: column;
+
+  box-shadow:
+    -15px 0 40px rgba(0,0,0,.18);
 }
 
 .drawer.open {
-  transform: translateX(0);
+  transform:
+    translateX(0);
 }
 
 .drawer-head {
-  padding: 23px 25px;
+  padding: 22px 24px;
+
   background: #111827;
   color: white;
 
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
 .drawer-head h2 {
   margin: 0;
+
   font-size: 22px;
 }
 
 .drawer-head p {
   margin: 5px 0 0;
-  font-size: 11px;
+
+  font-size: 10px;
   color: #9ca3af;
 }
 
@@ -600,59 +877,78 @@ select {
   width: 36px;
   height: 36px;
 
-  border: none;
+  border: 0;
   border-radius: 8px;
 
-  background: rgba(255,255,255,.1);
+  background:
+    rgba(255,255,255,.1);
+
   color: white;
 
   cursor: pointer;
+
   font-size: 20px;
 }
 
 .drawer-body {
   padding: 24px;
+
   overflow-y: auto;
 }
 
 .detail-title {
-  margin: 0 0 13px;
-  font-size: 15px;
+  margin: 0 0 12px;
+
+  font-size: 14px;
   font-weight: 800;
 }
 
 .detail-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
   gap: 9px;
-  margin-bottom: 28px;
+
+  margin-bottom: 27px;
 }
 
 .detail-item {
+  padding: 12px;
+
   background: #f8fafc;
+
   border: 1px solid #e5e7eb;
   border-radius: 9px;
-  padding: 13px;
 }
 
 .detail-label {
-  margin-bottom: 6px;
-  font-size: 10px;
+  margin-bottom: 5px;
+
+  font-size: 9px;
   color: #9ca3af;
 }
 
 .detail-value {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
 }
+
+
+/* =========================
+   HISTORY
+========================= */
 
 .timeline {
   position: relative;
+
   margin-left: 8px;
 }
 
 .timeline::before {
   content: "";
+
   position: absolute;
 
   left: 7px;
@@ -660,114 +956,138 @@ select {
   bottom: 7px;
 
   width: 2px;
+
   background: #e5e7eb;
 }
 
 .timeline-item {
   position: relative;
-  padding: 0 0 25px 35px;
+
+  padding:
+    0
+    0
+    24px
+    34px;
 }
 
 .timeline-dot {
   position: absolute;
 
-  top: 5px;
   left: 0;
+  top: 5px;
 
   width: 16px;
   height: 16px;
 
   border-radius: 50%;
+
   background: #111827;
 
   border: 4px solid white;
-  box-shadow: 0 0 0 2px #111827;
+
+  box-shadow:
+    0 0 0 2px #111827;
 }
 
 .timeline-date {
   margin-bottom: 5px;
-  font-size: 11px;
+
+  font-size: 10px;
+
   color: #6b7280;
 }
 
 .timeline-type {
   display: inline-block;
-  padding: 4px 8px;
+
+  padding: 4px 7px;
+
   margin-bottom: 7px;
 
   background: #f3f4f6;
+
   border-radius: 6px;
 
-  font-size: 10px;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 800;
 }
 
 .timeline-change {
   margin-bottom: 7px;
-  font-size: 16px;
+
+  font-size: 15px;
   font-weight: 800;
 }
 
 .timeline-detail {
-  padding: 11px 12px;
+  padding: 10px 11px;
 
   background: #f8fafc;
+
   border-radius: 8px;
 
-  font-size: 12px;
+  font-size: 11px;
+
   line-height: 1.6;
 }
 
 .no-data {
-  padding: 35px 20px;
+  padding: 30px 20px;
+
   text-align: center;
 
-  border: 1px dashed #d1d5db;
+  border:
+    1px dashed #d1d5db;
+
   border-radius: 9px;
 
   color: #9ca3af;
-  font-size: 12px;
+
+  font-size: 11px;
 }
 
 .footer {
-  padding: 25px 0 5px;
+  padding: 24px 0 5px;
+
   text-align: center;
 
+  font-size: 9px;
+
   color: #9ca3af;
-  font-size: 10px;
 }
 
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media(max-width:1200px) {
+
   .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+      1fr 1fr;
   }
+
 }
 
 @media(max-width:900px) {
+
   .kpi-grid {
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
   .dashboard-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
-  .lease-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .rank-row {
-    grid-template-columns: 45px 1fr 80px;
-  }
-
-  .rank-growth {
-    display: none;
-  }
 }
 
 @media(max-width:700px) {
+
   .container {
-    padding: 15px;
+    padding: 14px;
   }
 
   .header {
@@ -784,33 +1104,42 @@ select {
     align-items: stretch;
   }
 
-  .filter-box {
+  .filters {
     flex-direction: column;
   }
 
-  .filter-box input,
-  .filter-box select {
+  .filters input,
+  .filters select {
     width: 100%;
   }
 
   .detail-grid {
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
   }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
 <header class="header">
 
   <div>
-    <h1>TOPTEN 매장관리 포털</h1>
+
+    <h1>
+      TOPTEN 매장관리 포털
+    </h1>
 
     <div class="header-sub">
       Store · Lease · Contract Management Dashboard
     </div>
+
   </div>
+
 
   <div class="header-right">
 
@@ -832,11 +1161,21 @@ select {
 
 <main class="container">
 
-  <div class="section-head">
-    <div>
-      <h2>전체 운영 Summary</h2>
-      <p>점포 · 지역 · 임차 구조 종합 현황</p>
-    </div>
+
+  <!-- =========================
+       KPI
+  ========================== -->
+
+  <div class="section-title">
+
+    <h2>
+      전체 운영 Summary
+    </h2>
+
+    <p>
+      점포 · 매출 · 임차구조 종합 현황
+    </p>
+
   </div>
 
 
@@ -846,62 +1185,80 @@ select {
   ></section>
 
 
+
+  <!-- =========================
+       TOP SECTION
+  ========================== -->
+
   <section class="dashboard-grid">
+
+
+    <!-- =========================
+         LEFT
+    ========================== -->
 
     <div class="card">
 
+
       <div class="card-head">
-        <h3>유통채널별 현황</h3>
-        <p>대분류별 합계 기준</p>
+
+        <h3>
+          유통채널별 현황
+        </h3>
+
+        <p>
+          대분류 합계 기준
+        </p>
+
       </div>
+
 
       <div class="summary-table-wrap">
 
         <table class="summary-table">
 
           <thead>
+
             <tr>
+
               <th>구분</th>
               <th>매장수</th>
               <th>평균면적</th>
               <th>고정임차</th>
               <th>수수료임차</th>
-              <th>평균수수료율</th>
+              <th>수수료율</th>
+
             </tr>
+
           </thead>
 
-          <tbody id="summaryBody"></tbody>
+
+          <tbody
+            id="summaryBody"
+          ></tbody>
 
         </table>
 
       </div>
 
-    </div>
 
 
-    <div class="card">
+      <!-- 임차조건 -->
 
-      <div class="card-head">
-        <h3>지역별 매장 분포</h3>
-        <p>StoreMaster 지역 기준 자동 집계</p>
-      </div>
+      <div class="lease-summary">
 
-      <div
-        class="region-chart"
-        id="regionChart"
-      ></div>
+        <div class="lease-header">
 
-    </div>
+          <strong>
+            임차조건 Summary
+          </strong>
 
+          <span>
+            금액 단위 백만원
+          </span>
 
-    <div class="card">
+        </div>
 
-      <div class="card-head">
-        <h3>임차조건 Summary</h3>
-        <p>금액 단위 백만원</p>
-      </div>
-
-      <div class="lease-wrap">
 
         <div class="total-deposit">
 
@@ -920,6 +1277,7 @@ select {
 
 
         <div class="lease-columns">
+
 
           <div class="lease-box">
 
@@ -948,42 +1306,114 @@ select {
 
           </div>
 
+
         </div>
 
       </div>
 
+
     </div>
+
+
+
+    <!-- =========================
+         CENTER TOP10
+    ========================== -->
+
+    <div class="card">
+
+
+      <div class="card-head">
+
+        <h3>
+          26년 월평균 TOP 10
+        </h3>
+
+        <p>
+          StoreMaster 기준 · 영업이익율 양수 빨강 / 음수 파랑
+        </p>
+
+      </div>
+
+
+      <div class="top10-head">
+
+        <div>순위</div>
+        <div>매장명</div>
+        <div>월평균</div>
+        <div>영업이익율</div>
+
+      </div>
+
+
+      <div
+        class="top10-list"
+        id="top10List"
+      ></div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         RIGHT REGION
+    ========================== -->
+
+    <div class="card">
+
+
+      <div class="card-head">
+
+        <h3>
+          지역별 매장 분포
+        </h3>
+
+        <p>
+          StoreMaster 지역 기준 자동 집계
+        </p>
+
+      </div>
+
+
+      <div
+        class="region-chart"
+        id="regionChart"
+      ></div>
+
+
+    </div>
+
 
   </section>
 
 
-  <section class="card top10-card">
 
-    <div class="card-head">
-      <h3>26년 월평균 TOP 10</h3>
-      <p>StoreMaster 월평균 기준 자동 순위</p>
-    </div>
-
-    <div
-      class="top10-list"
-      id="top10List"
-    ></div>
-
-  </section>
-
+  <!-- =========================
+       STORE TABLE
+  ========================== -->
 
   <section class="store-panel">
 
+
     <div class="store-panel-head">
 
+
       <div>
-        <h2>매장 현황</h2>
+
+        <h2>
+          매장 현황
+        </h2>
+
         <p>
-          매장명을 클릭하면 계약 히스토리를 확인할 수 있습니다.
+          매장명을 클릭하면 상세정보 및 계약 히스토리를 확인할 수 있습니다.
         </p>
+
       </div>
 
-      <div class="filter-box">
+
+      <div class="filters">
+
 
         <input
           type="text"
@@ -991,25 +1421,43 @@ select {
           placeholder="매장명 검색"
         >
 
+
         <select id="categoryFilter">
-          <option value="">전체 대분류</option>
+
+          <option value="">
+            전체 대분류
+          </option>
+
         </select>
+
 
         <select id="regionFilter">
-          <option value="">전체 지역</option>
+
+          <option value="">
+            전체 지역
+          </option>
+
         </select>
 
+
       </div>
+
 
     </div>
 
 
+
     <div class="table-wrap">
+
 
       <table class="store-table">
 
+
         <thead>
+
+
           <tr>
+
             <th>매장명</th>
             <th>대분류</th>
             <th>지역</th>
@@ -1023,14 +1471,23 @@ select {
             <th>관리비</th>
             <th>보증금</th>
             <th>25년 영업이익율</th>
+
           </tr>
+
+
         </thead>
 
-        <tbody id="storeBody"></tbody>
+
+        <tbody
+          id="storeBody"
+        ></tbody>
+
 
       </table>
 
+
     </div>
+
 
   </section>
 
@@ -1039,8 +1496,14 @@ select {
     TOPTEN Store & Contract Management Portal
   </div>
 
+
 </main>
 
+
+
+<!-- =========================
+     DETAIL DRAWER
+========================== -->
 
 <div
   class="overlay"
@@ -1053,17 +1516,24 @@ select {
   id="drawer"
 >
 
+
   <div class="drawer-head">
 
+
     <div>
-      <h2 id="detailName">
+
+      <h2
+        id="detailName"
+      >
         매장 상세
       </h2>
 
       <p>
         Store Profile & Contract History
       </p>
+
     </div>
+
 
     <button
       class="close"
@@ -1072,14 +1542,18 @@ select {
       ×
     </button>
 
+
   </div>
+
 
 
   <div class="drawer-body">
 
+
     <h3 class="detail-title">
       매장 정보
     </h3>
+
 
     <div
       class="detail-grid"
@@ -1087,32 +1561,43 @@ select {
     ></div>
 
 
+
     <h3 class="detail-title">
       계약 히스토리
     </h3>
+
 
     <div
       class="timeline"
       id="timeline"
     ></div>
 
+
   </div>
+
 
 </aside>
 
 
+
 <script>
+
+/* =========================
+   DATA
+========================= */
 
 let stores = [];
 let history = [];
 let summaries = [];
 
 
+
 /* =========================
-   BASIC
+   BASIC FUNCTIONS
 ========================= */
 
 function text(v) {
+
   if (
     v === null ||
     v === undefined ||
@@ -1122,6 +1607,7 @@ function text(v) {
   }
 
   return String(v);
+
 }
 
 
@@ -1135,31 +1621,47 @@ function num(v) {
     return null;
   }
 
-  if (typeof v === "number") {
+
+  if (
+    typeof v === "number"
+  ) {
     return v;
   }
 
+
   const original =
-    String(v).trim();
+    String(v)
+      .trim();
+
 
   const cleaned =
     original
       .replace(/,/g,"")
       .replace(/%/g,"");
 
+
   const n =
     Number(cleaned);
 
-  if (isNaN(n)) {
+
+  if (
+    isNaN(n)
+  ) {
     return null;
   }
 
-  if (original.includes("%")) {
+
+  if (
+    original.includes("%")
+  ) {
     return n / 100;
   }
 
+
   return n;
+
 }
+
 
 
 function comma(v) {
@@ -1167,9 +1669,13 @@ function comma(v) {
   const n =
     num(v);
 
-  if (n === null) {
+
+  if (
+    n === null
+  ) {
     return "-";
   }
+
 
   return n.toLocaleString(
     "ko-KR",
@@ -1177,31 +1683,9 @@ function comma(v) {
       maximumFractionDigits: 1
     }
   );
+
 }
 
-
-function percent(v) {
-
-  const n =
-    num(v);
-
-  if (n === null) {
-    return "-";
-  }
-
-  const result =
-    Math.abs(n) <= 1
-      ? n * 100
-      : n;
-
-  return (
-    result
-      .toFixed(1)
-      .replace(".0","")
-    +
-    "%"
-  );
-}
 
 
 function million(v) {
@@ -1209,19 +1693,26 @@ function million(v) {
   const n =
     num(v);
 
-  if (n === null) {
+
+  if (
+    n === null
+  ) {
     return "-";
   }
 
+
   return (
     n / 1000000
-  ).toLocaleString(
+  )
+  .toLocaleString(
     "ko-KR",
     {
       maximumFractionDigits: 1
     }
   );
+
 }
+
 
 
 function moneyOrText(v) {
@@ -1234,22 +1725,104 @@ function moneyOrText(v) {
     return "-";
   }
 
+
   const n =
     num(v);
 
-  if (n === null) {
+
+  if (
+    n === null
+  ) {
     return String(v);
   }
 
+
   return (
     n / 1000000
-  ).toLocaleString(
+  )
+  .toLocaleString(
     "ko-KR",
     {
       maximumFractionDigits: 1
     }
   );
+
 }
+
+
+
+function percent(v) {
+
+  const n =
+    num(v);
+
+
+  if (
+    n === null
+  ) {
+    return "-";
+  }
+
+
+  const value =
+    Math.abs(n) <= 1
+      ? n * 100
+      : n;
+
+
+  return (
+    value
+      .toFixed(1)
+      .replace(".0","")
+    +
+    "%"
+  );
+
+}
+
+
+
+function signedPercent(v) {
+
+  const n =
+    num(v);
+
+
+  if (
+    n === null
+  ) {
+    return "-";
+  }
+
+
+  const value =
+    Math.abs(n) <= 1
+      ? n * 100
+      : n;
+
+
+  let sign = "";
+
+
+  if (
+    value > 0
+  ) {
+    sign = "+";
+  }
+
+
+  return (
+    sign
+    +
+    value
+      .toFixed(1)
+      .replace(".0","")
+    +
+    "%"
+  );
+
+}
+
 
 
 function dateFormat(v) {
@@ -1262,14 +1835,18 @@ function dateFormat(v) {
     return "-";
   }
 
+
   const s =
     String(v).trim();
 
 
-  if (/^\d+(\.\d+)?$/.test(s)) {
+  if (
+    /^\d+(\.\d+)?$/.test(s)
+  ) {
 
     const serial =
       Number(s);
+
 
     if (
       serial > 20000 &&
@@ -1283,8 +1860,10 @@ function dateFormat(v) {
           30
         );
 
+
       return new Date(
-        epoch +
+        epoch
+        +
         serial * 86400000
       )
       .toISOString()
@@ -1299,29 +1878,48 @@ function dateFormat(v) {
     /^\d{4}-\d{2}-\d{2}$/
       .test(s)
   ) {
+
     return s;
+
   }
 
 
   const d =
     new Date(v);
 
-  if (!isNaN(d.getTime())) {
+
+  if (
+    !isNaN(
+      d.getTime()
+    )
+  ) {
 
     return [
       d.getFullYear(),
       String(
         d.getMonth()+1
-      ).padStart(2,"0"),
+      )
+      .padStart(
+        2,
+        "0"
+      ),
       String(
         d.getDate()
-      ).padStart(2,"0")
-    ].join("-");
+      )
+      .padStart(
+        2,
+        "0"
+      )
+    ]
+    .join("-");
 
   }
 
+
   return s;
+
 }
+
 
 
 /* =========================
@@ -1330,15 +1928,23 @@ function dateFormat(v) {
 
 function getTotalSummary() {
 
-  return summaries.find(row =>
-    String(
-      row["대분류"] || ""
-    ).trim() === "총합"
-  )
-  ||
-  summaries[0];
+  return (
+    summaries.find(
+      row =>
+
+        String(
+          row["대분류"] || ""
+        )
+        .trim()
+        ===
+        "총합"
+    )
+    ||
+    summaries[0]
+  );
 
 }
+
 
 
 function renderSummary() {
@@ -1346,585 +1952,929 @@ function renderSummary() {
   const total =
     getTotalSummary();
 
+
   if (!total) {
     return;
   }
 
 
-  const cards = [
+
+  const kpis = [
 
     [
       "전체 매장",
-      comma(total["매장수"]),
+      comma(
+        total["매장수"]
+      ),
       "개"
     ],
 
     [
       "평균 면적",
-      comma(total["전체면적_AVG"]),
+      comma(
+        total["전체면적_AVG"]
+      ),
       "평"
     ],
 
     [
       "고정임차 매장",
-      comma(total["고정임차_매장수"]),
+      comma(
+        total["고정임차_매장수"]
+      ),
       "개"
     ],
 
     [
       "수수료임차 매장",
-      comma(total["수수료임차_매장수"]),
+      comma(
+        total["수수료임차_매장수"]
+      ),
       "개"
     ],
 
     [
       "평균 수수료율",
-      percent(total["수수료율_AVG"]),
+      percent(
+        total["수수료율_AVG"]
+      ),
       ""
     ]
 
   ];
 
 
+
   document.getElementById(
     "summaryKpi"
-  ).innerHTML =
+  )
+  .innerHTML =
 
-    cards.map(item => `
+    kpis
+      .map(
+        item => `
 
-      <div class="kpi-card">
+          <div class="kpi-card">
 
-        <div class="kpi-label">
-          ${item[0]}
-        </div>
+            <div class="kpi-label">
+              ${item[0]}
+            </div>
 
-        <div class="kpi-value">
-          ${item[1]}${item[2]}
-        </div>
+            <div class="kpi-value">
+              ${item[1]}${item[2]}
+            </div>
 
-        <div class="kpi-foot">
-          SummaryData 기준
-        </div>
+            <div class="kpi-foot">
+              SummaryData 기준
+            </div>
 
-      </div>
+          </div>
 
-    `).join("");
+        `
+      )
+      .join("");
+
+
+
+  const channelRows =
+
+    summaries
+      .filter(
+        row =>
+
+          String(
+            row["유통채널"] || ""
+          )
+          .trim()
+          ===
+          "합계"
+      );
+
+
+
+  document.getElementById(
+    "summaryBody"
+  )
+  .innerHTML =
+
+    channelRows
+      .map(
+        row => `
+
+          <tr>
+
+            <td>
+              ${text(
+                row["대분류"]
+              )}
+            </td>
+
+            <td>
+              ${comma(
+                row["매장수"]
+              )}
+            </td>
+
+            <td>
+              ${comma(
+                row["전체면적_AVG"]
+              )}
+            </td>
+
+            <td>
+              ${comma(
+                row["고정임차_매장수"]
+              )}
+            </td>
+
+            <td>
+              ${comma(
+                row["수수료임차_매장수"]
+              )}
+            </td>
+
+            <td>
+              ${percent(
+                row["수수료율_AVG"]
+              )}
+            </td>
+
+          </tr>
+
+        `
+      )
+      .join("");
+
 
 
   const fixedDeposit =
     num(
-      total["고정임차_보증금_TTL"]
+      total[
+        "고정임차_보증금_TTL"
+      ]
     )
     || 0;
 
 
   const commissionDeposit =
     num(
-      total["수수료임차_보증금_TTL"]
+      total[
+        "수수료임차_보증금_TTL"
+      ]
     )
     || 0;
 
 
+
   document.getElementById(
     "totalDeposit"
-  ).textContent =
+  )
+  .textContent =
+
     comma(
-      fixedDeposit +
+      fixedDeposit
+      +
       commissionDeposit
     );
 
 
+
   document.getElementById(
     "fixedLease"
-  ).innerHTML = `
+  )
+  .innerHTML = `
 
     <div class="lease-row">
+
       <span class="lease-key">
         매장수
       </span>
 
       <span class="lease-val">
-        ${comma(total["고정임차_매장수"])}개
+        ${comma(
+          total[
+            "고정임차_매장수"
+          ]
+        )}개
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         보증금 TTL
       </span>
 
       <span class="lease-val">
-        ${comma(total["고정임차_보증금_TTL"])}
+        ${comma(
+          total[
+            "고정임차_보증금_TTL"
+          ]
+        )}
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         보증금 AVG
       </span>
 
       <span class="lease-val">
-        ${comma(total["고정임차_보증금_AVG"])}
+        ${comma(
+          total[
+            "고정임차_보증금_AVG"
+          ]
+        )}
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         월임차료 AVG
       </span>
 
       <span class="lease-val">
-        ${comma(total["고정임차_월임차료_AVG"])}
+        ${comma(
+          total[
+            "고정임차_월임차료_AVG"
+          ]
+        )}
       </span>
+
     </div>
+
   `;
+
 
 
   document.getElementById(
     "commissionLease"
-  ).innerHTML = `
+  )
+  .innerHTML = `
 
     <div class="lease-row">
+
       <span class="lease-key">
         매장수
       </span>
 
       <span class="lease-val">
-        ${comma(total["수수료임차_매장수"])}개
+        ${comma(
+          total[
+            "수수료임차_매장수"
+          ]
+        )}개
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         보증금 TTL
       </span>
 
       <span class="lease-val">
-        ${comma(total["수수료임차_보증금_TTL"])}
+        ${comma(
+          total[
+            "수수료임차_보증금_TTL"
+          ]
+        )}
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         보증금 AVG
       </span>
 
       <span class="lease-val">
-        ${comma(total["수수료임차_보증금_AVG"])}
+        ${comma(
+          total[
+            "수수료임차_보증금_AVG"
+          ]
+        )}
       </span>
+
     </div>
 
+
     <div class="lease-row">
+
       <span class="lease-key">
         수수료율 AVG
       </span>
 
       <span class="lease-val">
-        ${percent(total["수수료율_AVG"])}
+        ${percent(
+          total[
+            "수수료율_AVG"
+          ]
+        )}
       </span>
+
     </div>
+
   `;
 
-
-  const channelRows =
-    summaries.filter(row =>
-      String(
-        row["유통채널"] || ""
-      ).trim() === "합계"
-    );
-
-
-  document.getElementById(
-    "summaryBody"
-  ).innerHTML =
-
-    channelRows.map(row => `
-
-      <tr>
-
-        <td class="summary-channel">
-          ${text(row["대분류"])}
-        </td>
-
-        <td>
-          ${comma(row["매장수"])}
-        </td>
-
-        <td>
-          ${comma(row["전체면적_AVG"])}
-        </td>
-
-        <td>
-          ${comma(row["고정임차_매장수"])}
-        </td>
-
-        <td>
-          ${comma(row["수수료임차_매장수"])}
-        </td>
-
-        <td>
-          ${percent(row["수수료율_AVG"])}
-        </td>
-
-      </tr>
-
-    `).join("");
-
 }
 
-
-/* =========================
-   REGION
-========================= */
-
-function renderRegionChart() {
-
-  const counts = {};
-
-
-  stores.forEach(row => {
-
-    const region =
-      String(
-        row["지역"] || "기타"
-      ).trim();
-
-    counts[region] =
-      (counts[region] || 0) + 1;
-
-  });
-
-
-  const rows =
-    Object.entries(counts)
-      .sort(
-        (a,b) =>
-          b[1] - a[1]
-      );
-
-
-  const max =
-    rows.length
-      ? rows[0][1]
-      : 1;
-
-
-  document.getElementById(
-    "regionChart"
-  ).innerHTML =
-
-    rows.map(([region,count]) => {
-
-      const width =
-        (count / max) * 100;
-
-      return `
-
-        <div class="region-row">
-
-          <div class="region-name">
-            ${region}
-          </div>
-
-          <div class="region-bar-bg">
-            <div
-              class="region-bar"
-              style="width:${width}%"
-            ></div>
-          </div>
-
-          <div class="region-count">
-            ${count}개
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-}
 
 
 /* =========================
    TOP 10
 ========================= */
 
+function profitClass(v) {
+
+  const n =
+    num(v);
+
+
+  if (
+    n === null
+  ) {
+    return "profit-neutral";
+  }
+
+
+  if (
+    n > 0
+  ) {
+    return "profit-positive";
+  }
+
+
+  if (
+    n < 0
+  ) {
+    return "profit-negative";
+  }
+
+
+  return "profit-neutral";
+
+}
+
+
+
 function renderTop10() {
 
   const ranked =
+
     stores
-      .map(row => ({
-        row,
-        sales:
-          num(
-            row["26년_월평균"]
-          )
-      }))
-      .filter(x =>
-        x.sales !== null
+      .map(
+        row => ({
+          row: row,
+
+          sales:
+            num(
+              row[
+                "26년_월평균"
+              ]
+            )
+        })
+      )
+      .filter(
+        item =>
+          item.sales !== null
       )
       .sort(
         (a,b) =>
           b.sales - a.sales
       )
-      .slice(0,10);
+      .slice(
+        0,
+        10
+      );
+
 
 
   document.getElementById(
     "top10List"
-  ).innerHTML =
+  )
+  .innerHTML =
 
-    ranked.map((item,index) => {
+    ranked
+      .map(
+        (item,index) => {
 
-      const rank =
-        index + 1;
-
-
-      let badgeClass =
-        "rank-other";
-
-
-      let badgeText =
-        rank;
+          const rank =
+            index + 1;
 
 
-      if (rank === 1) {
-        badgeClass = "rank-1";
-        badgeText = "🥇";
-      }
-
-      if (rank === 2) {
-        badgeClass = "rank-2";
-        badgeText = "🥈";
-      }
-
-      if (rank === 3) {
-        badgeClass = "rank-3";
-        badgeText = "🥉";
-      }
+          let rankClass =
+            "rank-normal";
 
 
-      return `
-
-        <div class="rank-row">
-
-          <div
-            class="rank-badge ${badgeClass}"
-          >
-            ${badgeText}
-          </div>
+          let rankText =
+            rank;
 
 
-          <div class="rank-store">
+          if (
+            rank === 1
+          ) {
 
-            ${text(
-              item.row["매장명"]
-            )}
+            rankClass =
+              "rank1";
 
-            <span class="rank-sub">
-              ${text(item.row["대분류"])}
-              ·
-              ${text(item.row["지역"])}
-            </span>
+            rankText =
+              "🥇";
 
-          </div>
+          }
 
 
-          <div class="rank-sales">
+          else if (
+            rank === 2
+          ) {
 
-            ${million(
-              item.row["26년_월평균"]
-            )}
+            rankClass =
+              "rank2";
 
-          </div>
+            rankText =
+              "🥈";
+
+          }
 
 
-          <div class="rank-growth">
+          else if (
+            rank === 3
+          ) {
 
-            ${growthBadge(
-              item.row["동매장_신장율"]
-            )}
+            rankClass =
+              "rank3";
 
-          </div>
+            rankText =
+              "🥉";
 
-        </div>
+          }
 
-      `;
 
-    }).join("");
+
+          const profit =
+            item.row[
+              "25년_영업이익율"
+            ];
+
+
+
+          return `
+
+            <div class="rank-row">
+
+
+              <div
+                class="
+                  rank-badge
+                  ${rankClass}
+                "
+              >
+                ${rankText}
+              </div>
+
+
+              <div class="rank-store">
+
+                ${text(
+                  item.row[
+                    "매장명"
+                  ]
+                )}
+
+                <span class="rank-store-sub">
+
+                  ${text(
+                    item.row[
+                      "대분류"
+                    ]
+                  )}
+
+                  ·
+
+                  ${text(
+                    item.row[
+                      "지역"
+                    ]
+                  )}
+
+                </span>
+
+              </div>
+
+
+              <div class="rank-sales">
+
+                ${million(
+                  item.row[
+                    "26년_월평균"
+                  ]
+                )}
+
+              </div>
+
+
+              <div
+                class="
+                  ${profitClass(
+                    profit
+                  )}
+                "
+              >
+
+                ${signedPercent(
+                  profit
+                )}
+
+              </div>
+
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
 
 }
 
 
+
 /* =========================
-   FILTER
+   REGION
+========================= */
+
+function renderRegion() {
+
+  const regionCount = {};
+
+
+  stores
+    .forEach(
+      row => {
+
+        const region =
+          String(
+            row["지역"]
+            ||
+            "기타"
+          )
+          .trim();
+
+
+        regionCount[region] =
+          (
+            regionCount[region]
+            ||
+            0
+          )
+          +
+          1;
+
+      }
+    );
+
+
+
+  const rows =
+
+    Object
+      .entries(
+        regionCount
+      )
+      .sort(
+        (a,b) =>
+          b[1] - a[1]
+      );
+
+
+
+  const max =
+    rows.length
+      ?
+      rows[0][1]
+      :
+      1;
+
+
+
+  document.getElementById(
+    "regionChart"
+  )
+  .innerHTML =
+
+    rows
+      .map(
+        ([region,count]) => {
+
+          const width =
+            (
+              count / max
+            )
+            *
+            100;
+
+
+          return `
+
+            <div class="region-row">
+
+              <div class="region-name">
+                ${region}
+              </div>
+
+              <div class="region-bg">
+
+                <div
+                  class="region-bar"
+                  style="
+                    width:${width}%
+                  "
+                ></div>
+
+              </div>
+
+              <div class="region-count">
+                ${count}개
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join("");
+
+}
+
+
+
+/* =========================
+   FILTERS
 ========================= */
 
 function fillFilters() {
 
   const categories =
+
     [
       ...new Set(
         stores
-          .map(x => x["대분류"])
+          .map(
+            row =>
+              row["대분류"]
+          )
           .filter(Boolean)
       )
-    ].sort();
+    ]
+    .sort();
+
 
 
   const regions =
+
     [
       ...new Set(
         stores
-          .map(x => x["지역"])
+          .map(
+            row =>
+              row["지역"]
+          )
           .filter(Boolean)
       )
-    ].sort();
+    ]
+    .sort();
 
 
-  const category =
+
+  const categoryFilter =
     document.getElementById(
       "categoryFilter"
     );
 
 
-  const region =
+  const regionFilter =
     document.getElementById(
       "regionFilter"
     );
 
 
-  categories.forEach(x => {
 
-    category.innerHTML +=
-      `<option value="${x}">
-        ${x}
-       </option>`;
+  categories
+    .forEach(
+      value => {
 
-  });
+        categoryFilter
+          .innerHTML += `
+
+            <option
+              value="${value}"
+            >
+              ${value}
+            </option>
+
+          `;
+
+      }
+    );
 
 
-  regions.forEach(x => {
 
-    region.innerHTML +=
-      `<option value="${x}">
-        ${x}
-       </option>`;
+  regions
+    .forEach(
+      value => {
 
-  });
+        regionFilter
+          .innerHTML += `
+
+            <option
+              value="${value}"
+            >
+              ${value}
+            </option>
+
+          `;
+
+      }
+    );
 
 }
+
 
 
 /* =========================
    GROWTH
 ========================= */
 
-function growthBadge(value) {
+function growthBadge(v) {
 
   const n =
-    num(value);
+    num(v);
 
-  if (n === null) {
+
+  if (
+    n === null
+  ) {
     return "-";
   }
 
-  const pct =
+
+  const value =
     Math.abs(n) <= 1
-      ? n * 100
-      : n;
+      ?
+      n * 100
+      :
+      n;
 
 
-  if (pct > 0) {
+
+  if (
+    value > 0
+  ) {
 
     return `
+
       <span class="badge up">
-        ▲${Math.abs(pct)
+
+        ▲${Math.abs(value)
           .toFixed(1)
           .replace(".0","")}%
+
       </span>
+
     `;
 
   }
 
 
-  if (pct < 0) {
+
+  if (
+    value < 0
+  ) {
 
     return `
+
       <span class="badge down">
-        ▼${Math.abs(pct)
+
+        ▼${Math.abs(value)
           .toFixed(1)
           .replace(".0","")}%
+
       </span>
+
     `;
 
   }
+
 
 
   return `
+
     <span class="badge neutral">
       0%
     </span>
+
   `;
 
 }
 
 
+
 /* =========================
-   EXPIRY
+   CONTRACT EXPIRY
 ========================= */
 
-function expiryBadge(value) {
+function expiryBadge(v) {
 
   const formatted =
-    dateFormat(value);
+    dateFormat(v);
 
-  if (formatted === "-") {
+
+  if (
+    formatted === "-"
+  ) {
     return "-";
   }
 
+
   const target =
     new Date(
-      formatted + "T00:00:00"
+      formatted
+      +
+      "T00:00:00"
     );
+
 
   const now =
     new Date();
 
+
   const days =
     Math.ceil(
-      (target - now)
+      (
+        target - now
+      )
       /
       86400000
     );
 
 
-  if (days <= 90) {
+
+  if (
+    days <= 90
+  ) {
 
     return `
-      <span class="badge expire-danger">
+
+      <span class="
+        badge
+        expire-danger
+      ">
         ${formatted}
       </span>
+
     `;
 
   }
 
 
-  if (days <= 180) {
+
+  if (
+    days <= 180
+  ) {
 
     return `
-      <span class="badge expire-warning">
+
+      <span class="
+        badge
+        expire-warning
+      ">
         ${formatted}
       </span>
+
     `;
 
   }
+
 
 
   return formatted;
 
 }
+
 
 
 /* =========================
@@ -1934,59 +2884,103 @@ function expiryBadge(value) {
 function renderStores() {
 
   const keyword =
-    document.getElementById(
-      "search"
-    )
-    .value
-    .trim()
-    .toLowerCase();
+
+    document
+      .getElementById(
+        "search"
+      )
+      .value
+      .trim()
+      .toLowerCase();
+
 
 
   const category =
-    document.getElementById(
-      "categoryFilter"
-    ).value;
+
+    document
+      .getElementById(
+        "categoryFilter"
+      )
+      .value;
+
 
 
   const region =
-    document.getElementById(
-      "regionFilter"
-    ).value;
+
+    document
+      .getElementById(
+        "regionFilter"
+      )
+      .value;
+
 
 
   const filtered =
-    stores.filter(row => {
 
-      const name =
-        String(
-          row["매장명"] || ""
-        ).toLowerCase();
+    stores
+      .filter(
+        row => {
+
+          const storeName =
+
+            String(
+              row["매장명"]
+              ||
+              ""
+            )
+            .toLowerCase();
 
 
-      return (
-        name.includes(keyword)
-        &&
-        (!category ||
-          row["대분류"] === category)
-        &&
-        (!region ||
-          row["지역"] === region)
+
+          return (
+
+            storeName
+              .includes(
+                keyword
+              )
+
+            &&
+
+            (
+              !category
+              ||
+              row["대분류"]
+              ===
+              category
+            )
+
+            &&
+
+            (
+              !region
+              ||
+              row["지역"]
+              ===
+              region
+            )
+
+          );
+
+        }
       );
 
-    });
 
 
-  const tbody =
+  const body =
     document.getElementById(
       "storeBody"
     );
 
 
-  if (!filtered.length) {
 
-    tbody.innerHTML = `
+  if (
+    !filtered.length
+  ) {
+
+    body.innerHTML = `
 
       <tr>
+
         <td
           colspan="13"
           style="
@@ -1996,107 +2990,203 @@ function renderStores() {
         >
           검색 결과가 없습니다.
         </td>
+
       </tr>
 
     `;
+
 
     return;
 
   }
 
 
-  tbody.innerHTML = "";
+
+  body.innerHTML = "";
 
 
-  filtered.forEach(row => {
 
-    const tr =
-      document.createElement(
-        "tr"
-      );
+  filtered
+    .forEach(
+      row => {
 
-
-    tr.innerHTML = `
-
-      <td class="store-name">
-
-        ${text(row["매장명"])}
-
-        <span class="sub-hint">
-          상세보기
-        </span>
-
-      </td>
-
-      <td>
-        ${text(row["대분류"])}
-      </td>
-
-      <td>
-        ${text(row["지역"])}
-      </td>
-
-      <td>
-        ${text(row["운영형태"])}
-      </td>
-
-      <td>
-        ${million(row["26년_월평균"])}
-      </td>
-
-      <td>
-        ${growthBadge(
-          row["동매장_신장율"]
-        )}
-      </td>
-
-      <td>
-        ${comma(row["전체면적_평"])}
-      </td>
-
-      <td>
-        ${expiryBadge(
-          row["계약만료일"]
-        )}
-      </td>
-
-      <td>
-        ${percent(row["유통마진율"])}
-      </td>
-
-      <td>
-        ${million(row["고정임차료"])}
-      </td>
-
-      <td>
-        ${moneyOrText(row["관리비"])}
-      </td>
-
-      <td>
-        ${million(row["보증금"])}
-      </td>
-
-      <td>
-        ${percent(
-          row["25년_영업이익율"]
-        )}
-      </td>
-
-    `;
+        const tr =
+          document
+            .createElement(
+              "tr"
+            );
 
 
-    tr.addEventListener(
-      "click",
-      () =>
-        openDetail(row)
+
+        tr.innerHTML = `
+
+
+          <td class="store-name">
+
+            ${text(
+              row["매장명"]
+            )}
+
+            <span class="sub-hint">
+              상세보기
+            </span>
+
+          </td>
+
+
+          <td>
+            ${text(
+              row["대분류"]
+            )}
+          </td>
+
+
+          <td>
+            ${text(
+              row["지역"]
+            )}
+          </td>
+
+
+          <td>
+            ${text(
+              row["운영형태"]
+            )}
+          </td>
+
+
+          <td>
+            ${million(
+              row[
+                "26년_월평균"
+              ]
+            )}
+          </td>
+
+
+          <td>
+
+            ${growthBadge(
+              row[
+                "동매장_신장율"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${comma(
+              row[
+                "전체면적_평"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${expiryBadge(
+              row[
+                "계약만료일"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${percent(
+              row[
+                "유통마진율"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${million(
+              row[
+                "고정임차료"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${moneyOrText(
+              row[
+                "관리비"
+              ]
+            )}
+
+          </td>
+
+
+          <td>
+
+            ${million(
+              row[
+                "보증금"
+              ]
+            )}
+
+          </td>
+
+
+          <td
+            class="
+              ${profitClass(
+                row[
+                  "25년_영업이익율"
+                ]
+              )}
+            "
+          >
+
+            ${signedPercent(
+              row[
+                "25년_영업이익율"
+              ]
+            )}
+
+          </td>
+
+
+        `;
+
+
+
+        tr.addEventListener(
+          "click",
+          () => {
+
+            openDetail(
+              row
+            );
+
+          }
+        );
+
+
+
+        body
+          .appendChild(
+            tr
+          );
+
+      }
     );
 
-
-    tbody.appendChild(tr);
-
-  });
-
 }
+
 
 
 /* =========================
@@ -2105,36 +3195,54 @@ function renderStores() {
 
 function historiesFor(name) {
 
-  return history
+  return (
 
-    .filter(row =>
+    history
 
-      String(
-        row["매장명"] || ""
-      ).trim()
-      ===
-      String(name || "").trim()
+      .filter(
+        row =>
 
-    )
-
-    .sort(
-      (a,b) =>
-
-        new Date(
-          dateFormat(
-            b["변경일"]
+          String(
+            row["매장명"]
+            ||
+            ""
           )
-        )
-        -
-        new Date(
-          dateFormat(
-            a["변경일"]
-          )
-        )
+          .trim()
 
-    );
+          ===
+
+          String(
+            name
+            ||
+            ""
+          )
+          .trim()
+
+      )
+
+      .sort(
+        (a,b) =>
+
+          new Date(
+            dateFormat(
+              b["변경일"]
+            )
+          )
+
+          -
+
+          new Date(
+            dateFormat(
+              a["변경일"]
+            )
+          )
+
+      )
+
+  );
 
 }
+
 
 
 /* =========================
@@ -2143,123 +3251,172 @@ function historiesFor(name) {
 
 function openDetail(row) {
 
-  document.getElementById(
-    "detailName"
-  ).textContent =
-    text(
-      row["매장명"]
-    );
+  document
+    .getElementById(
+      "detailName"
+    )
+    .textContent =
+
+      text(
+        row["매장명"]
+      );
 
 
-  const detailItems = [
+
+  const items = [
 
     [
       "대분류",
-      text(row["대분류"])
+      text(
+        row["대분류"]
+      )
     ],
 
     [
       "지역",
-      text(row["지역"])
+      text(
+        row["지역"]
+      )
     ],
 
     [
       "운영형태",
-      text(row["운영형태"])
+      text(
+        row["운영형태"]
+      )
     ],
 
     [
       "오픈일자",
-      dateFormat(row["오픈일자"])
+      dateFormat(
+        row["오픈일자"]
+      )
     ],
 
     [
       "전체면적",
-      comma(row["전체면적_평"]) + "평"
+      comma(
+        row["전체면적_평"]
+      )
+      +
+      "평"
     ],
 
     [
       "계약만료일",
-      dateFormat(row["계약만료일"])
+      dateFormat(
+        row["계약만료일"]
+      )
     ],
 
     [
       "유통마진율",
-      percent(row["유통마진율"])
+      percent(
+        row["유통마진율"]
+      )
     ],
 
     [
       "고정임차료",
-      million(row["고정임차료"])
+      million(
+        row["고정임차료"]
+      )
     ],
 
     [
       "관리비",
-      moneyOrText(row["관리비"])
+      moneyOrText(
+        row["관리비"]
+      )
     ],
 
     [
       "보증금",
-      million(row["보증금"])
+      million(
+        row["보증금"]
+      )
     ],
 
     [
       "26년 월평균",
-      million(row["26년_월평균"])
+      million(
+        row["26년_월평균"]
+      )
     ],
 
     [
       "25년 영업이익율",
-      percent(
-        row["25년_영업이익율"]
+      signedPercent(
+        row[
+          "25년_영업이익율"
+        ]
       )
     ]
 
   ];
 
 
-  document.getElementById(
-    "detailGrid"
-  ).innerHTML =
 
-    detailItems.map(x => `
+  document
+    .getElementById(
+      "detailGrid"
+    )
+    .innerHTML =
 
-      <div class="detail-item">
+      items
+        .map(
+          item => `
 
-        <div class="detail-label">
-          ${x[0]}
-        </div>
+            <div class="detail-item">
 
-        <div class="detail-value">
-          ${x[1]}
-        </div>
+              <div class="detail-label">
+                ${item[0]}
+              </div>
 
-      </div>
+              <div class="detail-value">
+                ${item[1]}
+              </div>
 
-    `).join("");
+            </div>
+
+          `
+        )
+        .join("");
+
 
 
   renderHistory(
+
     historiesFor(
       row["매장명"]
     )
+
   );
 
 
-  document.getElementById(
-    "overlay"
-  ).classList.add(
-    "open"
-  );
+
+  document
+    .getElementById(
+      "overlay"
+    )
+    .classList
+    .add(
+      "open"
+    );
 
 
-  document.getElementById(
-    "drawer"
-  ).classList.add(
-    "open"
-  );
+
+  document
+    .getElementById(
+      "drawer"
+    )
+    .classList
+    .add(
+      "open"
+    );
 
 }
+
 
 
 /* =========================
@@ -2269,266 +3426,399 @@ function openDetail(row) {
 function renderHistory(items) {
 
   const timeline =
-    document.getElementById(
-      "timeline"
-    );
+    document
+      .getElementById(
+        "timeline"
+      );
 
 
-  if (!items.length) {
 
-    timeline.innerHTML = `
+  if (
+    !items.length
+  ) {
 
-      <div class="no-data">
-        등록된 계약 히스토리가 없습니다.
-      </div>
+    timeline
+      .innerHTML = `
 
-    `;
+        <div class="no-data">
+          등록된 계약 히스토리가 없습니다.
+        </div>
+
+      `;
+
 
     return;
 
   }
 
 
-  timeline.innerHTML =
 
-    items.map(row => `
+  timeline
+    .innerHTML =
 
-      <div class="timeline-item">
+      items
+        .map(
+          row => `
 
-        <div class="timeline-dot"></div>
 
-        <div class="timeline-date">
-          ${dateFormat(row["변경일"])}
-        </div>
+            <div class="timeline-item">
 
-        <div class="timeline-type">
-          ${text(row["변경구분"])}
-        </div>
 
-        <div class="timeline-change">
-
-          ${percent(row["변경전"])}
-
-          &nbsp;→&nbsp;
-
-          ${percent(row["변경후"])}
-
-        </div>
-
-        <div class="timeline-detail">
-
-          ${
-            row["사유"]
-            ?
-            `
-              <div>
-                <strong>사유</strong>
-                &nbsp;
-                ${text(row["사유"])}
+              <div class="timeline-dot">
               </div>
-            `
-            :
-            ""
-          }
 
-          ${
-            row["비고"]
-            ?
-            `
-              <div>
-                <strong>비고</strong>
-                &nbsp;
-                ${text(row["비고"])}
+
+              <div class="timeline-date">
+
+                ${dateFormat(
+                  row["변경일"]
+                )}
+
               </div>
-            `
-            :
-            ""
-          }
 
-        </div>
 
-      </div>
+              <div class="timeline-type">
 
-    `).join("");
+                ${text(
+                  row["변경구분"]
+                )}
+
+              </div>
+
+
+              <div class="timeline-change">
+
+                ${percent(
+                  row["변경전"]
+                )}
+
+                &nbsp;→&nbsp;
+
+                ${percent(
+                  row["변경후"]
+                )}
+
+              </div>
+
+
+              <div class="timeline-detail">
+
+
+                ${
+                  row["사유"]
+
+                  ?
+
+                  `
+
+                    <div>
+
+                      <strong>
+                        사유
+                      </strong>
+
+                      &nbsp;
+
+                      ${text(
+                        row["사유"]
+                      )}
+
+                    </div>
+
+                  `
+
+                  :
+
+                  ""
+                }
+
+
+                ${
+                  row["비고"]
+
+                  ?
+
+                  `
+
+                    <div>
+
+                      <strong>
+                        비고
+                      </strong>
+
+                      &nbsp;
+
+                      ${text(
+                        row["비고"]
+                      )}
+
+                    </div>
+
+                  `
+
+                  :
+
+                  ""
+                }
+
+
+              </div>
+
+
+            </div>
+
+
+          `
+        )
+        .join("");
 
 }
 
 
+
 /* =========================
-   CLOSE
+   DRAWER CLOSE
 ========================= */
 
 function closeDrawer() {
 
-  document.getElementById(
-    "overlay"
-  ).classList.remove(
-    "open"
-  );
+  document
+    .getElementById(
+      "overlay"
+    )
+    .classList
+    .remove(
+      "open"
+    );
 
-  document.getElementById(
-    "drawer"
-  ).classList.remove(
-    "open"
-  );
+
+  document
+    .getElementById(
+      "drawer"
+    )
+    .classList
+    .remove(
+      "open"
+    );
 
 }
 
 
-document.getElementById(
-  "closeBtn"
-)
-.onclick =
-  closeDrawer;
+
+document
+  .getElementById(
+    "closeBtn"
+  )
+  .onclick =
+    closeDrawer;
 
 
-document.getElementById(
-  "overlay"
-)
-.onclick =
-  closeDrawer;
+
+document
+  .getElementById(
+    "overlay"
+  )
+  .onclick =
+    closeDrawer;
+
 
 
 /* =========================
-   FILTER EVENTS
+   FILTER EVENT
 ========================= */
 
-document.getElementById(
-  "search"
-)
-.addEventListener(
-  "input",
-  renderStores
-);
+document
+  .getElementById(
+    "search"
+  )
+  .addEventListener(
+    "input",
+    renderStores
+  );
 
 
-document.getElementById(
-  "categoryFilter"
-)
-.addEventListener(
-  "change",
-  renderStores
-);
+
+document
+  .getElementById(
+    "categoryFilter"
+  )
+  .addEventListener(
+    "change",
+    renderStores
+  );
 
 
-document.getElementById(
-  "regionFilter"
-)
-.addEventListener(
-  "change",
-  renderStores
-);
+
+document
+  .getElementById(
+    "regionFilter"
+  )
+  .addEventListener(
+    "change",
+    renderStores
+  );
+
 
 
 /* =========================
-   LOAD
+   LOAD DATA
 ========================= */
 
 async function loadData() {
 
   try {
 
+
     const ts =
       Date.now();
 
 
+
     const [
+
       storeRes,
       historyRes,
       summaryRes
+
     ] =
+
       await Promise.all([
 
+
         fetch(
+
           "./StoreMaster.json?ts="
-          + ts
+          +
+          ts
+
         ),
 
+
         fetch(
+
           "./ContractHistory.json?ts="
-          + ts
+          +
+          ts
+
         ),
 
+
         fetch(
+
           "./SummaryData.json?ts="
-          + ts
+          +
+          ts
+
         )
+
 
       ]);
 
 
-    if (!storeRes.ok) {
+
+    if (
+      !storeRes.ok
+    ) {
+
       throw new Error(
         "StoreMaster.json 오류"
       );
+
     }
 
 
-    if (!historyRes.ok) {
+
+    if (
+      !historyRes.ok
+    ) {
+
       throw new Error(
         "ContractHistory.json 오류"
       );
+
     }
 
 
-    if (!summaryRes.ok) {
+
+    if (
+      !summaryRes.ok
+    ) {
+
       throw new Error(
         "SummaryData.json 오류"
       );
+
     }
+
 
 
     stores =
       await storeRes.json();
 
 
+
     history =
       await historyRes.json();
+
 
 
     summaries =
       await summaryRes.json();
 
 
+
     renderSummary();
 
-    renderRegionChart();
-
     renderTop10();
+
+    renderRegion();
 
     fillFilters();
 
     renderStores();
 
 
-    document.getElementById(
-      "updated"
-    ).textContent =
-      "조회 "
-      +
-      new Date()
-        .toLocaleString(
-          "ko-KR"
-        );
+
+    document
+      .getElementById(
+        "updated"
+      )
+      .textContent =
+
+        "조회 "
+        +
+        new Date()
+          .toLocaleString(
+            "ko-KR"
+          );
+
 
   }
 
+
   catch(error) {
 
-    console.error(error);
+
+    console.error(
+      error
+    );
+
 
     alert(
-      "데이터 파일을 불러오지 못했습니다. JSON 파일을 확인해주세요."
+      "데이터 파일을 불러오지 못했습니다. StoreMaster / ContractHistory / SummaryData JSON 파일을 확인해주세요."
     );
+
 
   }
 
 }
 
 
+
 loadData();
 
 </script>
+
 
 </body>
 </html>
