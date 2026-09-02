@@ -14,7 +14,6 @@
 
 body {
   margin: 0;
-
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -57,6 +56,7 @@ select {
 
   font-size: 24px;
   font-weight: 800;
+
   letter-spacing: -0.7px;
 }
 
@@ -74,6 +74,7 @@ select {
 .unit {
   font-size: 12px;
   font-weight: 700;
+
   color: #e5e7eb;
 }
 
@@ -125,7 +126,7 @@ select {
   display: grid;
 
   grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+    repeat(5, minmax(0,1fr));
 
   gap: 14px;
 
@@ -133,15 +134,18 @@ select {
 }
 
 .kpi-card {
-  background: white;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
   padding: 18px 20px;
 
+  background: white;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 14px;
+
   box-shadow:
-    0 3px 12px rgba(0,0,0,0.035);
+    0 3px 12px
+    rgba(0,0,0,0.035);
 }
 
 .kpi-label {
@@ -167,7 +171,7 @@ select {
 
 
 /* =========================
-   TOP 3 GRID
+   DASHBOARD GRID
 ========================= */
 
 .dashboard-grid {
@@ -188,19 +192,23 @@ select {
 .card {
   background: white;
 
-  border: 1px solid #e5e7eb;
+  border:
+    1px solid #e5e7eb;
+
   border-radius: 14px;
 
   overflow: hidden;
 
   box-shadow:
-    0 3px 12px rgba(0,0,0,0.035);
+    0 3px 12px
+    rgba(0,0,0,0.035);
 }
 
 .card-head {
   padding: 17px 19px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 }
 
 .card-head h3 {
@@ -219,7 +227,7 @@ select {
 
 
 /* =========================
-   LEFT : CHANNEL SUMMARY
+   CHANNEL SUMMARY
 ========================= */
 
 .summary-table-wrap {
@@ -237,7 +245,8 @@ select {
 
   background: #f9fafb;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 
   font-size: 10px;
   font-weight: 700;
@@ -252,7 +261,8 @@ select {
 
   text-align: center;
 
-  border-bottom: 1px solid #f0f1f3;
+  border-bottom:
+    1px solid #f0f1f3;
 
   font-size: 11px;
 
@@ -271,15 +281,17 @@ select {
 
 
 /* =========================
-   LEFT : LEASE SUMMARY
+   LEASE SUMMARY
 ========================= */
 
 .lease-summary {
-  border-top: 1px solid #e5e7eb;
+  border-top:
+    1px solid #e5e7eb;
 }
 
 .lease-header {
-  padding: 15px 18px 10px;
+  padding:
+    15px 18px 10px;
 }
 
 .lease-header strong {
@@ -299,9 +311,11 @@ select {
 }
 
 .total-deposit {
-  margin: 0 16px 12px;
+  margin:
+    0 16px 12px;
 
-  padding: 15px 16px;
+  padding:
+    15px 16px;
 
   border-radius: 11px;
 
@@ -329,34 +343,42 @@ select {
 
   gap: 10px;
 
-  padding: 0 16px 16px;
+  padding:
+    0 16px 16px;
 }
 
 .lease-box {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-
   overflow: hidden;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 10px;
 }
 
 .lease-box-title {
-  padding: 10px 12px;
+  padding:
+    10px 12px;
 
   background: #f8fafc;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 
   font-size: 11px;
   font-weight: 800;
 }
 
 .lease-list {
-  padding: 10px 12px;
+  padding:
+    10px 12px;
 }
 
 .lease-row {
   display: flex;
-  justify-content: space-between;
+
+  justify-content:
+    space-between;
 
   gap: 8px;
 
@@ -383,7 +405,7 @@ select {
 
 
 /* =========================
-   CENTER : TOP 10
+   TOP 10
 ========================= */
 
 .top10-head {
@@ -391,19 +413,22 @@ select {
 
   grid-template-columns:
     38px
-    minmax(130px, 1fr)
+    minmax(130px,1fr)
     82px
     84px;
 
   gap: 8px;
 
-  padding: 9px 16px;
+  padding:
+    9px 16px;
 
   background: #f9fafb;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 
   font-size: 9px;
+
   color: #9ca3af;
 }
 
@@ -413,7 +438,8 @@ select {
 }
 
 .top10-list {
-  padding: 0 16px 8px;
+  padding:
+    0 16px 8px;
 }
 
 .rank-row {
@@ -421,7 +447,7 @@ select {
 
   grid-template-columns:
     38px
-    minmax(130px, 1fr)
+    minmax(130px,1fr)
     82px
     84px;
 
@@ -431,7 +457,8 @@ select {
 
   min-height: 47px;
 
-  border-bottom: 1px solid #f1f2f4;
+  border-bottom:
+    1px solid #f1f2f4;
 }
 
 .rank-row:last-child {
@@ -446,11 +473,12 @@ select {
   width: 29px;
   height: 29px;
 
-  border-radius: 50%;
-
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  border-radius: 50%;
 
   font-size: 11px;
   font-weight: 900;
@@ -459,7 +487,8 @@ select {
 .rank1 {
   background: #fff6ce;
 
-  border: 1px solid #e6b800;
+  border:
+    1px solid #e6b800;
 
   color: #9a6700;
 }
@@ -467,7 +496,8 @@ select {
 .rank2 {
   background: #f3f4f6;
 
-  border: 1px solid #aeb4bd;
+  border:
+    1px solid #aeb4bd;
 
   color: #5b6470;
 }
@@ -475,7 +505,8 @@ select {
 .rank3 {
   background: #fff0e2;
 
-  border: 1px solid #d98c52;
+  border:
+    1px solid #d98c52;
 
   color: #96501d;
 }
@@ -483,7 +514,8 @@ select {
 .rank-normal {
   background: white;
 
-  border: 1px dashed #9ca3af;
+  border:
+    1px dashed #9ca3af;
 
   color: #374151;
 }
@@ -520,7 +552,10 @@ select {
   color: #111827;
 }
 
-/* 이익률 양수 빨강 */
+
+/* =========================
+   PROFIT COLOR
+========================= */
 
 .profit-positive {
   text-align: right;
@@ -530,8 +565,6 @@ select {
 
   color: #dc2626;
 }
-
-/* 이익률 음수 파랑 */
 
 .profit-negative {
   text-align: right;
@@ -553,22 +586,47 @@ select {
 
 
 /* =========================
-   RIGHT : REGION
+   REGION
 ========================= */
 
 .region-chart {
-  padding: 16px 18px 18px;
+  padding:
+    15px 18px 18px;
+}
+
+.region-guide {
+  display: grid;
+
+  grid-template-columns:
+    50px
+    1fr
+    44px
+    48px;
+
+  gap: 7px;
+
+  margin-bottom: 10px;
+
+  font-size: 8px;
+
+  color: #9ca3af;
+}
+
+.region-guide div:nth-child(3),
+.region-guide div:nth-child(4) {
+  text-align: right;
 }
 
 .region-row {
   display: grid;
 
   grid-template-columns:
-    52px
+    50px
     1fr
-    38px;
+    44px
+    48px;
 
-  gap: 8px;
+  gap: 7px;
 
   align-items: center;
 
@@ -587,13 +645,15 @@ select {
 }
 
 .region-bg {
+  position: relative;
+
   height: 9px;
+
+  overflow: hidden;
 
   background: #eef1f5;
 
   border-radius: 999px;
-
-  overflow: hidden;
 }
 
 .region-bar {
@@ -610,36 +670,51 @@ select {
   font-size: 10px;
   font-weight: 800;
 
-  color: #4b5563;
+  color: #374151;
+}
+
+.region-share {
+  text-align: right;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  color: #6b7280;
 }
 
 
 /* =========================
-   STORE PANEL
+   STORE
 ========================= */
 
 .store-panel {
-  background: white;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
   overflow: hidden;
 
+  background: white;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 14px;
+
   box-shadow:
-    0 3px 12px rgba(0,0,0,0.035);
+    0 3px 12px
+    rgba(0,0,0,0.035);
 }
 
 .store-panel-head {
-  padding: 18px 20px;
+  padding:
+    18px 20px;
 
   display: flex;
+
   align-items: center;
   justify-content: space-between;
 
   gap: 15px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 }
 
 .store-panel-head h2 {
@@ -666,12 +741,15 @@ select {
 .filters select {
   height: 38px;
 
-  padding: 0 11px;
-
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
+  padding:
+    0 11px;
 
   background: white;
+
+  border:
+    1px solid #d1d5db;
+
+  border-radius: 8px;
 
   outline: none;
 
@@ -689,17 +767,19 @@ select {
 .store-table {
   width: 100%;
 
-  min-width: 1250px;
+  min-width: 1350px;
 
   border-collapse: collapse;
 }
 
 .store-table th {
-  padding: 12px 10px;
+  padding:
+    12px 10px;
 
   background: #f9fafb;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom:
+    1px solid #e5e7eb;
 
   font-size: 10px;
 
@@ -709,11 +789,13 @@ select {
 }
 
 .store-table td {
-  padding: 12px 10px;
+  padding:
+    12px 10px;
 
   text-align: center;
 
-  border-bottom: 1px solid #f0f1f3;
+  border-bottom:
+    1px solid #f0f1f3;
 
   font-size: 11px;
 
@@ -749,7 +831,7 @@ select {
 
 
 /* =========================
-   BADGES
+   BADGE
 ========================= */
 
 .badge {
@@ -760,7 +842,8 @@ select {
 
   min-width: 58px;
 
-  padding: 4px 7px;
+  padding:
+    4px 7px;
 
   border-radius: 999px;
 
@@ -825,7 +908,9 @@ select {
   top: 0;
   right: 0;
 
-  width: min(650px, 94vw);
+  width:
+    min(650px,94vw);
+
   height: 100vh;
 
   background: white;
@@ -841,7 +926,8 @@ select {
   flex-direction: column;
 
   box-shadow:
-    -15px 0 40px rgba(0,0,0,.18);
+    -15px 0 40px
+    rgba(0,0,0,.18);
 }
 
 .drawer.open {
@@ -850,14 +936,19 @@ select {
 }
 
 .drawer-head {
-  padding: 22px 24px;
+  padding:
+    22px 24px;
 
   background: #111827;
   color: white;
 
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
 }
 
 .drawer-head h2 {
@@ -878,6 +969,7 @@ select {
   height: 36px;
 
   border: 0;
+
   border-radius: 8px;
 
   background:
@@ -897,7 +989,8 @@ select {
 }
 
 .detail-title {
-  margin: 0 0 12px;
+  margin:
+    0 0 12px;
 
   font-size: 14px;
   font-weight: 800;
@@ -907,7 +1000,7 @@ select {
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(3,1fr);
 
   gap: 9px;
 
@@ -919,7 +1012,9 @@ select {
 
   background: #f8fafc;
 
-  border: 1px solid #e5e7eb;
+  border:
+    1px solid #e5e7eb;
+
   border-radius: 9px;
 }
 
@@ -927,6 +1022,7 @@ select {
   margin-bottom: 5px;
 
   font-size: 9px;
+
   color: #9ca3af;
 }
 
@@ -937,7 +1033,7 @@ select {
 
 
 /* =========================
-   HISTORY
+   TIMELINE
 ========================= */
 
 .timeline {
@@ -964,10 +1060,7 @@ select {
   position: relative;
 
   padding:
-    0
-    0
-    24px
-    34px;
+    0 0 24px 34px;
 }
 
 .timeline-dot {
@@ -983,7 +1076,8 @@ select {
 
   background: #111827;
 
-  border: 4px solid white;
+  border:
+    4px solid white;
 
   box-shadow:
     0 0 0 2px #111827;
@@ -1000,9 +1094,10 @@ select {
 .timeline-type {
   display: inline-block;
 
-  padding: 4px 7px;
-
   margin-bottom: 7px;
+
+  padding:
+    4px 7px;
 
   background: #f3f4f6;
 
@@ -1020,7 +1115,8 @@ select {
 }
 
 .timeline-detail {
-  padding: 10px 11px;
+  padding:
+    10px 11px;
 
   background: #f8fafc;
 
@@ -1032,7 +1128,8 @@ select {
 }
 
 .no-data {
-  padding: 30px 20px;
+  padding:
+    30px 20px;
 
   text-align: center;
 
@@ -1047,7 +1144,8 @@ select {
 }
 
 .footer {
-  padding: 24px 0 5px;
+  padding:
+    24px 0 5px;
 
   text-align: center;
 
@@ -1091,8 +1189,11 @@ select {
   }
 
   .header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction:
+      column;
+
+    align-items:
+      flex-start;
   }
 
   .header-right {
@@ -1100,12 +1201,16 @@ select {
   }
 
   .store-panel-head {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction:
+      column;
+
+    align-items:
+      stretch;
   }
 
   .filters {
-    flex-direction: column;
+    flex-direction:
+      column;
   }
 
   .filters input,
@@ -1125,6 +1230,7 @@ select {
 
 
 <body>
+
 
 <header class="header">
 
@@ -1159,12 +1265,9 @@ select {
 </header>
 
 
+
 <main class="container">
 
-
-  <!-- =========================
-       KPI
-  ========================== -->
 
   <div class="section-title">
 
@@ -1186,16 +1289,10 @@ select {
 
 
 
-  <!-- =========================
-       TOP SECTION
-  ========================== -->
-
   <section class="dashboard-grid">
 
 
-    <!-- =========================
-         LEFT
-    ========================== -->
+    <!-- LEFT -->
 
     <div class="card">
 
@@ -1243,9 +1340,8 @@ select {
 
 
 
-      <!-- 임차조건 -->
-
       <div class="lease-summary">
+
 
         <div class="lease-header">
 
@@ -1309,6 +1405,7 @@ select {
 
         </div>
 
+
       </div>
 
 
@@ -1316,9 +1413,7 @@ select {
 
 
 
-    <!-- =========================
-         CENTER TOP10
-    ========================== -->
+    <!-- CENTER -->
 
     <div class="card">
 
@@ -1330,7 +1425,7 @@ select {
         </h3>
 
         <p>
-          StoreMaster 기준 · 영업이익율 양수 빨강 / 음수 파랑
+          월평균 매출 기준 · 영업이익율 양수 빨강 / 음수 파랑
         </p>
 
       </div>
@@ -1356,9 +1451,7 @@ select {
 
 
 
-    <!-- =========================
-         RIGHT REGION
-    ========================== -->
+    <!-- RIGHT -->
 
     <div class="card">
 
@@ -1370,16 +1463,29 @@ select {
         </h3>
 
         <p>
-          StoreMaster 지역 기준 자동 집계
+          StoreMaster 기준 · 전국 매장 대비 비중
         </p>
 
       </div>
 
 
-      <div
-        class="region-chart"
-        id="regionChart"
-      ></div>
+      <div class="region-chart">
+
+        <div class="region-guide">
+
+          <div>지역</div>
+          <div>분포</div>
+          <div>매장</div>
+          <div>비중</div>
+
+        </div>
+
+
+        <div
+          id="regionChart"
+        ></div>
+
+      </div>
 
 
     </div>
@@ -1389,9 +1495,7 @@ select {
 
 
 
-  <!-- =========================
-       STORE TABLE
-  ========================== -->
+  <!-- STORE MASTER -->
 
   <section class="store-panel">
 
@@ -1459,6 +1563,10 @@ select {
           <tr>
 
             <th>매장명</th>
+
+            <!-- 새로 추가 -->
+            <th>오픈일자</th>
+
             <th>대분류</th>
             <th>지역</th>
             <th>운영형태</th>
@@ -1501,9 +1609,7 @@ select {
 
 
 
-<!-- =========================
-     DETAIL DRAWER
-========================== -->
+<!-- DRAWER -->
 
 <div
   class="overlay"
@@ -1582,18 +1688,13 @@ select {
 
 <script>
 
-/* =========================
-   DATA
-========================= */
-
 let stores = [];
 let history = [];
 let summaries = [];
 
 
-
 /* =========================
-   BASIC FUNCTIONS
+   FORMAT
 ========================= */
 
 function text(v) {
@@ -1630,8 +1731,7 @@ function num(v) {
 
 
   const original =
-    String(v)
-      .trim();
+    String(v).trim();
 
 
   const cleaned =
@@ -1663,7 +1763,6 @@ function num(v) {
 }
 
 
-
 function comma(v) {
 
   const n =
@@ -1680,12 +1779,11 @@ function comma(v) {
   return n.toLocaleString(
     "ko-KR",
     {
-      maximumFractionDigits: 1
+      maximumFractionDigits:1
     }
   );
 
 }
-
 
 
 function million(v) {
@@ -1707,12 +1805,11 @@ function million(v) {
   .toLocaleString(
     "ko-KR",
     {
-      maximumFractionDigits: 1
+      maximumFractionDigits:1
     }
   );
 
 }
-
 
 
 function moneyOrText(v) {
@@ -1743,12 +1840,11 @@ function moneyOrText(v) {
   .toLocaleString(
     "ko-KR",
     {
-      maximumFractionDigits: 1
+      maximumFractionDigits:1
     }
   );
 
 }
-
 
 
 function percent(v) {
@@ -1766,8 +1862,10 @@ function percent(v) {
 
   const value =
     Math.abs(n) <= 1
-      ? n * 100
-      : n;
+      ?
+      n * 100
+      :
+      n;
 
 
   return (
@@ -1779,7 +1877,6 @@ function percent(v) {
   );
 
 }
-
 
 
 function signedPercent(v) {
@@ -1797,18 +1894,18 @@ function signedPercent(v) {
 
   const value =
     Math.abs(n) <= 1
-      ? n * 100
-      : n;
+      ?
+      n * 100
+      :
+      n;
 
 
-  let sign = "";
-
-
-  if (
+  const sign =
     value > 0
-  ) {
-    sign = "+";
-  }
+      ?
+      "+"
+      :
+      "";
 
 
   return (
@@ -1822,7 +1919,6 @@ function signedPercent(v) {
   );
 
 }
-
 
 
 function dateFormat(v) {
@@ -1899,17 +1995,11 @@ function dateFormat(v) {
       String(
         d.getMonth()+1
       )
-      .padStart(
-        2,
-        "0"
-      ),
+      .padStart(2,"0"),
       String(
         d.getDate()
       )
-      .padStart(
-        2,
-        "0"
-      )
+      .padStart(2,"0")
     ]
     .join("-");
 
@@ -1921,6 +2011,41 @@ function dateFormat(v) {
 }
 
 
+/* =========================
+   PROFIT COLOR
+========================= */
+
+function profitClass(v) {
+
+  const n =
+    num(v);
+
+
+  if (
+    n === null
+  ) {
+    return "profit-neutral";
+  }
+
+
+  if (
+    n > 0
+  ) {
+    return "profit-positive";
+  }
+
+
+  if (
+    n < 0
+  ) {
+    return "profit-negative";
+  }
+
+
+  return "profit-neutral";
+
+}
+
 
 /* =========================
    SUMMARY
@@ -1929,6 +2054,7 @@ function dateFormat(v) {
 function getTotalSummary() {
 
   return (
+
     summaries.find(
       row =>
 
@@ -1939,12 +2065,14 @@ function getTotalSummary() {
         ===
         "총합"
     )
+
     ||
+
     summaries[0]
+
   );
 
 }
-
 
 
 function renderSummary() {
@@ -1956,7 +2084,6 @@ function renderSummary() {
   if (!total) {
     return;
   }
-
 
 
   const kpis = [
@@ -2004,36 +2131,35 @@ function renderSummary() {
   ];
 
 
+  document
+    .getElementById(
+      "summaryKpi"
+    )
+    .innerHTML =
 
-  document.getElementById(
-    "summaryKpi"
-  )
-  .innerHTML =
+      kpis
+        .map(
+          item => `
 
-    kpis
-      .map(
-        item => `
+            <div class="kpi-card">
 
-          <div class="kpi-card">
+              <div class="kpi-label">
+                ${item[0]}
+              </div>
 
-            <div class="kpi-label">
-              ${item[0]}
+              <div class="kpi-value">
+                ${item[1]}${item[2]}
+              </div>
+
+              <div class="kpi-foot">
+                SummaryData 기준
+              </div>
+
             </div>
 
-            <div class="kpi-value">
-              ${item[1]}${item[2]}
-            </div>
-
-            <div class="kpi-foot">
-              SummaryData 기준
-            </div>
-
-          </div>
-
-        `
-      )
-      .join("");
-
+          `
+        )
+        .join("");
 
 
   const channelRows =
@@ -2051,60 +2177,59 @@ function renderSummary() {
       );
 
 
+  document
+    .getElementById(
+      "summaryBody"
+    )
+    .innerHTML =
 
-  document.getElementById(
-    "summaryBody"
-  )
-  .innerHTML =
+      channelRows
+        .map(
+          row => `
 
-    channelRows
-      .map(
-        row => `
+            <tr>
 
-          <tr>
+              <td>
+                ${text(
+                  row["대분류"]
+                )}
+              </td>
 
-            <td>
-              ${text(
-                row["대분류"]
-              )}
-            </td>
+              <td>
+                ${comma(
+                  row["매장수"]
+                )}
+              </td>
 
-            <td>
-              ${comma(
-                row["매장수"]
-              )}
-            </td>
+              <td>
+                ${comma(
+                  row["전체면적_AVG"]
+                )}
+              </td>
 
-            <td>
-              ${comma(
-                row["전체면적_AVG"]
-              )}
-            </td>
+              <td>
+                ${comma(
+                  row["고정임차_매장수"]
+                )}
+              </td>
 
-            <td>
-              ${comma(
-                row["고정임차_매장수"]
-              )}
-            </td>
+              <td>
+                ${comma(
+                  row["수수료임차_매장수"]
+                )}
+              </td>
 
-            <td>
-              ${comma(
-                row["수수료임차_매장수"]
-              )}
-            </td>
+              <td>
+                ${percent(
+                  row["수수료율_AVG"]
+                )}
+              </td>
 
-            <td>
-              ${percent(
-                row["수수료율_AVG"]
-              )}
-            </td>
+            </tr>
 
-          </tr>
-
-        `
-      )
-      .join("");
-
+          `
+        )
+        .join("");
 
 
   const fixedDeposit =
@@ -2125,210 +2250,98 @@ function renderSummary() {
     || 0;
 
 
+  document
+    .getElementById(
+      "totalDeposit"
+    )
+    .textContent =
 
-  document.getElementById(
-    "totalDeposit"
-  )
-  .textContent =
-
-    comma(
-      fixedDeposit
-      +
-      commissionDeposit
-    );
-
-
-
-  document.getElementById(
-    "fixedLease"
-  )
-  .innerHTML = `
-
-    <div class="lease-row">
-
-      <span class="lease-key">
-        매장수
-      </span>
-
-      <span class="lease-val">
-        ${comma(
-          total[
-            "고정임차_매장수"
-          ]
-        )}개
-      </span>
-
-    </div>
+      comma(
+        fixedDeposit
+        +
+        commissionDeposit
+      );
 
 
-    <div class="lease-row">
+  document
+    .getElementById(
+      "fixedLease"
+    )
+    .innerHTML = `
 
-      <span class="lease-key">
-        보증금 TTL
-      </span>
+      <div class="lease-row">
+        <span class="lease-key">매장수</span>
+        <span class="lease-val">
+          ${comma(total["고정임차_매장수"])}개
+        </span>
+      </div>
 
-      <span class="lease-val">
-        ${comma(
-          total[
-            "고정임차_보증금_TTL"
-          ]
-        )}
-      </span>
+      <div class="lease-row">
+        <span class="lease-key">보증금 TTL</span>
+        <span class="lease-val">
+          ${comma(total["고정임차_보증금_TTL"])}
+        </span>
+      </div>
 
-    </div>
+      <div class="lease-row">
+        <span class="lease-key">보증금 AVG</span>
+        <span class="lease-val">
+          ${comma(total["고정임차_보증금_AVG"])}
+        </span>
+      </div>
 
+      <div class="lease-row">
+        <span class="lease-key">월임차료 AVG</span>
+        <span class="lease-val">
+          ${comma(total["고정임차_월임차료_AVG"])}
+        </span>
+      </div>
 
-    <div class="lease-row">
-
-      <span class="lease-key">
-        보증금 AVG
-      </span>
-
-      <span class="lease-val">
-        ${comma(
-          total[
-            "고정임차_보증금_AVG"
-          ]
-        )}
-      </span>
-
-    </div>
-
-
-    <div class="lease-row">
-
-      <span class="lease-key">
-        월임차료 AVG
-      </span>
-
-      <span class="lease-val">
-        ${comma(
-          total[
-            "고정임차_월임차료_AVG"
-          ]
-        )}
-      </span>
-
-    </div>
-
-  `;
+    `;
 
 
+  document
+    .getElementById(
+      "commissionLease"
+    )
+    .innerHTML = `
 
-  document.getElementById(
-    "commissionLease"
-  )
-  .innerHTML = `
+      <div class="lease-row">
+        <span class="lease-key">매장수</span>
+        <span class="lease-val">
+          ${comma(total["수수료임차_매장수"])}개
+        </span>
+      </div>
 
-    <div class="lease-row">
+      <div class="lease-row">
+        <span class="lease-key">보증금 TTL</span>
+        <span class="lease-val">
+          ${comma(total["수수료임차_보증금_TTL"])}
+        </span>
+      </div>
 
-      <span class="lease-key">
-        매장수
-      </span>
+      <div class="lease-row">
+        <span class="lease-key">보증금 AVG</span>
+        <span class="lease-val">
+          ${comma(total["수수료임차_보증금_AVG"])}
+        </span>
+      </div>
 
-      <span class="lease-val">
-        ${comma(
-          total[
-            "수수료임차_매장수"
-          ]
-        )}개
-      </span>
+      <div class="lease-row">
+        <span class="lease-key">수수료율 AVG</span>
+        <span class="lease-val">
+          ${percent(total["수수료율_AVG"])}
+        </span>
+      </div>
 
-    </div>
-
-
-    <div class="lease-row">
-
-      <span class="lease-key">
-        보증금 TTL
-      </span>
-
-      <span class="lease-val">
-        ${comma(
-          total[
-            "수수료임차_보증금_TTL"
-          ]
-        )}
-      </span>
-
-    </div>
-
-
-    <div class="lease-row">
-
-      <span class="lease-key">
-        보증금 AVG
-      </span>
-
-      <span class="lease-val">
-        ${comma(
-          total[
-            "수수료임차_보증금_AVG"
-          ]
-        )}
-      </span>
-
-    </div>
-
-
-    <div class="lease-row">
-
-      <span class="lease-key">
-        수수료율 AVG
-      </span>
-
-      <span class="lease-val">
-        ${percent(
-          total[
-            "수수료율_AVG"
-          ]
-        )}
-      </span>
-
-    </div>
-
-  `;
+    `;
 
 }
-
 
 
 /* =========================
-   TOP 10
+   TOP10
 ========================= */
-
-function profitClass(v) {
-
-  const n =
-    num(v);
-
-
-  if (
-    n === null
-  ) {
-    return "profit-neutral";
-  }
-
-
-  if (
-    n > 0
-  ) {
-    return "profit-positive";
-  }
-
-
-  if (
-    n < 0
-  ) {
-    return "profit-negative";
-  }
-
-
-  return "profit-neutral";
-
-}
-
-
 
 function renderTop10() {
 
@@ -2337,19 +2350,16 @@ function renderTop10() {
     stores
       .map(
         row => ({
-          row: row,
-
+          row,
           sales:
             num(
-              row[
-                "26년_월평균"
-              ]
+              row["26년_월평균"]
             )
         })
       )
       .filter(
-        item =>
-          item.sales !== null
+        x =>
+          x.sales !== null
       )
       .sort(
         (a,b) =>
@@ -2361,155 +2371,150 @@ function renderTop10() {
       );
 
 
+  document
+    .getElementById(
+      "top10List"
+    )
+    .innerHTML =
 
-  document.getElementById(
-    "top10List"
-  )
-  .innerHTML =
+      ranked
+        .map(
+          (item,index) => {
 
-    ranked
-      .map(
-        (item,index) => {
-
-          const rank =
-            index + 1;
-
-
-          let rankClass =
-            "rank-normal";
+            const rank =
+              index + 1;
 
 
-          let rankText =
-            rank;
+            let badgeClass =
+              "rank-normal";
 
 
-          if (
-            rank === 1
-          ) {
-
-            rankClass =
-              "rank1";
-
-            rankText =
-              "🥇";
-
-          }
+            let badgeText =
+              rank;
 
 
-          else if (
-            rank === 2
-          ) {
+            if (
+              rank === 1
+            ) {
 
-            rankClass =
-              "rank2";
+              badgeClass =
+                "rank1";
 
-            rankText =
-              "🥈";
+              badgeText =
+                "🥇";
 
-          }
-
-
-          else if (
-            rank === 3
-          ) {
-
-            rankClass =
-              "rank3";
-
-            rankText =
-              "🥉";
-
-          }
+            }
 
 
+            else if (
+              rank === 2
+            ) {
 
-          const profit =
-            item.row[
-              "25년_영업이익율"
-            ];
+              badgeClass =
+                "rank2";
 
+              badgeText =
+                "🥈";
 
-
-          return `
-
-            <div class="rank-row">
-
-
-              <div
-                class="
-                  rank-badge
-                  ${rankClass}
-                "
-              >
-                ${rankText}
-              </div>
+            }
 
 
-              <div class="rank-store">
+            else if (
+              rank === 3
+            ) {
 
-                ${text(
-                  item.row[
-                    "매장명"
-                  ]
-                )}
+              badgeClass =
+                "rank3";
 
-                <span class="rank-store-sub">
+              badgeText =
+                "🥉";
+
+            }
+
+
+            const profit =
+              item.row[
+                "25년_영업이익율"
+              ];
+
+
+            return `
+
+              <div class="rank-row">
+
+                <div
+                  class="
+                    rank-badge
+                    ${badgeClass}
+                  "
+                >
+                  ${badgeText}
+                </div>
+
+
+                <div class="rank-store">
 
                   ${text(
                     item.row[
-                      "대분류"
+                      "매장명"
                     ]
                   )}
 
-                  ·
+                  <span class="rank-store-sub">
 
-                  ${text(
+                    ${text(
+                      item.row[
+                        "대분류"
+                      ]
+                    )}
+
+                    ·
+
+                    ${text(
+                      item.row[
+                        "지역"
+                      ]
+                    )}
+
+                  </span>
+
+                </div>
+
+
+                <div class="rank-sales">
+
+                  ${million(
                     item.row[
-                      "지역"
+                      "26년_월평균"
                     ]
                   )}
 
-                </span>
-
-              </div>
+                </div>
 
 
-              <div class="rank-sales">
+                <div
+                  class="
+                    ${profitClass(
+                      profit
+                    )}
+                  "
+                >
 
-                ${million(
-                  item.row[
-                    "26년_월평균"
-                  ]
-                )}
-
-              </div>
-
-
-              <div
-                class="
-                  ${profitClass(
+                  ${signedPercent(
                     profit
                   )}
-                "
-              >
 
-                ${signedPercent(
-                  profit
-                )}
+                </div>
 
               </div>
 
+            `;
 
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
+          }
+        )
+        .join("");
 
 }
-
 
 
 /* =========================
@@ -2518,7 +2523,7 @@ function renderTop10() {
 
 function renderRegion() {
 
-  const regionCount = {};
+  const counts = {};
 
 
   stores
@@ -2534,9 +2539,9 @@ function renderRegion() {
           .trim();
 
 
-        regionCount[region] =
+        counts[region] =
           (
-            regionCount[region]
+            counts[region]
             ||
             0
           )
@@ -2547,12 +2552,10 @@ function renderRegion() {
     );
 
 
-
   const rows =
-
     Object
       .entries(
-        regionCount
+        counts
       )
       .sort(
         (a,b) =>
@@ -2560,8 +2563,21 @@ function renderRegion() {
       );
 
 
+  /*
+   * 실제 StoreMaster 행 기준
+   * 전국 총 매장수
+   */
 
-  const max =
+  const totalStores =
+    stores.length || 1;
+
+
+  /*
+   * 그래프 길이는
+   * 가장 많은 지역을 100%로
+   */
+
+  const maxCount =
     rows.length
       ?
       rows[0][1]
@@ -2569,67 +2585,91 @@ function renderRegion() {
       1;
 
 
+  document
+    .getElementById(
+      "regionChart"
+    )
+    .innerHTML =
 
-  document.getElementById(
-    "regionChart"
-  )
-  .innerHTML =
+      rows
+        .map(
+          ([region,count]) => {
 
-    rows
-      .map(
-        ([region,count]) => {
-
-          const width =
-            (
-              count / max
-            )
-            *
-            100;
+            const graphWidth =
+              (
+                count
+                /
+                maxCount
+              )
+              *
+              100;
 
 
-          return `
+            const share =
+              (
+                count
+                /
+                totalStores
+              )
+              *
+              100;
 
-            <div class="region-row">
 
-              <div class="region-name">
-                ${region}
+            return `
+
+              <div class="region-row">
+
+
+                <div class="region-name">
+                  ${region}
+                </div>
+
+
+                <div class="region-bg">
+
+                  <div
+                    class="region-bar"
+                    style="
+                      width:${graphWidth}%
+                    "
+                  ></div>
+
+                </div>
+
+
+                <div class="region-count">
+                  ${count}개
+                </div>
+
+
+                <div class="region-share">
+
+                  ${share
+                    .toFixed(1)
+                    .replace(".0","")
+                  }%
+
+                </div>
+
+
               </div>
 
-              <div class="region-bg">
+            `;
 
-                <div
-                  class="region-bar"
-                  style="
-                    width:${width}%
-                  "
-                ></div>
-
-              </div>
-
-              <div class="region-count">
-                ${count}개
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
+          }
+        )
+        .join("");
 
 }
 
 
-
 /* =========================
-   FILTERS
+   FILTER
 ========================= */
 
 function fillFilters() {
 
   const categories =
-
     [
       ...new Set(
         stores
@@ -2643,9 +2683,7 @@ function fillFilters() {
     .sort();
 
 
-
   const regions =
-
     [
       ...new Set(
         stores
@@ -2659,25 +2697,25 @@ function fillFilters() {
     .sort();
 
 
+  const category =
+    document
+      .getElementById(
+        "categoryFilter"
+      );
 
-  const categoryFilter =
-    document.getElementById(
-      "categoryFilter"
-    );
 
-
-  const regionFilter =
-    document.getElementById(
-      "regionFilter"
-    );
-
+  const region =
+    document
+      .getElementById(
+        "regionFilter"
+      );
 
 
   categories
     .forEach(
       value => {
 
-        categoryFilter
+        category
           .innerHTML += `
 
             <option
@@ -2692,12 +2730,11 @@ function fillFilters() {
     );
 
 
-
   regions
     .forEach(
       value => {
 
-        regionFilter
+        region
           .innerHTML += `
 
             <option
@@ -2712,7 +2749,6 @@ function fillFilters() {
     );
 
 }
-
 
 
 /* =========================
@@ -2740,25 +2776,24 @@ function growthBadge(v) {
       n;
 
 
-
   if (
     value > 0
   ) {
 
     return `
 
-      <span class="badge up">
-
+      <span class="
+        badge
+        up
+      ">
         ▲${Math.abs(value)
           .toFixed(1)
           .replace(".0","")}%
-
       </span>
 
     `;
 
   }
-
 
 
   if (
@@ -2767,12 +2802,13 @@ function growthBadge(v) {
 
     return `
 
-      <span class="badge down">
-
+      <span class="
+        badge
+        down
+      ">
         ▼${Math.abs(value)
           .toFixed(1)
           .replace(".0","")}%
-
       </span>
 
     `;
@@ -2780,17 +2816,18 @@ function growthBadge(v) {
   }
 
 
-
   return `
 
-    <span class="badge neutral">
+    <span class="
+      badge
+      neutral
+    ">
       0%
     </span>
 
   `;
 
 }
-
 
 
 /* =========================
@@ -2832,7 +2869,6 @@ function expiryBadge(v) {
     );
 
 
-
   if (
     days <= 90
   ) {
@@ -2849,7 +2885,6 @@ function expiryBadge(v) {
     `;
 
   }
-
 
 
   if (
@@ -2870,11 +2905,9 @@ function expiryBadge(v) {
   }
 
 
-
   return formatted;
 
 }
-
 
 
 /* =========================
@@ -2884,7 +2917,6 @@ function expiryBadge(v) {
 function renderStores() {
 
   const keyword =
-
     document
       .getElementById(
         "search"
@@ -2894,9 +2926,7 @@ function renderStores() {
       .toLowerCase();
 
 
-
   const category =
-
     document
       .getElementById(
         "categoryFilter"
@@ -2904,15 +2934,12 @@ function renderStores() {
       .value;
 
 
-
   const region =
-
     document
       .getElementById(
         "regionFilter"
       )
       .value;
-
 
 
   const filtered =
@@ -2921,8 +2948,7 @@ function renderStores() {
       .filter(
         row => {
 
-          const storeName =
-
+          const name =
             String(
               row["매장명"]
               ||
@@ -2931,13 +2957,11 @@ function renderStores() {
             .toLowerCase();
 
 
-
           return (
 
-            storeName
-              .includes(
-                keyword
-              )
+            name.includes(
+              keyword
+            )
 
             &&
 
@@ -2965,24 +2989,23 @@ function renderStores() {
       );
 
 
-
-  const body =
-    document.getElementById(
-      "storeBody"
-    );
-
+  const tbody =
+    document
+      .getElementById(
+        "storeBody"
+      );
 
 
   if (
     !filtered.length
   ) {
 
-    body.innerHTML = `
+    tbody.innerHTML = `
 
       <tr>
 
         <td
-          colspan="13"
+          colspan="14"
           style="
             padding:40px;
             color:#9ca3af;
@@ -3001,9 +3024,7 @@ function renderStores() {
   }
 
 
-
-  body.innerHTML = "";
-
+  tbody.innerHTML = "";
 
 
   filtered
@@ -3015,7 +3036,6 @@ function renderStores() {
             .createElement(
               "tr"
             );
-
 
 
         tr.innerHTML = `
@@ -3030,6 +3050,17 @@ function renderStores() {
             <span class="sub-hint">
               상세보기
             </span>
+
+          </td>
+
+
+          <!-- 오픈일자 추가 -->
+
+          <td>
+
+            ${dateFormat(
+              row["오픈일자"]
+            )}
 
           </td>
 
@@ -3056,11 +3087,13 @@ function renderStores() {
 
 
           <td>
+
             ${million(
               row[
                 "26년_월평균"
               ]
             )}
+
           </td>
 
 
@@ -3163,21 +3196,14 @@ function renderStores() {
         `;
 
 
-
         tr.addEventListener(
           "click",
-          () => {
-
-            openDetail(
-              row
-            );
-
-          }
+          () =>
+            openDetail(row)
         );
 
 
-
-        body
+        tbody
           .appendChild(
             tr
           );
@@ -3188,61 +3214,55 @@ function renderStores() {
 }
 
 
-
 /* =========================
    HISTORY
 ========================= */
 
 function historiesFor(name) {
 
-  return (
+  return history
 
-    history
+    .filter(
+      row =>
 
-      .filter(
-        row =>
+        String(
+          row["매장명"]
+          ||
+          ""
+        )
+        .trim()
 
-          String(
-            row["매장명"]
-            ||
-            ""
+        ===
+
+        String(
+          name
+          ||
+          ""
+        )
+        .trim()
+
+    )
+
+    .sort(
+      (a,b) =>
+
+        new Date(
+          dateFormat(
+            b["변경일"]
           )
-          .trim()
+        )
 
-          ===
+        -
 
-          String(
-            name
-            ||
-            ""
+        new Date(
+          dateFormat(
+            a["변경일"]
           )
-          .trim()
+        )
 
-      )
-
-      .sort(
-        (a,b) =>
-
-          new Date(
-            dateFormat(
-              b["변경일"]
-            )
-          )
-
-          -
-
-          new Date(
-            dateFormat(
-              a["변경일"]
-            )
-          )
-
-      )
-
-  );
+    );
 
 }
-
 
 
 /* =========================
@@ -3262,8 +3282,14 @@ function openDetail(row) {
       );
 
 
-
   const items = [
+
+    [
+      "오픈일자",
+      dateFormat(
+        row["오픈일자"]
+      )
+    ],
 
     [
       "대분류",
@@ -3283,13 +3309,6 @@ function openDetail(row) {
       "운영형태",
       text(
         row["운영형태"]
-      )
-    ],
-
-    [
-      "오픈일자",
-      dateFormat(
-        row["오픈일자"]
       )
     ],
 
@@ -3356,7 +3375,6 @@ function openDetail(row) {
   ];
 
 
-
   document
     .getElementById(
       "detailGrid"
@@ -3384,7 +3402,6 @@ function openDetail(row) {
         .join("");
 
 
-
   renderHistory(
 
     historiesFor(
@@ -3392,7 +3409,6 @@ function openDetail(row) {
     )
 
   );
-
 
 
   document
@@ -3405,7 +3421,6 @@ function openDetail(row) {
     );
 
 
-
   document
     .getElementById(
       "drawer"
@@ -3416,7 +3431,6 @@ function openDetail(row) {
     );
 
 }
-
 
 
 /* =========================
@@ -3432,19 +3446,17 @@ function renderHistory(items) {
       );
 
 
-
   if (
     !items.length
   ) {
 
-    timeline
-      .innerHTML = `
+    timeline.innerHTML = `
 
-        <div class="no-data">
-          등록된 계약 히스토리가 없습니다.
-        </div>
+      <div class="no-data">
+        등록된 계약 히스토리가 없습니다.
+      </div>
 
-      `;
+    `;
 
 
     return;
@@ -3452,132 +3464,111 @@ function renderHistory(items) {
   }
 
 
+  timeline.innerHTML =
 
-  timeline
-    .innerHTML =
+    items
+      .map(
+        row => `
 
-      items
-        .map(
-          row => `
+          <div class="timeline-item">
 
+            <div class="timeline-dot">
+            </div>
 
-            <div class="timeline-item">
+            <div class="timeline-date">
 
-
-              <div class="timeline-dot">
-              </div>
-
-
-              <div class="timeline-date">
-
-                ${dateFormat(
-                  row["변경일"]
-                )}
-
-              </div>
-
-
-              <div class="timeline-type">
-
-                ${text(
-                  row["변경구분"]
-                )}
-
-              </div>
-
-
-              <div class="timeline-change">
-
-                ${percent(
-                  row["변경전"]
-                )}
-
-                &nbsp;→&nbsp;
-
-                ${percent(
-                  row["변경후"]
-                )}
-
-              </div>
-
-
-              <div class="timeline-detail">
-
-
-                ${
-                  row["사유"]
-
-                  ?
-
-                  `
-
-                    <div>
-
-                      <strong>
-                        사유
-                      </strong>
-
-                      &nbsp;
-
-                      ${text(
-                        row["사유"]
-                      )}
-
-                    </div>
-
-                  `
-
-                  :
-
-                  ""
-                }
-
-
-                ${
-                  row["비고"]
-
-                  ?
-
-                  `
-
-                    <div>
-
-                      <strong>
-                        비고
-                      </strong>
-
-                      &nbsp;
-
-                      ${text(
-                        row["비고"]
-                      )}
-
-                    </div>
-
-                  `
-
-                  :
-
-                  ""
-                }
-
-
-              </div>
-
+              ${dateFormat(
+                row["변경일"]
+              )}
 
             </div>
 
+            <div class="timeline-type">
 
-          `
-        )
-        .join("");
+              ${text(
+                row["변경구분"]
+              )}
+
+            </div>
+
+            <div class="timeline-change">
+
+              ${percent(
+                row["변경전"]
+              )}
+
+              &nbsp;→&nbsp;
+
+              ${percent(
+                row["변경후"]
+              )}
+
+            </div>
+
+            <div class="timeline-detail">
+
+              ${
+                row["사유"]
+                ?
+                `
+
+                  <div>
+
+                    <strong>
+                      사유
+                    </strong>
+
+                    &nbsp;
+
+                    ${text(
+                      row["사유"]
+                    )}
+
+                  </div>
+
+                `
+                :
+                ""
+              }
+
+
+              ${
+                row["비고"]
+                ?
+                `
+
+                  <div>
+
+                    <strong>
+                      비고
+                    </strong>
+
+                    &nbsp;
+
+                    ${text(
+                      row["비고"]
+                    )}
+
+                  </div>
+
+                `
+                :
+                ""
+              }
+
+            </div>
+
+          </div>
+
+        `
+      )
+      .join("");
 
 }
 
 
-
 /* =========================
-   DRAWER CLOSE
+   CLOSE DRAWER
 ========================= */
 
 function closeDrawer() {
@@ -3604,14 +3595,12 @@ function closeDrawer() {
 }
 
 
-
 document
   .getElementById(
     "closeBtn"
   )
   .onclick =
     closeDrawer;
-
 
 
 document
@@ -3622,9 +3611,8 @@ document
     closeDrawer;
 
 
-
 /* =========================
-   FILTER EVENT
+   FILTER EVENTS
 ========================= */
 
 document
@@ -3637,7 +3625,6 @@ document
   );
 
 
-
 document
   .getElementById(
     "categoryFilter"
@@ -3646,7 +3633,6 @@ document
     "change",
     renderStores
   );
-
 
 
 document
@@ -3659,9 +3645,8 @@ document
   );
 
 
-
 /* =========================
-   LOAD DATA
+   LOAD
 ========================= */
 
 async function loadData() {
@@ -3673,98 +3658,70 @@ async function loadData() {
       Date.now();
 
 
-
     const [
-
       storeRes,
       historyRes,
       summaryRes
-
     ] =
 
       await Promise.all([
 
 
         fetch(
-
           "./StoreMaster.json?ts="
           +
           ts
-
         ),
 
 
         fetch(
-
           "./ContractHistory.json?ts="
           +
           ts
-
         ),
 
 
         fetch(
-
           "./SummaryData.json?ts="
           +
           ts
-
         )
 
 
       ]);
 
 
-
-    if (
-      !storeRes.ok
-    ) {
-
+    if (!storeRes.ok) {
       throw new Error(
         "StoreMaster.json 오류"
       );
-
     }
 
 
-
-    if (
-      !historyRes.ok
-    ) {
-
+    if (!historyRes.ok) {
       throw new Error(
         "ContractHistory.json 오류"
       );
-
     }
 
 
-
-    if (
-      !summaryRes.ok
-    ) {
-
+    if (!summaryRes.ok) {
       throw new Error(
         "SummaryData.json 오류"
       );
-
     }
-
 
 
     stores =
       await storeRes.json();
 
 
-
     history =
       await historyRes.json();
 
 
-
     summaries =
       await summaryRes.json();
-
 
 
     renderSummary();
@@ -3776,7 +3733,6 @@ async function loadData() {
     fillFilters();
 
     renderStores();
-
 
 
     document
@@ -3812,7 +3768,6 @@ async function loadData() {
   }
 
 }
-
 
 
 loadData();
