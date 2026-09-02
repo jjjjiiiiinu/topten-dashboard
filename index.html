@@ -10,10 +10,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>
-TOPTEN 매장관리 포털
-</title>
-
+<title>TOPTEN 매장관리 포털</title>
 
 <style>
 
@@ -47,9 +44,7 @@ body {
 button,
 input,
 select {
-
   font: inherit;
-
 }
 
 
@@ -98,9 +93,7 @@ select {
 }
 
 .header-right {
-
   text-align: right;
-
 }
 
 .unit {
@@ -130,7 +123,7 @@ select {
 
 .container {
 
-  max-width: 1700px;
+  max-width: 1750px;
 
   margin: 0 auto;
 
@@ -139,9 +132,7 @@ select {
 }
 
 .section-title {
-
   margin-bottom: 14px;
-
 }
 
 .section-title h2 {
@@ -176,7 +167,7 @@ select {
   display: grid;
 
   grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+    repeat(5, minmax(0,1fr));
 
   gap: 14px;
 
@@ -233,7 +224,7 @@ select {
 
 
 /* =========================================================
-   DASHBOARD TOP
+   DASHBOARD
 ========================================================= */
 
 .dashboard-grid {
@@ -242,12 +233,12 @@ select {
 
   grid-template-columns:
     1.05fr
-    1.25fr
+    1.3fr
     0.95fr;
 
   gap: 18px;
 
-  align-items: stretch;
+  align-items: start;
 
   margin-bottom: 24px;
 
@@ -301,13 +292,11 @@ select {
 
 
 /* =========================================================
-   CHANNEL
+   CHANNEL SUMMARY
 ========================================================= */
 
 .summary-table-wrap {
-
   overflow-x: auto;
-
 }
 
 .summary-table {
@@ -362,7 +351,7 @@ select {
 
 
 /* =========================================================
-   LEASE SUMMARY
+   LEASE
 ========================================================= */
 
 .lease-summary {
@@ -497,9 +486,7 @@ select {
 }
 
 .lease-row:last-child {
-
   margin-bottom: 0;
-
 }
 
 .lease-key {
@@ -522,46 +509,104 @@ select {
 
 
 /* =========================================================
-   TOP 10
+   CHANNEL TOP 5
 ========================================================= */
 
-.top10-head {
-
-  display: grid;
-
-  grid-template-columns:
-    38px
-    minmax(130px,1fr)
-    82px
-    84px;
-
-  gap: 8px;
-
-  padding:
-    9px 16px;
-
-  background: #f9fafb;
+.ranking-section {
 
   border-bottom:
     1px solid #e5e7eb;
 
-  font-size: 9px;
+}
 
-  color: #9ca3af;
+.ranking-section:last-child {
+
+  border-bottom: none;
 
 }
 
-.top10-head div:nth-child(3),
-.top10-head div:nth-child(4) {
+.ranking-title {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    11px 16px;
+
+  background: #f9fafb;
+
+}
+
+.ranking-title-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+}
+
+.ranking-chip {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 48px;
+
+  padding:
+    5px 8px;
+
+  border-radius: 999px;
+
+  background: #111827;
+
+  color: white;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+}
+
+.ranking-title-text {
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  color: #111827;
+
+}
+
+.ranking-columns {
+
+  display: grid;
+
+  grid-template-columns:
+    75px
+    80px;
+
+  gap: 8px;
+
+  font-size: 8px;
+
+  color: #9ca3af;
 
   text-align: right;
 
 }
 
-.top10-list {
+.ranking-list {
 
   padding:
-    0 16px 8px;
+    0 16px 7px;
 
 }
 
@@ -570,19 +615,25 @@ select {
   display: grid;
 
   grid-template-columns:
-    38px
-    minmax(130px,1fr)
-    82px
-    84px;
+    34px
+    minmax(120px,1fr)
+    75px
+    80px;
 
   gap: 8px;
 
-  align-items: center;
+  min-height: 41px;
 
-  min-height: 47px;
+  align-items: center;
 
   border-bottom:
     1px solid #f1f2f4;
+
+}
+
+.rank-row:last-child {
+
+  border-bottom: none;
 
 }
 
@@ -594,9 +645,9 @@ select {
 
 .rank-badge {
 
-  width: 29px;
+  width: 26px;
 
-  height: 29px;
+  height: 26px;
 
   display: flex;
 
@@ -606,7 +657,7 @@ select {
 
   border-radius: 50%;
 
-  font-size: 11px;
+  font-size: 10px;
 
   font-weight: 900;
 
@@ -660,6 +711,8 @@ select {
 
   font-weight: 800;
 
+  color: #111827;
+
 }
 
 .rank-store-sub {
@@ -668,7 +721,7 @@ select {
 
   margin-top: 2px;
 
-  font-size: 9px;
+  font-size: 8px;
 
   font-weight: 400;
 
@@ -688,7 +741,7 @@ select {
 
 
 /* =========================================================
-   PROFIT COLOR
+   PROFIT
 ========================================================= */
 
 .profit-positive {
@@ -838,7 +891,7 @@ select {
 
 
 /* =========================================================
-   DEVELOPMENT TOP 5
+   DEVELOPMENT
 ========================================================= */
 
 .development-card {
@@ -909,8 +962,6 @@ select {
 }
 
 .dev-card {
-
-  position: relative;
 
   min-height: 215px;
 
@@ -988,8 +1039,6 @@ select {
   font-size: 16px;
 
   font-weight: 900;
-
-  color: #111827;
 
 }
 
@@ -1079,8 +1128,6 @@ select {
   font-size: 16px;
 
   font-weight: 900;
-
-  color: #111827;
 
 }
 
@@ -1202,7 +1249,8 @@ select {
 
   align-items: center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
   gap: 15px;
 
@@ -1261,15 +1309,11 @@ select {
 }
 
 .filters input {
-
   width: 220px;
-
 }
 
 .table-wrap {
-
   overflow-x: auto;
-
 }
 
 .store-table {
@@ -1317,15 +1361,11 @@ select {
 }
 
 .store-table tbody tr {
-
   cursor: pointer;
-
 }
 
 .store-table tbody tr:hover {
-
   background: #f8fafc;
-
 }
 
 .store-name {
@@ -1483,10 +1523,7 @@ select {
 }
 
 .drawer.open {
-
-  transform:
-    translateX(0);
-
+  transform: translateX(0);
 }
 
 .drawer-head {
@@ -1810,9 +1847,7 @@ select {
 @media(max-width:700px) {
 
   .container {
-
     padding: 14px;
-
   }
 
   .header {
@@ -1825,9 +1860,7 @@ select {
   }
 
   .header-right {
-
     text-align: left;
-
   }
 
   .store-panel-head {
@@ -1840,16 +1873,12 @@ select {
   }
 
   .filters {
-
     flex-direction: column;
-
   }
 
   .filters input,
   .filters select {
-
     width: 100%;
-
   }
 
   .detail-grid {
@@ -1860,10 +1889,7 @@ select {
   }
 
   .dev-list {
-
-    grid-template-columns:
-      1fr;
-
+    grid-template-columns: 1fr;
   }
 
 }
@@ -1871,7 +1897,6 @@ select {
 </style>
 
 </head>
-
 
 
 <body>
@@ -1914,10 +1939,6 @@ select {
 <main class="container">
 
 
-<!-- =====================================================
-     OVERVIEW
-===================================================== -->
-
 <div class="section-title">
 
   <h2>
@@ -1937,10 +1958,6 @@ select {
 ></section>
 
 
-
-<!-- =====================================================
-     TOP DASHBOARD
-===================================================== -->
 
 <section class="dashboard-grid">
 
@@ -1972,15 +1989,10 @@ select {
         <tr>
 
           <th>구분</th>
-
           <th>매장수</th>
-
           <th>평균면적</th>
-
           <th>고정임차</th>
-
           <th>수수료임차</th>
-
           <th>수수료율</th>
 
         </tr>
@@ -2071,7 +2083,7 @@ select {
 
 
 
-<!-- CENTER TOP10 -->
+<!-- CENTER : CATEGORY TOP 5 -->
 
 <div class="card">
 
@@ -2079,32 +2091,18 @@ select {
   <div class="card-head">
 
     <h3>
-      26년 월평균 TOP 10
+      26년 월평균 채널별 TOP 5
     </h3>
 
     <p>
-      월평균 기준 · 영업이익율 양수 빨강 / 음수 파랑
+      가두 · 유통 · 밸런스 별도 순위 / 영업이익율 양수 빨강 · 음수 파랑
     </p>
 
   </div>
 
 
-  <div class="top10-head">
-
-    <div>순위</div>
-
-    <div>매장명</div>
-
-    <div>월평균</div>
-
-    <div>영업이익율</div>
-
-  </div>
-
-
   <div
-    class="top10-list"
-    id="top10List"
+    id="categoryRanking"
   ></div>
 
 
@@ -2112,7 +2110,7 @@ select {
 
 
 
-<!-- RIGHT REGION -->
+<!-- RIGHT -->
 
 <div class="card">
 
@@ -2136,11 +2134,8 @@ select {
     <div class="region-guide">
 
       <div>지역</div>
-
       <div>분포</div>
-
       <div>매장</div>
-
       <div>비중</div>
 
     </div>
@@ -2161,9 +2156,7 @@ select {
 
 
 
-<!-- =====================================================
-     DEVELOPMENT TOP 5
-===================================================== -->
+<!-- DEVELOPMENT -->
 
 <section class="card development-card">
 
@@ -2189,9 +2182,9 @@ select {
 
     <div class="dev-intro-text">
 
-      단순히 매장이 적은 지역을 추천하지 않습니다.
-      인구 대비 현재 매장 비중과 기존 TOPTEN 점포의
-      월평균 · 영업이익율 · 동매장 신장율을 함께 비교합니다.
+      단순히 점포가 적은 지역을 추천하지 않고,
+      인구 대비 현재 매장 비중과 기존점 월평균,
+      영업이익율, 동매장 신장율을 함께 비교합니다.
 
     </div>
 
@@ -2206,10 +2199,9 @@ select {
 
   <div class="dev-note">
 
-    ※ 출점 검토지역은 1차 스크리닝 지표입니다.
-    실제 출점 판단 시 상권 위치, 임대조건, 유동인구,
-    경쟁점 및 기존점 잠식 가능성 확인이 필요합니다.
-    인구는 코드 내 기준값을 사용합니다.
+    ※ 출점 검토지역은 1차 스크리닝용 지표입니다.
+    실제 출점 판단 시 세부 상권, 임대조건, 유동인구,
+    경쟁점 및 기존점 잠식 가능성 검토가 필요합니다.
 
   </div>
 
@@ -2218,9 +2210,7 @@ select {
 
 
 
-<!-- =====================================================
-     STORE MASTER
-===================================================== -->
+<!-- STORE TABLE -->
 
 <section class="store-panel">
 
@@ -2287,31 +2277,18 @@ select {
         <tr>
 
           <th>매장명</th>
-
           <th>오픈일자</th>
-
           <th>대분류</th>
-
           <th>지역</th>
-
           <th>운영형태</th>
-
           <th>26년 월평균</th>
-
           <th>동매장 신장율</th>
-
           <th>면적(평)</th>
-
           <th>계약만료일</th>
-
           <th>유통마진율</th>
-
           <th>고정임차료</th>
-
           <th>관리비</th>
-
           <th>보증금</th>
-
           <th>25년 영업이익율</th>
 
         </tr>
@@ -2341,10 +2318,6 @@ select {
 </main>
 
 
-
-<!-- =====================================================
-     DRAWER
-===================================================== -->
 
 <div
   class="overlay"
@@ -2423,10 +2396,6 @@ select {
 <script>
 
 
-/* =========================================================
-   DATA
-========================================================= */
-
 let stores = [];
 
 let history = [];
@@ -2437,49 +2406,26 @@ let summaries = [];
 
 /* =========================================================
    POPULATION REFERENCE
-   단위 : 명
-
-   Excel에 넣는 데이터가 아니라
-   출점 스크리닝 계산용 코드 내부 기준값.
-
-   나중에 공식 최신 숫자로
-   이 부분만 바꾸면 됨.
 ========================================================= */
 
 const POPULATION = {
 
   "서울": 9298000,
-
   "부산": 3245000,
-
   "대구": 2355000,
-
   "인천": 3055000,
-
   "광주": 1392000,
-
   "대전": 1440000,
-
   "울산": 1087000,
-
   "세종": 391000,
-
   "경기": 13720000,
-
   "강원": 1517000,
-
   "충북": 1593000,
-
   "충남": 2135000,
-
   "전북": 1735000,
-
   "전남": 1790000,
-
   "경북": 2530000,
-
   "경남": 3220000,
-
   "제주": 669000
 
 };
@@ -2487,7 +2433,7 @@ const POPULATION = {
 
 
 /* =========================================================
-   BASIC FORMAT
+   BASIC
 ========================================================= */
 
 function text(v) {
@@ -2587,7 +2533,7 @@ function comma(v) {
   return n.toLocaleString(
     "ko-KR",
     {
-      maximumFractionDigits: 1
+      maximumFractionDigits:1
     }
   );
 
@@ -2616,7 +2562,7 @@ function million(v) {
   .toLocaleString(
     "ko-KR",
     {
-      maximumFractionDigits: 1
+      maximumFractionDigits:1
     }
   );
 
@@ -2680,19 +2626,24 @@ function percent(v) {
 
 
   const value =
+
     Math.abs(n) <= 1
-      ?
-      n * 100
-      :
-      n;
+    ?
+    n * 100
+    :
+    n;
 
 
   return (
+
     value
       .toFixed(1)
       .replace(".0","")
+
     +
+
     "%"
+
   );
 
 }
@@ -2715,29 +2666,37 @@ function signedPercent(v) {
 
 
   const value =
+
     Math.abs(n) <= 1
-      ?
-      n * 100
-      :
-      n;
+    ?
+    n * 100
+    :
+    n;
 
 
   const sign =
+
     value > 0
-      ?
-      "+"
-      :
-      "";
+    ?
+    "+"
+    :
+    "";
 
 
   return (
+
     sign
+
     +
+
     value
       .toFixed(1)
       .replace(".0","")
+
     +
+
     "%"
+
   );
 
 }
@@ -2785,9 +2744,13 @@ function dateFormat(v) {
 
 
       return new Date(
+
         epoch
+
         +
+
         serial * 86400000
+
       )
       .toISOString()
       .slice(0,10);
@@ -2822,7 +2785,7 @@ function dateFormat(v) {
       d.getFullYear(),
 
       String(
-        d.getMonth() + 1
+        d.getMonth()+1
       )
       .padStart(
         2,
@@ -2879,13 +2842,17 @@ function average(values) {
 
 
   return (
+
     values.reduce(
       (sum,value) =>
         sum + value,
       0
     )
+
     /
+
     values.length
+
   );
 
 }
@@ -2893,7 +2860,7 @@ function average(values) {
 
 
 /* =========================================================
-   PROFIT COLOR
+   PROFIT
 ========================================================= */
 
 function profitClass(v) {
@@ -2950,7 +2917,9 @@ function getTotalSummary() {
           row["대분류"] || ""
         )
         .trim()
+
         ===
+
         "총합"
     )
 
@@ -2971,9 +2940,7 @@ function renderSummary() {
 
 
   if (!total) {
-
     return;
-
   }
 
 
@@ -3056,16 +3023,18 @@ function renderSummary() {
   const channelRows =
 
     summaries
-    .filter(
-      row =>
+      .filter(
+        row =>
 
-        String(
-          row["유통채널"] || ""
-        )
-        .trim()
-        ===
-        "합계"
-    );
+          String(
+            row["유통채널"] || ""
+          )
+          .trim()
+
+          ===
+
+          "합계"
+      );
 
 
   document
@@ -3312,18 +3281,76 @@ function renderSummary() {
 
 
 /* =========================================================
-   TOP 10
+   CATEGORY CLASSIFICATION
 ========================================================= */
 
-function renderTop10() {
+function classifyStore(row) {
 
-  const ranked =
+  const category =
 
-    stores
+    String(
+      row["대분류"] || ""
+    )
+    .trim();
+
+
+  if (
+    category.includes(
+      "밸런스"
+    )
+    ||
+    category.startsWith(
+      "B)"
+    )
+    ||
+    category.startsWith(
+      "B）"
+    )
+  ) {
+
+    return "밸런스";
+
+  }
+
+
+  if (
+    category.includes(
+      "가두"
+    )
+  ) {
+
+    return "가두";
+
+  }
+
+
+  return "유통";
+
+}
+
+
+
+/* =========================================================
+   CATEGORY TOP 5
+========================================================= */
+
+function getTopFiveByGroup(
+  groupName
+) {
+
+  return stores
+
+    .filter(
+      row =>
+        classifyStore(row)
+        ===
+        groupName
+    )
+
     .map(
       row => ({
 
-        row,
+        row: row,
 
         sales:
           num(
@@ -3334,27 +3361,107 @@ function renderTop10() {
 
       })
     )
+
     .filter(
       item =>
         item.sales !== null
+        &&
+        item.sales > 0
     )
+
     .sort(
       (a,b) =>
         b.sales - a.sales
     )
+
     .slice(
       0,
-      10
+      5
+    );
+
+}
+
+
+
+function rankBadgeHtml(rank) {
+
+  let badgeClass =
+    "rank-normal";
+
+
+  let badgeText =
+    rank;
+
+
+  if (
+    rank === 1
+  ) {
+
+    badgeClass =
+      "rank1";
+
+    badgeText =
+      "🥇";
+
+  }
+
+
+  else if (
+    rank === 2
+  ) {
+
+    badgeClass =
+      "rank2";
+
+    badgeText =
+      "🥈";
+
+  }
+
+
+  else if (
+    rank === 3
+  ) {
+
+    badgeClass =
+      "rank3";
+
+    badgeText =
+      "🥉";
+
+  }
+
+
+  return `
+
+    <div
+      class="
+        rank-badge
+        ${badgeClass}
+      "
+    >
+      ${badgeText}
+    </div>
+
+  `;
+
+}
+
+
+
+function renderRankingSection(
+  groupName
+) {
+
+  const ranked =
+    getTopFiveByGroup(
+      groupName
     );
 
 
-  document
-    .getElementById(
-      "top10List"
-    )
-    .innerHTML =
+  const rowsHtml =
 
-      ranked
+    ranked
       .map(
         (item,index) => {
 
@@ -3362,52 +3469,8 @@ function renderTop10() {
             index + 1;
 
 
-          let badgeClass =
-            "rank-normal";
-
-
-          let badgeText =
-            rank;
-
-
-          if (
-            rank === 1
-          ) {
-
-            badgeClass =
-              "rank1";
-
-            badgeText =
-              "🥇";
-
-          }
-
-          else if (
-            rank === 2
-          ) {
-
-            badgeClass =
-              "rank2";
-
-            badgeText =
-              "🥈";
-
-          }
-
-          else if (
-            rank === 3
-          ) {
-
-            badgeClass =
-              "rank3";
-
-            badgeText =
-              "🥉";
-
-          }
-
-
           const profit =
+
             item.row[
               "25년_영업이익율"
             ];
@@ -3417,14 +3480,10 @@ function renderTop10() {
 
             <div class="rank-row">
 
-              <div
-                class="
-                  rank-badge
-                  ${badgeClass}
-                "
-              >
-                ${badgeText}
-              </div>
+
+              ${rankBadgeHtml(
+                rank
+              )}
 
 
               <div class="rank-store">
@@ -3439,7 +3498,7 @@ function renderTop10() {
 
                   ${text(
                     item.row[
-                      "대분류"
+                      "지역"
                     ]
                   )}
 
@@ -3447,7 +3506,7 @@ function renderTop10() {
 
                   ${text(
                     item.row[
-                      "지역"
+                      "대분류"
                     ]
                   )}
 
@@ -3481,6 +3540,7 @@ function renderTop10() {
 
               </div>
 
+
             </div>
 
           `;
@@ -3489,12 +3549,108 @@ function renderTop10() {
       )
       .join("");
 
+
+  return `
+
+    <div class="ranking-section">
+
+
+      <div class="ranking-title">
+
+
+        <div class="ranking-title-left">
+
+          <span class="ranking-chip">
+
+            ${groupName}
+
+          </span>
+
+          <span class="ranking-title-text">
+
+            월평균 TOP 5
+
+          </span>
+
+        </div>
+
+
+        <div class="ranking-columns">
+
+          <div>
+            월평균
+          </div>
+
+          <div>
+            영업이익율
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="ranking-list">
+
+        ${
+          rowsHtml
+          ||
+          `
+            <div
+              style="
+                padding:20px;
+                text-align:center;
+                color:#9ca3af;
+                font-size:10px;
+              "
+            >
+              해당 구분 데이터가 없습니다.
+            </div>
+          `
+        }
+
+      </div>
+
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderCategoryRanking() {
+
+  document
+    .getElementById(
+      "categoryRanking"
+    )
+    .innerHTML =
+
+      renderRankingSection(
+        "가두"
+      )
+
+      +
+
+      renderRankingSection(
+        "유통"
+      )
+
+      +
+
+      renderRankingSection(
+        "밸런스"
+      );
+
 }
 
 
 
 /* =========================================================
-   REGION DISTRIBUTION
+   REGION
 ========================================================= */
 
 function renderRegion() {
@@ -3507,6 +3663,7 @@ function renderRegion() {
       row => {
 
         const region =
+
           String(
             row["지역"]
             ||
@@ -3516,12 +3673,15 @@ function renderRegion() {
 
 
         counts[region] =
+
           (
             counts[region]
             ||
             0
           )
+
           +
+
           1;
 
       }
@@ -3545,11 +3705,12 @@ function renderRegion() {
 
 
   const maxCount =
+
     rows.length
-      ?
-      rows[0][1]
-      :
-      1;
+    ?
+    rows[0][1]
+    :
+    1;
 
 
   document
@@ -3632,7 +3793,7 @@ function renderRegion() {
 
 
 /* =========================================================
-   DEVELOPMENT ANALYSIS
+   DEVELOPMENT
 ========================================================= */
 
 function percentileRank(
@@ -3641,6 +3802,7 @@ function percentileRank(
 ) {
 
   const valid =
+
     values
       .filter(
         v =>
@@ -3665,11 +3827,12 @@ function percentileRank(
 
   const below =
 
-    valid.filter(
-      v =>
-        v <= value
-    )
-    .length;
+    valid
+      .filter(
+        v =>
+          v <= value
+      )
+      .length;
 
 
   return (
@@ -3737,6 +3900,7 @@ function buildRegionalData() {
 
 
         const sales =
+
           num(
             row[
               "26년_월평균"
@@ -3760,6 +3924,7 @@ function buildRegionalData() {
 
 
         const profit =
+
           num(
             row[
               "25년_영업이익율"
@@ -3781,6 +3946,7 @@ function buildRegionalData() {
 
 
         const growth =
+
           num(
             row[
               "동매장_신장율"
@@ -3886,8 +4052,11 @@ function buildReason(row) {
 
 
   const gap =
+
     row.populationShare
+
     -
+
     row.storeShare;
 
 
@@ -4112,227 +4281,208 @@ function renderDevelopmentCandidates() {
   rows =
 
     rows
-    .map(
-      row => {
+      .map(
+        row => {
 
 
-        const salesRank =
+          const salesRank =
 
-          row.avgSales === null
-          ?
-          50
-          :
-          percentileRank(
-            row.avgSales,
-            salesValues
-          );
+            row.avgSales === null
 
+            ?
 
-        const profitRank =
-
-          row.avgProfit === null
-          ?
-          50
-          :
-          percentileRank(
-            row.avgProfit,
-            profitValues
-          );
-
-
-        const growthRank =
-
-          row.avgGrowth === null
-          ?
-          50
-          :
-          percentileRank(
-            row.avgGrowth,
-            growthValues
-          );
-
-
-        /*
-         * 인구 비중보다
-         * 매장 비중이 낮으면
-         * 시장여력 점수 상승.
-         *
-         * 두 비중이 같으면 50점.
-         */
-
-        const shareGap =
-
-          row.populationShare
-          -
-          row.storeShare;
-
-
-        const penetrationScore =
-
-          clamp(
             50
-            +
-            shareGap * 4,
-            0,
-            100
-          );
+
+            :
+
+            percentileRank(
+              row.avgSales,
+              salesValues
+            );
 
 
-        /*
-         * 시장여력
-         *
-         * 인구 대비 점포망 35%
-         * 월평균 실적      30%
-         * 영업이익         20%
-         * 성장률           15%
-         */
+          const profitRank =
 
-        const marketPotential =
+            row.avgProfit === null
 
-          penetrationScore
-          *
-          0.35
+            ?
 
-          +
+            50
 
-          salesRank
-          *
-          0.30
+            :
 
-          +
-
-          profitRank
-          *
-          0.20
-
-          +
-
-          growthRank
-          *
-          0.15;
+            percentileRank(
+              row.avgProfit,
+              profitValues
+            );
 
 
-        /*
-         * 포화위험
-         *
-         * 매장비중 > 인구비중이면 증가
-         * 영업이익/성장률 부진 시 추가 증가
-         */
+          const growthRank =
 
-        let saturationRisk =
+            row.avgGrowth === null
 
-          50
-          +
-          (
-            row.storeShare
-            -
+            ?
+
+            50
+
+            :
+
+            percentileRank(
+              row.avgGrowth,
+              growthValues
+            );
+
+
+          const shareGap =
+
             row.populationShare
-          )
-          *
-          4;
 
-
-        if (
-          row.avgProfit !== null
-          &&
-          row.avgProfit < 0
-        ) {
-
-          saturationRisk += 12;
-
-        }
-
-
-        if (
-          row.avgGrowth !== null
-          &&
-          row.avgGrowth < 0
-        ) {
-
-          saturationRisk += 10;
-
-        }
-
-
-        if (
-          salesRank < 35
-        ) {
-
-          saturationRisk += 8;
-
-        }
-
-
-        saturationRisk =
-          clamp(
-            saturationRisk,
-            0,
-            100
-          );
-
-
-        /*
-         * 최종 검토점수
-         *
-         * 시장여력 75%
-         * 낮은 포화위험 25%
-         */
-
-        const reviewScore =
-
-          marketPotential
-          *
-          0.75
-
-          +
-
-          (
-            100
             -
-            saturationRisk
-          )
-          *
-          0.25;
+
+            row.storeShare;
 
 
-        return {
+          const penetrationScore =
 
-          ...row,
+            clamp(
 
-          salesRank:
-            salesRank,
+              50
 
-          profitRank:
-            profitRank,
+              +
 
-          growthRank:
-            growthRank,
+              shareGap * 4,
 
-          marketPotential:
-            Math.round(
-              marketPotential
-            ),
+              0,
 
-          saturationRisk:
-            Math.round(
-              saturationRisk
-            ),
+              100
 
-          reviewScore:
-            Math.round(
-              reviewScore
+            );
+
+
+          const marketPotential =
+
+            penetrationScore
+            *
+            0.35
+
+            +
+
+            salesRank
+            *
+            0.30
+
+            +
+
+            profitRank
+            *
+            0.20
+
+            +
+
+            growthRank
+            *
+            0.15;
+
+
+          let saturationRisk =
+
+            50
+
+            +
+
+            (
+              row.storeShare
+              -
+              row.populationShare
             )
-
-        };
-
-      }
-    );
+            *
+            4;
 
 
-  /*
-   * 데이터 신뢰도를 위해
-   * 최소 기존점 2개 이상 지역 우선.
-   */
+          if (
+            row.avgProfit !== null
+            &&
+            row.avgProfit < 0
+          ) {
+
+            saturationRisk += 12;
+
+          }
+
+
+          if (
+            row.avgGrowth !== null
+            &&
+            row.avgGrowth < 0
+          ) {
+
+            saturationRisk += 10;
+
+          }
+
+
+          if (
+            salesRank < 35
+          ) {
+
+            saturationRisk += 8;
+
+          }
+
+
+          saturationRisk =
+
+            clamp(
+              saturationRisk,
+              0,
+              100
+            );
+
+
+          const reviewScore =
+
+            marketPotential
+            *
+            0.75
+
+            +
+
+            (
+              100
+              -
+              saturationRisk
+            )
+            *
+            0.25;
+
+
+          return {
+
+            ...row,
+
+            salesRank:
+              salesRank,
+
+            marketPotential:
+              Math.round(
+                marketPotential
+              ),
+
+            saturationRisk:
+              Math.round(
+                saturationRisk
+              ),
+
+            reviewScore:
+              Math.round(
+                reviewScore
+              )
+
+          };
+
+        }
+      );
+
 
   let candidates =
 
@@ -4342,11 +4492,6 @@ function renderDevelopmentCandidates() {
           row.count >= 2
       );
 
-
-  /*
-   * 혹시 5개 미만이면
-   * 1개 점포 지역도 포함
-   */
 
   if (
     candidates.length < 5
@@ -4389,6 +4534,7 @@ function renderDevelopmentCandidates() {
 
 
           const status =
+
             developmentStatus(
               row.reviewScore
             );
@@ -4397,9 +4543,13 @@ function renderDevelopmentCandidates() {
           const riskClass =
 
             row.saturationRisk >= 60
+
             ?
+
             "risk-high"
+
             :
+
             "risk-low";
 
 
@@ -4414,11 +4564,15 @@ function renderDevelopmentCandidates() {
                 <div class="dev-rank-area">
 
                   <div class="dev-rank">
+
                     ${index + 1}
+
                   </div>
 
                   <div class="dev-region">
+
                     ${row.region}
+
                   </div>
 
                 </div>
@@ -4450,7 +4604,9 @@ function renderDevelopmentCandidates() {
                   </div>
 
                   <div class="dev-score-value">
+
                     ${row.marketPotential}
+
                   </div>
 
                 </div>
@@ -4468,7 +4624,9 @@ function renderDevelopmentCandidates() {
                       ${riskClass}
                     "
                   >
+
                     ${row.saturationRisk}
+
                   </div>
 
                 </div>
@@ -4488,7 +4646,9 @@ function renderDevelopmentCandidates() {
                   </span>
 
                   <span class="dev-data-value">
+
                     ${row.count}개
+
                   </span>
 
                 </div>
@@ -4501,7 +4661,9 @@ function renderDevelopmentCandidates() {
                   </span>
 
                   <span class="dev-data-value">
+
                     ${row.reviewScore}점
+
                   </span>
 
                 </div>
@@ -4551,9 +4713,13 @@ function renderDevelopmentCandidates() {
 
                     ${
                       row.avgSales === null
+
                       ?
+
                       "-"
+
                       :
+
                       (
                         row.avgSales
                         /
@@ -4629,9 +4795,13 @@ function renderDevelopmentCandidates() {
                       )
                       >
                       0
+
                       ?
+
                       "+"
+
                       :
+
                       ""
                     }
 
@@ -4660,7 +4830,9 @@ function renderDevelopmentCandidates() {
 
                 <br>
 
-                ${buildReason(row)}
+                ${buildReason(
+                  row
+                )}
 
               </div>
 
@@ -4687,12 +4859,14 @@ function fillFilters() {
 
     [
       ...new Set(
+
         stores
           .map(
             row =>
               row["대분류"]
           )
           .filter(Boolean)
+
       )
     ]
     .sort();
@@ -4702,12 +4876,14 @@ function fillFilters() {
 
     [
       ...new Set(
+
         stores
           .map(
             row =>
               row["지역"]
           )
           .filter(Boolean)
+
       )
     ]
     .sort();
@@ -4790,9 +4966,13 @@ function growthBadge(v) {
   const value =
 
     Math.abs(n) <= 1
+
     ?
+
     n * 100
+
     :
+
     n;
 
 
@@ -4848,7 +5028,9 @@ function growthBadge(v) {
       badge
       neutral
     ">
+
       0%
+
     </span>
 
   `;
@@ -4858,7 +5040,7 @@ function growthBadge(v) {
 
 
 /* =========================================================
-   CONTRACT EXPIRY
+   EXPIRY
 ========================================================= */
 
 function expiryBadge(v) {
@@ -4892,11 +5074,17 @@ function expiryBadge(v) {
   const days =
 
     Math.ceil(
+
       (
-        target - now
+        target
+        -
+        now
       )
+
       /
+
       86400000
+
     );
 
 
@@ -5053,7 +5241,9 @@ function renderStores() {
             color:#9ca3af;
           "
         >
+
           검색 결과가 없습니다.
+
         </td>
 
       </tr>
@@ -5101,9 +5291,7 @@ function renderStores() {
           <td>
 
             ${dateFormat(
-              row[
-                "오픈일자"
-              ]
+              row["오픈일자"]
             )}
 
           </td>
@@ -5112,9 +5300,7 @@ function renderStores() {
           <td>
 
             ${text(
-              row[
-                "대분류"
-              ]
+              row["대분류"]
             )}
 
           </td>
@@ -5123,9 +5309,7 @@ function renderStores() {
           <td>
 
             ${text(
-              row[
-                "지역"
-              ]
+              row["지역"]
             )}
 
           </td>
@@ -5134,9 +5318,7 @@ function renderStores() {
           <td>
 
             ${text(
-              row[
-                "운영형태"
-              ]
+              row["운영형태"]
             )}
 
           </td>
@@ -5145,9 +5327,7 @@ function renderStores() {
           <td>
 
             ${million(
-              row[
-                "26년_월평균"
-              ]
+              row["26년_월평균"]
             )}
 
           </td>
@@ -5156,9 +5336,7 @@ function renderStores() {
           <td>
 
             ${growthBadge(
-              row[
-                "동매장_신장율"
-              ]
+              row["동매장_신장율"]
             )}
 
           </td>
@@ -5167,9 +5345,7 @@ function renderStores() {
           <td>
 
             ${comma(
-              row[
-                "전체면적_평"
-              ]
+              row["전체면적_평"]
             )}
 
           </td>
@@ -5178,9 +5354,7 @@ function renderStores() {
           <td>
 
             ${expiryBadge(
-              row[
-                "계약만료일"
-              ]
+              row["계약만료일"]
             )}
 
           </td>
@@ -5189,9 +5363,7 @@ function renderStores() {
           <td>
 
             ${percent(
-              row[
-                "유통마진율"
-              ]
+              row["유통마진율"]
             )}
 
           </td>
@@ -5200,9 +5372,7 @@ function renderStores() {
           <td>
 
             ${million(
-              row[
-                "고정임차료"
-              ]
+              row["고정임차료"]
             )}
 
           </td>
@@ -5211,9 +5381,7 @@ function renderStores() {
           <td>
 
             ${moneyOrText(
-              row[
-                "관리비"
-              ]
+              row["관리비"]
             )}
 
           </td>
@@ -5222,9 +5390,7 @@ function renderStores() {
           <td>
 
             ${million(
-              row[
-                "보증금"
-              ]
+              row["보증금"]
             )}
 
           </td>
@@ -5733,7 +5899,7 @@ document
 
 
 /* =========================================================
-   LOAD DATA
+   LOAD
 ========================================================= */
 
 async function loadData() {
@@ -5748,9 +5914,7 @@ async function loadData() {
     const [
 
       storeRes,
-
       historyRes,
-
       summaryRes
 
     ] =
@@ -5835,7 +5999,7 @@ async function loadData() {
 
     renderSummary();
 
-    renderTop10();
+    renderCategoryRanking();
 
     renderRegion();
 
@@ -5853,7 +6017,9 @@ async function loadData() {
       .textContent =
 
         "조회 "
+
         +
+
         new Date()
           .toLocaleString(
             "ko-KR"
@@ -5888,8 +6054,7 @@ loadData();
 
 </script>
 
-</body>
 
-<!-- redeploy -->
+</body>
 
 </html>
