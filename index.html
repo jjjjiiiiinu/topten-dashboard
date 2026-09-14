@@ -1508,10 +1508,7 @@ select {
 
 </head>
 
-
-
 <body>
-
 
 <header class="header">
 
@@ -1526,7 +1523,6 @@ select {
     </div>
 
   </div>
-
 
   <div class="header-right">
 
@@ -1545,10 +1541,7 @@ select {
 
 </header>
 
-
-
 <main class="container">
-
 
 <div class="section-title">
 
@@ -1562,25 +1555,16 @@ select {
 
 </div>
 
-
 <section
   class="kpi-grid"
   id="summaryKpi"
 ></section>
 
-
-
-<!-- =====================================================
-     TOP DASHBOARD
-===================================================== -->
+<!-- TOP DASHBOARD -->
 
 <section class="dashboard-grid">
 
-
-<!-- LEFT -->
-
 <div class="card">
-
 
   <div class="card-head">
 
@@ -1593,7 +1577,6 @@ select {
     </p>
 
   </div>
-
 
   <div class="summary-table-wrap">
 
@@ -1614,7 +1597,6 @@ select {
 
       </thead>
 
-
       <tbody
         id="summaryBody"
       ></tbody>
@@ -1623,10 +1605,7 @@ select {
 
   </div>
 
-
-
   <div class="lease-summary">
-
 
     <div class="lease-header">
 
@@ -1639,7 +1618,6 @@ select {
       </span>
 
     </div>
-
 
     <div class="total-deposit">
 
@@ -1656,9 +1634,7 @@ select {
 
     </div>
 
-
     <div class="lease-columns">
-
 
       <div class="lease-box">
 
@@ -1673,7 +1649,6 @@ select {
 
       </div>
 
-
       <div class="lease-box">
 
         <div class="lease-box-title">
@@ -1687,21 +1662,13 @@ select {
 
       </div>
 
-
     </div>
-
 
   </div>
 
-
 </div>
 
-
-
-<!-- CENTER -->
-
 <div class="card">
-
 
   <div class="card-head">
 
@@ -1715,20 +1682,13 @@ select {
 
   </div>
 
-
   <div
     id="categoryRanking"
   ></div>
 
-
 </div>
 
-
-
-<!-- RIGHT -->
-
 <div class="card">
-
 
   <div class="card-head">
 
@@ -1742,9 +1702,7 @@ select {
 
   </div>
 
-
   <div class="region-chart">
-
 
     <div class="region-guide">
 
@@ -1755,28 +1713,17 @@ select {
 
     </div>
 
-
     <div
       id="regionChart"
     ></div>
 
-
   </div>
-
 
 </div>
 
-
 </section>
 
-
-
-<!-- =====================================================
-     DEVELOPMENT
-===================================================== -->
-
 <section class="card development-card">
-
 
   <div class="card-head">
 
@@ -1789,7 +1736,6 @@ select {
     </p>
 
   </div>
-
 
   <div class="dev-intro">
 
@@ -1807,12 +1753,10 @@ select {
 
   </div>
 
-
   <div
     class="dev-list"
     id="developmentList"
   ></div>
-
 
   <div class="dev-note">
 
@@ -1822,20 +1766,11 @@ select {
 
   </div>
 
-
 </section>
-
-
-
-<!-- =====================================================
-     STORE TABLE
-===================================================== -->
 
 <section class="store-panel">
 
-
   <div class="store-panel-head">
-
 
     <div>
 
@@ -1849,16 +1784,13 @@ select {
 
     </div>
 
-
     <div class="filters">
-
 
       <input
         type="text"
         id="search"
         placeholder="매장명 검색"
       >
-
 
       <select id="categoryFilter">
 
@@ -1868,7 +1800,6 @@ select {
 
       </select>
 
-
       <select id="regionFilter">
 
         <option value="">
@@ -1877,19 +1808,13 @@ select {
 
       </select>
 
-
     </div>
-
 
   </div>
 
-
-
   <div class="table-wrap">
 
-
     <table class="store-table">
-
 
       <thead>
 
@@ -1914,48 +1839,33 @@ select {
 
       </thead>
 
-
       <tbody
         id="storeBody"
       ></tbody>
 
-
     </table>
-
 
   </div>
 
-
 </section>
-
 
 <div class="footer">
   TOPTEN Store & Contract Management Portal
 </div>
 
-
 </main>
-
-
-
-<!-- =====================================================
-     DRAWER
-===================================================== -->
 
 <div
   class="overlay"
   id="overlay"
 ></div>
 
-
 <aside
   class="drawer"
   id="drawer"
 >
 
-
 <div class="drawer-head">
-
 
   <div>
 
@@ -1971,7 +1881,6 @@ select {
 
   </div>
 
-
   <button
     class="close"
     id="closeBtn"
@@ -1979,61 +1888,37 @@ select {
     ×
   </button>
 
-
 </div>
 
-
-
 <div class="drawer-body">
-
 
   <h3 class="detail-title">
     매장 정보
   </h3>
-
 
   <div
     class="detail-grid"
     id="detailGrid"
   ></div>
 
-
   <h3 class="detail-title">
     계약 히스토리
   </h3>
-
 
   <div
     class="timeline"
     id="timeline"
   ></div>
 
-
 </div>
-
 
 </aside>
 
-
-
 <script>
 
-
-/* =========================================================
-   DATA
-========================================================= */
-
 let stores = [];
-
 let history = [];
-
 let summaries = [];
-
-
-
-/* =========================================================
-   POPULATION REFERENCE
-========================================================= */
 
 const POPULATION = {
 
@@ -2057,12 +1942,6 @@ const POPULATION = {
 
 };
 
-
-
-/* =========================================================
-   BASIC FUNCTIONS
-========================================================= */
-
 function text(v) {
 
   if (
@@ -2079,8 +1958,6 @@ function text(v) {
 
 }
 
-
-
 function num(v) {
 
   if (
@@ -2093,7 +1970,6 @@ function num(v) {
 
   }
 
-
   if (
     typeof v === "number"
   ) {
@@ -2102,21 +1978,17 @@ function num(v) {
 
   }
 
-
   const original =
     String(v)
       .trim();
-
 
   const cleaned =
     original
       .replace(/,/g,"")
       .replace(/%/g,"");
 
-
   const n =
     Number(cleaned);
-
 
   if (
     isNaN(n)
@@ -2126,7 +1998,6 @@ function num(v) {
 
   }
 
-
   if (
     original.includes("%")
   ) {
@@ -2135,18 +2006,14 @@ function num(v) {
 
   }
 
-
   return n;
 
 }
-
-
 
 function comma(v) {
 
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2155,7 +2022,6 @@ function comma(v) {
     return "-";
 
   }
-
 
   return n.toLocaleString(
     "ko-KR",
@@ -2166,13 +2032,10 @@ function comma(v) {
 
 }
 
-
-
 function million(v) {
 
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2181,7 +2044,6 @@ function million(v) {
     return "-";
 
   }
-
 
   return (
     n / 1000000
@@ -2194,8 +2056,6 @@ function million(v) {
   );
 
 }
-
-
 
 function moneyOrText(v) {
 
@@ -2209,10 +2069,8 @@ function moneyOrText(v) {
 
   }
 
-
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2221,7 +2079,6 @@ function moneyOrText(v) {
     return String(v);
 
   }
-
 
   return (
     n / 1000000
@@ -2235,13 +2092,10 @@ function moneyOrText(v) {
 
 }
 
-
-
 function percent(v) {
 
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2251,7 +2105,6 @@ function percent(v) {
 
   }
 
-
   const value =
 
     Math.abs(n) <= 1
@@ -2259,7 +2112,6 @@ function percent(v) {
     n * 100
     :
     n;
-
 
   return (
 
@@ -2275,13 +2127,10 @@ function percent(v) {
 
 }
 
-
-
 function signedPercent(v) {
 
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2291,7 +2140,6 @@ function signedPercent(v) {
 
   }
 
-
   const value =
 
     Math.abs(n) <= 1
@@ -2300,7 +2148,6 @@ function signedPercent(v) {
     :
     n;
 
-
   const sign =
 
     value > 0
@@ -2308,7 +2155,6 @@ function signedPercent(v) {
     "+"
     :
     "";
-
 
   return (
 
@@ -2328,8 +2174,6 @@ function signedPercent(v) {
 
 }
 
-
-
 function dateFormat(v) {
 
   if (
@@ -2342,11 +2186,9 @@ function dateFormat(v) {
 
   }
 
-
   const s =
     String(v)
       .trim();
-
 
   if (
     /^\d+(\.\d+)?$/
@@ -2355,7 +2197,6 @@ function dateFormat(v) {
 
     const serial =
       Number(s);
-
 
     if (
       serial > 20000 &&
@@ -2368,7 +2209,6 @@ function dateFormat(v) {
           11,
           30
         );
-
 
       return new Date(
 
@@ -2386,7 +2226,6 @@ function dateFormat(v) {
 
   }
 
-
   if (
     /^\d{4}-\d{2}-\d{2}$/
       .test(s)
@@ -2396,10 +2235,8 @@ function dateFormat(v) {
 
   }
 
-
   const d =
     new Date(v);
-
 
   if (
     !isNaN(
@@ -2432,12 +2269,9 @@ function dateFormat(v) {
 
   }
 
-
   return s;
 
 }
-
-
 
 function clamp(
   value,
@@ -2455,8 +2289,6 @@ function clamp(
 
 }
 
-
-
 function average(values) {
 
   if (
@@ -2466,7 +2298,6 @@ function average(values) {
     return null;
 
   }
-
 
   return (
 
@@ -2484,17 +2315,10 @@ function average(values) {
 
 }
 
-
-
-/* =========================================================
-   PROFIT COLOR
-========================================================= */
-
 function profitClass(v) {
 
   const n =
     num(v);
-
 
   if (
     n === null
@@ -2504,7 +2328,6 @@ function profitClass(v) {
 
   }
 
-
   if (
     n > 0
   ) {
@@ -2512,7 +2335,6 @@ function profitClass(v) {
     return "profit-positive";
 
   }
-
 
   if (
     n < 0
@@ -2522,16 +2344,9 @@ function profitClass(v) {
 
   }
 
-
   return "profit-neutral";
 
 }
-
-
-
-/* =========================================================
-   SUMMARY
-========================================================= */
 
 function getTotalSummary() {
 
@@ -2558,18 +2373,14 @@ function getTotalSummary() {
 
 }
 
-
-
 function renderSummary() {
 
   const total =
     getTotalSummary();
 
-
   if (!total) {
     return;
   }
-
 
   const kpis = [
 
@@ -2615,7 +2426,6 @@ function renderSummary() {
 
   ];
 
-
   document
     .getElementById(
       "summaryKpi"
@@ -2646,7 +2456,6 @@ function renderSummary() {
       )
       .join("");
 
-
   const channelRows =
 
     summaries
@@ -2662,7 +2471,6 @@ function renderSummary() {
 
           "합계"
       );
-
 
   document
     .getElementById(
@@ -2718,7 +2526,6 @@ function renderSummary() {
       )
       .join("");
 
-
   const fixedDeposit =
 
     num(
@@ -2728,7 +2535,6 @@ function renderSummary() {
     )
     || 0;
 
-
   const commissionDeposit =
 
     num(
@@ -2737,7 +2543,6 @@ function renderSummary() {
       ]
     )
     || 0;
-
 
   document
     .getElementById(
@@ -2750,7 +2555,6 @@ function renderSummary() {
         +
         commissionDeposit
       );
-
 
   document
     .getElementById(
@@ -2774,7 +2578,6 @@ function renderSummary() {
 
       </div>
 
-
       <div class="lease-row">
 
         <span class="lease-key">
@@ -2791,7 +2594,6 @@ function renderSummary() {
 
       </div>
 
-
       <div class="lease-row">
 
         <span class="lease-key">
@@ -2807,7 +2609,6 @@ function renderSummary() {
         </span>
 
       </div>
-
 
       <div class="lease-row">
 
@@ -2826,7 +2627,6 @@ function renderSummary() {
       </div>
 
     `;
-
 
   document
     .getElementById(
@@ -2850,7 +2650,6 @@ function renderSummary() {
 
       </div>
 
-
       <div class="lease-row">
 
         <span class="lease-key">
@@ -2867,7 +2666,6 @@ function renderSummary() {
 
       </div>
 
-
       <div class="lease-row">
 
         <span class="lease-key">
@@ -2883,7 +2681,6 @@ function renderSummary() {
         </span>
 
       </div>
-
 
       <div class="lease-row">
 
@@ -2904,72 +2701,53 @@ function renderSummary() {
     `;
 
 }
-
-
-
-/* =========================================================
+  /* =========================================================
    CATEGORY CLASSIFICATION
 ========================================================= */
 
 function classifyStore(row) {
 
   const category =
-
     String(
       row["대분류"] || ""
     )
     .trim();
 
-
   if (
-    category.includes(
-      "밸런스"
-    )
+    category.includes("밸런스")
     ||
-    category.startsWith(
-      "B)"
-    )
+    category.startsWith("B)")
     ||
-    category.startsWith(
-      "B）"
-    )
+    category.startsWith("B）")
   ) {
 
     return "밸런스";
 
   }
 
-
   if (
-    category.includes(
-      "가두"
-    )
+    category.includes("가두")
   ) {
 
     return "가두";
 
   }
 
-
   return "유통";
 
 }
-
 
 
 /* =========================================================
    CATEGORY TOP 3
 ========================================================= */
 
-function getTopThreeByGroup(
-  groupName
-) {
+function getTopThreeByGroup(groupName) {
 
   return stores
 
     .filter(
       row =>
-
         classifyStore(row)
         ===
         groupName
@@ -2982,9 +2760,7 @@ function getTopThreeByGroup(
 
         sales:
           num(
-            row[
-              "26년_월평균"
-            ]
+            row["26년_월평균"]
           )
 
       })
@@ -2992,11 +2768,8 @@ function getTopThreeByGroup(
 
     .filter(
       item =>
-
         item.sales !== null
-
         &&
-
         item.sales > 0
     )
 
@@ -3013,16 +2786,13 @@ function getTopThreeByGroup(
 }
 
 
-
 function rankBadgeHtml(rank) {
 
   let badgeClass =
     "rank1";
 
-
   let badgeText =
     "🥇";
-
 
   if (
     rank === 2
@@ -3036,7 +2806,6 @@ function rankBadgeHtml(rank) {
 
   }
 
-
   else if (
     rank === 3
   ) {
@@ -3048,7 +2817,6 @@ function rankBadgeHtml(rank) {
       "🥉";
 
   }
-
 
   return `
 
@@ -3066,16 +2834,12 @@ function rankBadgeHtml(rank) {
 }
 
 
-
-function renderRankingSection(
-  groupName
-) {
+function renderRankingSection(groupName) {
 
   const ranked =
     getTopThreeByGroup(
       groupName
     );
-
 
   const rowsHtml =
 
@@ -3086,23 +2850,18 @@ function renderRankingSection(
           const rank =
             index + 1;
 
-
           const profit =
-
             item.row[
               "25년_영업이익율"
             ];
-
 
           return `
 
             <div class="rank-row">
 
-
               ${rankBadgeHtml(
                 rank
               )}
-
 
               <div class="rank-store">
 
@@ -3132,7 +2891,6 @@ function renderRankingSection(
 
               </div>
 
-
               <div class="rank-sales">
 
                 ${million(
@@ -3142,7 +2900,6 @@ function renderRankingSection(
                 )}
 
               </div>
-
 
               <div
                 class="
@@ -3158,7 +2915,6 @@ function renderRankingSection(
 
               </div>
 
-
             </div>
 
           `;
@@ -3167,14 +2923,11 @@ function renderRankingSection(
       )
       .join("");
 
-
   return `
 
     <div class="ranking-section">
 
-
       <div class="ranking-title">
-
 
         <div class="ranking-title-left">
 
@@ -3192,7 +2945,6 @@ function renderRankingSection(
 
         </div>
 
-
         <div class="ranking-columns">
 
           <div>
@@ -3205,9 +2957,7 @@ function renderRankingSection(
 
         </div>
 
-
       </div>
-
 
       <div class="ranking-list">
 
@@ -3236,13 +2986,11 @@ function renderRankingSection(
 
       </div>
 
-
     </div>
 
   `;
 
 }
-
 
 
 function renderCategoryRanking() {
@@ -3272,7 +3020,6 @@ function renderCategoryRanking() {
 }
 
 
-
 /* =========================================================
    REGION
 ========================================================= */
@@ -3281,13 +3028,11 @@ function renderRegion() {
 
   const counts = {};
 
-
   stores
     .forEach(
       row => {
 
         const region =
-
           String(
             row["지역"]
             ||
@@ -3295,25 +3040,19 @@ function renderRegion() {
           )
           .trim();
 
-
         counts[region] =
-
           (
             counts[region]
             ||
             0
           )
-
           +
-
           1;
 
       }
     );
 
-
   const rows =
-
     Object
       .entries(
         counts
@@ -3323,19 +3062,15 @@ function renderRegion() {
           b[1] - a[1]
       );
 
-
   const totalStores =
     stores.length || 1;
 
-
   const maxCount =
-
     rows.length
     ?
     rows[0][1]
     :
     1;
-
 
   document
     .getElementById(
@@ -3348,7 +3083,6 @@ function renderRegion() {
         ([region,count]) => {
 
           const width =
-
             (
               count
               /
@@ -3357,9 +3091,7 @@ function renderRegion() {
             *
             100;
 
-
           const share =
-
             (
               count
               /
@@ -3368,7 +3100,6 @@ function renderRegion() {
             *
             100;
 
-
           return `
 
             <div class="region-row">
@@ -3376,7 +3107,6 @@ function renderRegion() {
               <div class="region-name">
                 ${region}
               </div>
-
 
               <div class="region-bg">
 
@@ -3389,11 +3119,9 @@ function renderRegion() {
 
               </div>
 
-
               <div class="region-count">
                 ${count}개
               </div>
-
 
               <div class="region-share">
 
@@ -3415,7 +3143,6 @@ function renderRegion() {
 }
 
 
-
 /* =========================================================
    DEVELOPMENT
 ========================================================= */
@@ -3430,19 +3157,14 @@ function percentileRank(
     values
       .filter(
         v =>
-
           v !== null
-
           &&
-
           !isNaN(v)
       )
-
       .sort(
         (a,b) =>
           a - b
       );
-
 
   if (
     !valid.length
@@ -3452,7 +3174,6 @@ function percentileRank(
 
   }
 
-
   const below =
 
     valid
@@ -3461,7 +3182,6 @@ function percentileRank(
           v <= value
       )
       .length;
-
 
   return (
     below
@@ -3474,25 +3194,21 @@ function percentileRank(
 }
 
 
-
 function buildRegionalData() {
 
   const map = {};
-
 
   stores
     .forEach(
       row => {
 
         const region =
-
           String(
             row["지역"]
             ||
             ""
           )
           .trim();
-
 
         if (
           !region
@@ -3501,7 +3217,6 @@ function buildRegionalData() {
           return;
 
         }
-
 
         if (
           !map[region]
@@ -3523,18 +3238,14 @@ function buildRegionalData() {
 
         }
 
-
         map[region].count += 1;
 
-
         const sales =
-
           num(
             row[
               "26년_월평균"
             ]
           );
-
 
         if (
           sales !== null
@@ -3550,15 +3261,12 @@ function buildRegionalData() {
 
         }
 
-
         const profit =
-
           num(
             row[
               "25년_영업이익율"
             ]
           );
-
 
         if (
           profit !== null
@@ -3572,15 +3280,12 @@ function buildRegionalData() {
 
         }
 
-
         const growth =
-
           num(
             row[
               "동매장_신장율"
             ]
           );
-
 
         if (
           growth !== null
@@ -3597,14 +3302,12 @@ function buildRegionalData() {
       }
     );
 
-
   return Object
     .values(
       map
     );
 
 }
-
 
 
 function developmentStatus(score) {
@@ -3625,7 +3328,6 @@ function developmentStatus(score) {
 
   }
 
-
   if (
     score >= 60
   ) {
@@ -3641,7 +3343,6 @@ function developmentStatus(score) {
     };
 
   }
-
 
   if (
     score >= 50
@@ -3659,7 +3360,6 @@ function developmentStatus(score) {
 
   }
 
-
   return {
 
     text:
@@ -3673,20 +3373,14 @@ function developmentStatus(score) {
 }
 
 
-
 function buildReason(row) {
 
   const reasons = [];
 
-
   const gap =
-
     row.populationShare
-
     -
-
     row.storeShare;
-
 
   if (
     gap >= 2
@@ -3698,7 +3392,6 @@ function buildReason(row) {
 
   }
 
-
   if (
     row.salesRank >= 70
   ) {
@@ -3708,7 +3401,6 @@ function buildReason(row) {
     );
 
   }
-
 
   if (
     row.avgProfit !== null
@@ -3722,7 +3414,6 @@ function buildReason(row) {
 
   }
 
-
   if (
     row.avgGrowth !== null
     &&
@@ -3735,7 +3426,6 @@ function buildReason(row) {
 
   }
 
-
   if (
     row.saturationRisk >= 65
   ) {
@@ -3745,7 +3435,6 @@ function buildReason(row) {
     );
 
   }
-
 
   if (
     !reasons.length
@@ -3757,7 +3446,6 @@ function buildReason(row) {
 
   }
 
-
   return reasons
     .slice(
       0,
@@ -3768,12 +3456,10 @@ function buildReason(row) {
 }
 
 
-
 function renderDevelopmentCandidates() {
 
   const regions =
     buildRegionalData();
-
 
   if (
     !regions.length
@@ -3783,13 +3469,10 @@ function renderDevelopmentCandidates() {
 
   }
 
-
   const totalStoreCount =
     stores.length || 1;
 
-
   const totalPopulation =
-
     Object
       .values(
         POPULATION
@@ -3799,7 +3482,6 @@ function renderDevelopmentCandidates() {
           sum + value,
         0
       );
-
 
   let rows =
 
@@ -3814,27 +3496,22 @@ function renderDevelopmentCandidates() {
       .map(
         item => {
 
-
           const avgSales =
             average(
               item.sales
             );
-
 
           const avgProfit =
             average(
               item.profits
             );
 
-
           const avgGrowth =
             average(
               item.growths
             );
 
-
           const storeShare =
-
             (
               item.count
               /
@@ -3843,9 +3520,7 @@ function renderDevelopmentCandidates() {
             *
             100;
 
-
           const populationShare =
-
             (
               POPULATION[
                 item.region
@@ -3855,7 +3530,6 @@ function renderDevelopmentCandidates() {
             )
             *
             100;
-
 
           return {
 
@@ -3885,13 +3559,11 @@ function renderDevelopmentCandidates() {
         }
       );
 
-
   const salesValues =
     rows.map(
       row =>
         row.avgSales
     );
-
 
   const profitValues =
     rows.map(
@@ -3899,80 +3571,53 @@ function renderDevelopmentCandidates() {
         row.avgProfit
     );
 
-
   const growthValues =
     rows.map(
       row =>
         row.avgGrowth
     );
 
-
   rows =
-
     rows
       .map(
         row => {
 
-
           const salesRank =
-
             row.avgSales === null
-
             ?
-
             50
-
             :
-
             percentileRank(
               row.avgSales,
               salesValues
             );
 
-
           const profitRank =
-
             row.avgProfit === null
-
             ?
-
             50
-
             :
-
             percentileRank(
               row.avgProfit,
               profitValues
             );
 
-
           const growthRank =
-
             row.avgGrowth === null
-
             ?
-
             50
-
             :
-
             percentileRank(
               row.avgGrowth,
               growthValues
             );
 
-
           const shareGap =
-
             row.populationShare
-
             -
-
             row.storeShare;
 
-
           const penetrationScore =
-
             clamp(
 
               50
@@ -3987,9 +3632,7 @@ function renderDevelopmentCandidates() {
 
             );
 
-
           const marketPotential =
-
             penetrationScore
             *
             0.35
@@ -4012,9 +3655,7 @@ function renderDevelopmentCandidates() {
             *
             0.15;
 
-
           let saturationRisk =
-
             50
 
             +
@@ -4027,7 +3668,6 @@ function renderDevelopmentCandidates() {
             *
             4;
 
-
           if (
             row.avgProfit !== null
             &&
@@ -4037,7 +3677,6 @@ function renderDevelopmentCandidates() {
             saturationRisk += 12;
 
           }
-
 
           if (
             row.avgGrowth !== null
@@ -4049,7 +3688,6 @@ function renderDevelopmentCandidates() {
 
           }
 
-
           if (
             salesRank < 35
           ) {
@@ -4058,18 +3696,14 @@ function renderDevelopmentCandidates() {
 
           }
 
-
           saturationRisk =
-
             clamp(
               saturationRisk,
               0,
               100
             );
 
-
           const reviewScore =
-
             marketPotential
             *
             0.75
@@ -4083,7 +3717,6 @@ function renderDevelopmentCandidates() {
             )
             *
             0.25;
-
 
           return {
 
@@ -4112,7 +3745,6 @@ function renderDevelopmentCandidates() {
         }
       );
 
-
   let candidates =
 
     rows
@@ -4120,7 +3752,6 @@ function renderDevelopmentCandidates() {
         row =>
           row.count >= 2
       );
-
 
   if (
     candidates.length < 5
@@ -4130,7 +3761,6 @@ function renderDevelopmentCandidates() {
       rows;
 
   }
-
 
   candidates =
 
@@ -4147,14 +3777,11 @@ function renderDevelopmentCandidates() {
         5
       );
 
-
   const container =
-
     document
       .getElementById(
         "developmentList"
       );
-
 
   container.innerHTML =
 
@@ -4162,34 +3789,23 @@ function renderDevelopmentCandidates() {
       .map(
         (row,index) => {
 
-
           const status =
-
             developmentStatus(
               row.reviewScore
             );
 
-
           const riskClass =
-
             row.saturationRisk >= 60
-
             ?
-
             "risk-high"
-
             :
-
             "risk-low";
-
 
           return `
 
             <div class="dev-card">
 
-
               <div class="dev-card-top">
-
 
                 <div class="dev-rank-area">
 
@@ -4207,7 +3823,6 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
                 <div
                   class="
                     dev-status
@@ -4219,13 +3834,9 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
               </div>
 
-
-
               <div class="dev-score-row">
-
 
                 <div class="dev-score-box">
 
@@ -4240,7 +3851,6 @@ function renderDevelopmentCandidates() {
                   </div>
 
                 </div>
-
 
                 <div class="dev-score-box">
 
@@ -4261,13 +3871,9 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
               </div>
 
-
-
               <div class="dev-data">
-
 
                 <div class="dev-data-item">
 
@@ -4283,7 +3889,6 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
                 <div class="dev-data-item">
 
                   <span class="dev-data-label">
@@ -4297,7 +3902,6 @@ function renderDevelopmentCandidates() {
                   </span>
 
                 </div>
-
 
                 <div class="dev-data-item">
 
@@ -4315,7 +3919,6 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
                 <div class="dev-data-item">
 
                   <span class="dev-data-label">
@@ -4332,7 +3935,6 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
                 <div class="dev-data-item">
 
                   <span class="dev-data-label">
@@ -4343,13 +3945,9 @@ function renderDevelopmentCandidates() {
 
                     ${
                       row.avgSales === null
-
                       ?
-
                       "-"
-
                       :
-
                       (
                         row.avgSales
                         /
@@ -4366,7 +3964,6 @@ function renderDevelopmentCandidates() {
                   </span>
 
                 </div>
-
 
                 <div class="dev-data-item">
 
@@ -4391,7 +3988,6 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
                 <div class="dev-data-item">
 
                   <span class="dev-data-label">
@@ -4407,7 +4003,6 @@ function renderDevelopmentCandidates() {
                   </span>
 
                 </div>
-
 
                 <div class="dev-data-item">
 
@@ -4425,13 +4020,9 @@ function renderDevelopmentCandidates() {
                       )
                       >
                       0
-
                       ?
-
                       "+"
-
                       :
-
                       ""
                     }
 
@@ -4447,10 +4038,7 @@ function renderDevelopmentCandidates() {
 
                 </div>
 
-
               </div>
-
-
 
               <div class="dev-reason">
 
@@ -4466,7 +4054,6 @@ function renderDevelopmentCandidates() {
 
               </div>
 
-
             </div>
 
           `;
@@ -4476,7 +4063,6 @@ function renderDevelopmentCandidates() {
       .join("");
 
 }
-
 
 
 /* =========================================================
@@ -4501,7 +4087,6 @@ function fillFilters() {
     ]
     .sort();
 
-
   const regions =
 
     [
@@ -4518,22 +4103,17 @@ function fillFilters() {
     ]
     .sort();
 
-
   const category =
-
     document
       .getElementById(
         "categoryFilter"
       );
 
-
   const region =
-
     document
       .getElementById(
         "regionFilter"
       );
-
 
   categories
     .forEach(
@@ -4551,7 +4131,6 @@ function fillFilters() {
 
       }
     );
-
 
   regions
     .forEach(
@@ -4573,7 +4152,6 @@ function fillFilters() {
 }
 
 
-
 /* =========================================================
    GROWTH
 ========================================================= */
@@ -4583,7 +4161,6 @@ function growthBadge(v) {
   const n =
     num(v);
 
-
   if (
     n === null
   ) {
@@ -4591,7 +4168,6 @@ function growthBadge(v) {
     return "-";
 
   }
-
 
   const value =
 
@@ -4604,7 +4180,6 @@ function growthBadge(v) {
     :
 
     n;
-
 
   if (
     value > 0
@@ -4628,7 +4203,6 @@ function growthBadge(v) {
 
   }
 
-
   if (
     value < 0
   ) {
@@ -4651,7 +4225,6 @@ function growthBadge(v) {
 
   }
 
-
   return `
 
     <span class="
@@ -4668,7 +4241,6 @@ function growthBadge(v) {
 }
 
 
-
 /* =========================================================
    CONTRACT EXPIRY
 ========================================================= */
@@ -4678,7 +4250,6 @@ function expiryBadge(v) {
   const formatted =
     dateFormat(v);
 
-
   if (
     formatted === "-"
   ) {
@@ -4687,22 +4258,17 @@ function expiryBadge(v) {
 
   }
 
-
   const target =
-
     new Date(
       formatted
       +
       "T00:00:00"
     );
 
-
   const now =
     new Date();
 
-
   const days =
-
     Math.ceil(
 
       (
@@ -4716,7 +4282,6 @@ function expiryBadge(v) {
       86400000
 
     );
-
 
   if (
     days <= 90
@@ -4737,7 +4302,6 @@ function expiryBadge(v) {
 
   }
 
-
   if (
     days <= 180
   ) {
@@ -4757,11 +4321,9 @@ function expiryBadge(v) {
 
   }
 
-
   return formatted;
 
 }
-
 
 
 /* =========================================================
@@ -4771,7 +4333,6 @@ function expiryBadge(v) {
 function renderStores() {
 
   const keyword =
-
     document
       .getElementById(
         "search"
@@ -4780,24 +4341,19 @@ function renderStores() {
       .trim()
       .toLowerCase();
 
-
   const category =
-
     document
       .getElementById(
         "categoryFilter"
       )
       .value;
 
-
   const region =
-
     document
       .getElementById(
         "regionFilter"
       )
       .value;
-
 
   const filtered =
 
@@ -4805,16 +4361,13 @@ function renderStores() {
       .filter(
         row => {
 
-
           const name =
-
             String(
               row["매장명"]
               ||
               ""
             )
             .toLowerCase();
-
 
           return (
 
@@ -4847,14 +4400,11 @@ function renderStores() {
         }
       );
 
-
   const tbody =
-
     document
       .getElementById(
         "storeBody"
       );
-
 
   if (
     !filtered.length
@@ -4880,30 +4430,23 @@ function renderStores() {
 
     `;
 
-
     return;
 
   }
 
-
   tbody.innerHTML = "";
-
 
   filtered
     .forEach(
       row => {
 
-
         const tr =
-
           document
             .createElement(
               "tr"
             );
 
-
         tr.innerHTML = `
-
 
           <td class="store-name">
 
@@ -4917,7 +4460,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${dateFormat(
@@ -4925,7 +4467,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td>
 
@@ -4935,7 +4476,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${text(
@@ -4943,7 +4483,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td>
 
@@ -4953,7 +4492,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${million(
@@ -4961,7 +4499,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td>
 
@@ -4971,7 +4508,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${comma(
@@ -4979,7 +4515,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td>
 
@@ -4989,7 +4524,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${percent(
@@ -4997,7 +4531,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td>
 
@@ -5007,7 +4540,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${moneyOrText(
@@ -5016,7 +4548,6 @@ function renderStores() {
 
           </td>
 
-
           <td>
 
             ${million(
@@ -5024,7 +4555,6 @@ function renderStores() {
             )}
 
           </td>
-
 
           <td
             class="
@@ -5044,9 +4574,7 @@ function renderStores() {
 
           </td>
 
-
         `;
-
 
         tr.addEventListener(
           "click",
@@ -5055,7 +4583,6 @@ function renderStores() {
               row
             )
         );
-
 
         tbody
           .appendChild(
@@ -5066,7 +4593,6 @@ function renderStores() {
     );
 
 }
-
 
 
 /* =========================================================
@@ -5120,7 +4646,6 @@ function historiesFor(name) {
 }
 
 
-
 /* =========================================================
    DETAIL
 ========================================================= */
@@ -5132,13 +4657,11 @@ function openDetail(row) {
       "detailName"
     )
     .textContent =
-
       text(
         row[
           "매장명"
         ]
       );
-
 
   const items = [
 
@@ -5232,7 +4755,6 @@ function openDetail(row) {
 
   ];
 
-
   document
     .getElementById(
       "detailGrid"
@@ -5259,7 +4781,6 @@ function openDetail(row) {
         )
         .join("");
 
-
   renderHistory(
 
     historiesFor(
@@ -5267,7 +4788,6 @@ function openDetail(row) {
     )
 
   );
-
 
   document
     .getElementById(
@@ -5277,7 +4797,6 @@ function openDetail(row) {
     .add(
       "open"
     );
-
 
   document
     .getElementById(
@@ -5291,7 +4810,6 @@ function openDetail(row) {
 }
 
 
-
 /* =========================================================
    HISTORY RENDER
 ========================================================= */
@@ -5299,12 +4817,10 @@ function openDetail(row) {
 function renderHistory(items) {
 
   const timeline =
-
     document
       .getElementById(
         "timeline"
       );
-
 
   if (
     !items.length
@@ -5320,11 +4836,9 @@ function renderHistory(items) {
 
     `;
 
-
     return;
 
   }
-
 
   timeline.innerHTML =
 
@@ -5332,13 +4846,10 @@ function renderHistory(items) {
       .map(
         row => `
 
-
           <div class="timeline-item">
-
 
             <div class="timeline-dot">
             </div>
-
 
             <div class="timeline-date">
 
@@ -5348,7 +4859,6 @@ function renderHistory(items) {
 
             </div>
 
-
             <div class="timeline-type">
 
               ${text(
@@ -5356,7 +4866,6 @@ function renderHistory(items) {
               )}
 
             </div>
-
 
             <div class="timeline-change">
 
@@ -5372,9 +4881,7 @@ function renderHistory(items) {
 
             </div>
 
-
             <div class="timeline-detail">
-
 
               ${
                 row["사유"]
@@ -5404,7 +4911,6 @@ function renderHistory(items) {
                 ""
               }
 
-
               ${
                 row["비고"]
 
@@ -5433,19 +4939,15 @@ function renderHistory(items) {
                 ""
               }
 
-
             </div>
 
-
           </div>
-
 
         `
       )
       .join("");
 
 }
-
 
 
 /* =========================================================
@@ -5463,7 +4965,6 @@ function closeDrawer() {
       "open"
     );
 
-
   document
     .getElementById(
       "drawer"
@@ -5475,7 +4976,6 @@ function closeDrawer() {
 
 }
 
-
 document
   .getElementById(
     "closeBtn"
@@ -5483,14 +4983,12 @@ document
   .onclick =
     closeDrawer;
 
-
 document
   .getElementById(
     "overlay"
   )
   .onclick =
     closeDrawer;
-
 
 
 /* =========================================================
@@ -5506,7 +5004,6 @@ document
     renderStores
   );
 
-
 document
   .getElementById(
     "categoryFilter"
@@ -5515,7 +5012,6 @@ document
     "change",
     renderStores
   );
-
 
 document
   .getElementById(
@@ -5527,7 +5023,6 @@ document
   );
 
 
-
 /* =========================================================
    LOAD
 ========================================================= */
@@ -5536,10 +5031,8 @@ async function loadData() {
 
   try {
 
-
     const ts =
       Date.now();
-
 
     const [
 
@@ -5551,36 +5044,25 @@ async function loadData() {
 
       await Promise.all([
 
-
         fetch(
-
           "./StoreMaster.json?ts="
           +
           ts
-
         ),
 
-
         fetch(
-
           "./ContractHistory.json?ts="
           +
           ts
-
         ),
 
-
         fetch(
-
           "./SummaryData.json?ts="
           +
           ts
-
         )
 
-
       ]);
-
 
     if (
       !storeRes.ok
@@ -5592,7 +5074,6 @@ async function loadData() {
 
     }
 
-
     if (
       !historyRes.ok
     ) {
@@ -5602,7 +5083,6 @@ async function loadData() {
       );
 
     }
-
 
     if (
       !summaryRes.ok
@@ -5614,18 +5094,14 @@ async function loadData() {
 
     }
 
-
     stores =
       await storeRes.json();
-
 
     history =
       await historyRes.json();
 
-
     summaries =
       await summaryRes.json();
-
 
     renderSummary();
 
@@ -5638,7 +5114,6 @@ async function loadData() {
     fillFilters();
 
     renderStores();
-
 
     document
       .getElementById(
@@ -5655,17 +5130,13 @@ async function loadData() {
             "ko-KR"
           );
 
-
   }
 
-
   catch(error) {
-
 
     console.error(
       error
     );
-
 
     alert(
 
@@ -5673,19 +5144,16 @@ async function loadData() {
 
     );
 
-
   }
 
 }
 
-
 loadData();
-
 
 </script>
 
+<!-- redeploy trigger 2026-09-14 -->
 
 </body>
 
-  
 </html>
