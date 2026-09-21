@@ -1132,6 +1132,14 @@ border-radius: 8px;
 font-size: 11px;
 line-height: 1.6;
 }
+.timeline-special {
+margin-top: 6px;
+padding: 7px 9px;
+border-radius: 6px;
+background: #fff7ed;
+color: #c2410c;
+font-weight: 800;
+}
 .no-data {
 padding:
 30px 20px;
@@ -6832,7 +6840,30 @@ row["비고"]
 ""
 }
 
+${
+row["특이사항"]
+
+?
+
+`
+<div class="timeline-special">
+
+<strong>
+특이사항
+</strong>
+
+&nbsp;
+
+${text(
+row["특이사항"]
+)}
+
 </div>
+`
+
+:
+""
+}
 
 </div>
 
