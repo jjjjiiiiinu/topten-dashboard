@@ -1,6608 +1,5767 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-
 <meta charset="UTF-8">
 <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 >
-
 <title>TOPTEN Store Portfolio Team</title>
-
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-
 <style>
-
 * {
-  box-sizing: border-box;
+box-sizing: border-box;
 }
-
 body {
-  margin: 0;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "Noto Sans KR",
-    "Malgun Gothic",
-    Arial,
-    sans-serif;
-
-  background: #f3f5f8;
-  color: #1f2937;
+margin: 0;
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+"Noto Sans KR",
+"Malgun Gothic",
+Arial,
+sans-serif;
+background: #f3f5f8;
+color: #1f2937;
 }
-
 button,
 input,
 select {
-  font: inherit;
+font: inherit;
 }
-
 /* =========================================================
-   HEADER
+HEADER
 ========================================================= */
-
 .header {
-  background: #111827;
-  color: white;
-
-  padding: 20px 30px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 20px;
+background: #111827;
+color: white;
+padding: 20px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 20px;
 }
-
 .header h1 {
-  margin: 0;
-
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: -0.7px;
+margin: 0;
+font-size: 24px;
+font-weight: 800;
+letter-spacing: -0.7px;
 }
-
 .header-sub {
-  margin-top: 5px;
-
-  font-size: 12px;
-  color: #9ca3af;
+margin-top: 5px;
+font-size: 12px;
+color: #9ca3af;
 }
-
 .header-right {
-  text-align: right;
+text-align: right;
 }
-
 .unit {
-  font-size: 12px;
-  font-weight: 700;
-  color: #e5e7eb;
+font-size: 12px;
+font-weight: 700;
+color: #e5e7eb;
 }
-
 .updated {
-  margin-top: 5px;
-
-  font-size: 11px;
-  color: #9ca3af;
+margin-top: 5px;
+font-size: 11px;
+color: #9ca3af;
 }
-
 /* =========================================================
-   MAIN
+MAIN
 ========================================================= */
-
 .container {
-  max-width: 1750px;
-
-  margin: 0 auto;
-  padding: 26px;
+max-width: 1750px;
+margin: 0 auto;
+padding: 26px;
 }
-
 .section-title {
-  margin-bottom: 14px;
+margin-bottom: 14px;
 }
-
 .section-title h2 {
-  margin: 0;
-
-  font-size: 19px;
-  font-weight: 800;
-
-  color: #111827;
+margin: 0;
+font-size: 19px;
+font-weight: 800;
+color: #111827;
 }
-
 .section-title p {
-  margin: 5px 0 0;
-
-  font-size: 12px;
-  color: #9ca3af;
+margin: 5px 0 0;
+font-size: 12px;
+color: #9ca3af;
 }
-
 /* =========================================================
-   KPI
+KPI
 ========================================================= */
-
 .kpi-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(5, minmax(0,1fr));
-
-  gap: 14px;
-
-  margin-bottom: 20px;
+display: grid;
+grid-template-columns:
+repeat(5, minmax(0,1fr));
+gap: 14px;
+margin-bottom: 20px;
 }
-
 .kpi-card {
-  background: white;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  padding: 18px 20px;
-
-  box-shadow:
-    0 3px 12px
-    rgba(0,0,0,0.035);
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 14px;
+padding: 18px 20px;
+box-shadow:
+0 3px 12px
+rgba(0,0,0,0.035);
 }
-
 .kpi-label {
-  margin-bottom: 8px;
-
-  font-size: 12px;
-  color: #6b7280;
+margin-bottom: 8px;
+font-size: 12px;
+color: #6b7280;
 }
-
 .kpi-value {
-  font-size: 25px;
-  font-weight: 800;
-
-  color: #111827;
+font-size: 25px;
+font-weight: 800;
+color: #111827;
 }
-
 .kpi-foot {
-  margin-top: 6px;
-
-  font-size: 10px;
-  color: #9ca3af;
+margin-top: 6px;
+font-size: 10px;
+color: #9ca3af;
 }
-
 /* =========================================================
-   DASHBOARD
+DASHBOARD
 ========================================================= */
-
 .dashboard-grid {
-  display: grid;
-
-  grid-template-columns:
-    1.05fr
-    1.18fr
-    1.15fr;
-
-  gap: 18px;
-
-  align-items: start;
-
-  margin-bottom: 24px;
+display: grid;
+grid-template-columns:
+1.05fr
+1.18fr
+1.15fr;
+gap: 18px;
+align-items: start;
+margin-bottom: 24px;
 }
-
 .card {
-  background: white;
-
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 3px 12px
-    rgba(0,0,0,0.035);
+background: white;
+border: 1px solid #e5e7eb;
+border-radius: 14px;
+overflow: hidden;
+box-shadow:
+0 3px 12px
+rgba(0,0,0,0.035);
 }
-
 .card-head {
-  padding: 17px 19px;
-
-  border-bottom:
-    1px solid #e5e7eb;
+padding: 17px 19px;
+border-bottom:
+1px solid #e5e7eb;
 }
-
 .card-head h3 {
-  margin: 0;
-
-  font-size: 15px;
-  font-weight: 800;
+margin: 0;
+font-size: 15px;
+font-weight: 800;
 }
-
 .card-head p {
-  margin: 5px 0 0;
-
-  font-size: 10px;
-  color: #9ca3af;
+margin: 5px 0 0;
+font-size: 10px;
+color: #9ca3af;
 }
-
 /* =========================================================
-   CHANNEL SUMMARY
+CHANNEL SUMMARY
 ========================================================= */
-
 .summary-table-wrap {
-  overflow-x: auto;
+overflow-x: auto;
 }
-
 .summary-table {
-  width: 100%;
-  border-collapse: collapse;
+width: 100%;
+border-collapse: collapse;
 }
-
 .summary-table th {
-  padding: 11px 9px;
-
-  background: #f9fafb;
-
-  border-bottom:
-    1px solid #e5e7eb;
-
-  font-size: 10px;
-  font-weight: 700;
-
-  color: #4b5563;
-
-  white-space: nowrap;
+padding: 11px 9px;
+background: #f9fafb;
+border-bottom:
+1px solid #e5e7eb;
+font-size: 10px;
+font-weight: 700;
+color: #4b5563;
+white-space: nowrap;
 }
-
 .summary-table td {
-  padding: 11px 9px;
-
-  text-align: center;
-
-  border-bottom:
-    1px solid #f0f1f3;
-
-  font-size: 11px;
-
-  white-space: nowrap;
+padding: 11px 9px;
+text-align: center;
+border-bottom:
+1px solid #f0f1f3;
+font-size: 11px;
+white-space: nowrap;
 }
-
 .summary-table td:first-child {
-  text-align: left;
-  font-weight: 800;
+text-align: left;
+font-weight: 800;
 }
-
 /* =========================================================
-   LEASE
+SUMMARY FILTER / SORT
 ========================================================= */
-
+.summary-controls {
+padding: 12px 16px 10px;
+background: #fbfcfd;
+border-bottom: 1px solid #e5e7eb;
+}
+.summary-filter-row {
+display: flex;
+align-items: center;
+gap: 8px;
+flex-wrap: wrap;
+}
+.summary-filter-row + .summary-filter-row {
+margin-top: 8px;
+}
+.summary-filter-label {
+min-width: 46px;
+font-size: 9px;
+font-weight: 800;
+color: #6b7280;
+}
+.summary-filter-buttons {
+display: flex;
+gap: 5px;
+flex-wrap: wrap;
+}
+.summary-filter-btn {
+border: 1px solid #d1d5db;
+background: white;
+color: #6b7280;
+padding: 5px 8px;
+border-radius: 999px;
+font-size: 9px;
+font-weight: 800;
+cursor: pointer;
+}
+.summary-filter-btn:hover {
+border-color: #9ca3af;
+color: #111827;
+}
+.summary-filter-btn.active {
+background: #111827;
+border-color: #111827;
+color: white;
+}
+.summary-selection {
+margin-top: 9px;
+font-size: 9px;
+color: #9ca3af;
+}
+.summary-selection strong {
+color: #111827;
+}
+.summary-sort-btn {
+width: 100%;
+border: 0;
+background: transparent;
+padding: 0;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 4px;
+color: inherit;
+font: inherit;
+font-weight: 700;
+cursor: pointer;
+white-space: nowrap;
+}
+.summary-sort-btn:hover {
+color: #111827;
+}
+.summary-sort-indicator {
+min-width: 8px;
+font-size: 8px;
+color: #9ca3af;
+}
+.summary-sort-btn.active .summary-sort-indicator {
+color: #111827;
+}
+/* =========================================================
+LEASE
+========================================================= */
 .lease-summary {
-  border-top:
-    1px solid #e5e7eb;
+border-top:
+1px solid #e5e7eb;
 }
-
 .lease-header {
-  padding:
-    15px 18px 10px;
+padding:
+15px 18px 10px;
 }
-
 .lease-header strong {
-  display: block;
-
-  font-size: 13px;
-  font-weight: 800;
+display: block;
+font-size: 13px;
+font-weight: 800;
 }
-
 .lease-header span {
-  display: block;
-
-  margin-top: 4px;
-
-  font-size: 9px;
-  color: #9ca3af;
+display: block;
+margin-top: 4px;
+font-size: 9px;
+color: #9ca3af;
 }
-
 .total-deposit {
-  margin:
-    0 16px 12px;
-
-  padding:
-    15px 16px;
-
-  border-radius: 11px;
-
-  background: #111827;
-  color: white;
+margin:
+0 16px 12px;
+padding:
+15px 16px;
+border-radius: 11px;
+background: #111827;
+color: white;
 }
-
 .total-deposit-label {
-  margin-bottom: 5px;
-
-  font-size: 10px;
-  color: #cbd5e1;
+margin-bottom: 5px;
+font-size: 10px;
+color: #cbd5e1;
 }
-
 .total-deposit-value {
-  font-size: 25px;
-  font-weight: 900;
+font-size: 25px;
+font-weight: 900;
 }
-
 .lease-columns {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 10px;
-
-  padding:
-    0 16px 16px;
+display: grid;
+grid-template-columns:
+1fr 1fr;
+gap: 10px;
+padding:
+0 16px 16px;
 }
-
 .lease-box {
-  overflow: hidden;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius: 10px;
+overflow: hidden;
+border:
+1px solid #e5e7eb;
+border-radius: 10px;
 }
-
 .lease-box-title {
-  padding:
-    10px 12px;
-
-  background: #f8fafc;
-
-  border-bottom:
-    1px solid #e5e7eb;
-
-  font-size: 11px;
-  font-weight: 800;
+padding:
+10px 12px;
+background: #f8fafc;
+border-bottom:
+1px solid #e5e7eb;
+font-size: 11px;
+font-weight: 800;
 }
-
 .lease-list {
-  padding:
-    10px 12px;
+padding:
+10px 12px;
 }
-
 .lease-row {
-  display: flex;
-
-  justify-content:
-    space-between;
-
-  gap: 8px;
-
-  margin-bottom: 8px;
+display: flex;
+justify-content:
+space-between;
+gap: 8px;
+margin-bottom: 8px;
 }
-
 .lease-row:last-child {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
-
 .lease-key {
-  font-size: 10px;
-  color: #6b7280;
+font-size: 10px;
+color: #6b7280;
 }
-
 .lease-val {
-  text-align: right;
-
-  font-size: 11px;
-  font-weight: 800;
+text-align: right;
+font-size: 11px;
+font-weight: 800;
 }
-
 /* =========================================================
-   RANKING
+RANKING
 ========================================================= */
-
 .ranking-section {
-  border-bottom:
-    1px solid #e5e7eb;
+border-bottom:
+1px solid #e5e7eb;
 }
-
 .ranking-section:last-child {
-  border-bottom: none;
+border-bottom: none;
 }
-
 .ranking-title {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  padding:
-    11px 16px;
-
-  background: #f9fafb;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding:
+11px 16px;
+background: #f9fafb;
 }
-
 .ranking-title-left {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
+display: flex;
+align-items: center;
+gap: 8px;
 }
-
 .ranking-chip {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-width: 48px;
-
-  padding:
-    5px 8px;
-
-  border-radius: 999px;
-
-  background: #111827;
-  color: white;
-
-  font-size: 10px;
-  font-weight: 900;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 48px;
+padding:
+5px 8px;
+border-radius: 999px;
+background: #111827;
+color: white;
+font-size: 10px;
+font-weight: 900;
 }
-
 .ranking-title-text {
-  font-size: 11px;
-  font-weight: 800;
-
-  color: #111827;
+font-size: 11px;
+font-weight: 800;
+color: #111827;
 }
-
 .ranking-columns {
-  display: grid;
-
-  grid-template-columns:
-    75px
-    80px;
-
-  gap: 8px;
-
-  text-align: right;
-
-  font-size: 8px;
-
-  color: #9ca3af;
+display: grid;
+grid-template-columns:
+75px
+80px;
+gap: 8px;
+text-align: right;
+font-size: 8px;
+color: #9ca3af;
 }
-
 .ranking-list {
-  padding:
-    0 16px 7px;
+padding:
+0 16px 7px;
 }
-
 .rank-row {
-  display: grid;
-
-  grid-template-columns:
-    34px
-    minmax(120px,1fr)
-    75px
-    80px;
-
-  gap: 8px;
-
-  align-items: center;
-
-  min-height: 45px;
-
-  border-bottom:
-    1px solid #f1f2f4;
+display: grid;
+grid-template-columns:
+34px
+minmax(120px,1fr)
+75px
+80px;
+gap: 8px;
+align-items: center;
+min-height: 45px;
+border-bottom:
+1px solid #f1f2f4;
 }
-
 .rank-row:last-child {
-  border-bottom: none;
+border-bottom: none;
 }
-
 .rank-row:hover {
-  background: #fafbfc;
+background: #fafbfc;
 }
-
 .rank-badge {
-  width: 27px;
-  height: 27px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  font-size: 10px;
-  font-weight: 900;
+width: 27px;
+height: 27px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+font-size: 10px;
+font-weight: 900;
 }
-
 .rank1 {
-  background: #fff6ce;
-  border: 1px solid #e6b800;
+background: #fff6ce;
+border: 1px solid #e6b800;
 }
-
 .rank2 {
-  background: #f3f4f6;
-  border: 1px solid #aeb4bd;
+background: #f3f4f6;
+border: 1px solid #aeb4bd;
 }
-
 .rank3 {
-  background: #fff0e2;
-  border: 1px solid #d98c52;
+background: #fff0e2;
+border: 1px solid #d98c52;
 }
-
 .rank-store {
-  overflow: hidden;
-
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  font-size: 11px;
-  font-weight: 800;
-
-  color: #111827;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+font-size: 11px;
+font-weight: 800;
+color: #111827;
 }
-
 .rank-store-sub {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 8px;
-  font-weight: 400;
-
-  color: #9ca3af;
+display: block;
+margin-top: 2px;
+font-size: 8px;
+font-weight: 400;
+color: #9ca3af;
 }
-
 .rank-sales {
-  text-align: right;
-
-  font-size: 11px;
-  font-weight: 800;
+text-align: right;
+font-size: 11px;
+font-weight: 800;
 }
-
 .profit-positive {
-  text-align: right;
-
-  color: #dc2626;
-
-  font-size: 11px;
-  font-weight: 900;
+text-align: right;
+color: #dc2626;
+font-size: 11px;
+font-weight: 900;
 }
-
 .profit-negative {
-  text-align: right;
-
-  color: #2563eb;
-
-  font-size: 11px;
-  font-weight: 900;
+text-align: right;
+color: #2563eb;
+font-size: 11px;
+font-weight: 900;
 }
-
 .profit-neutral {
-  text-align: right;
-
-  color: #9ca3af;
-
-  font-size: 11px;
-  font-weight: 700;
+text-align: right;
+color: #9ca3af;
+font-size: 11px;
+font-weight: 700;
 }
-
 /* =========================================================
-   MAP
+MAP
 ========================================================= */
-
 .map-wrap {
-  padding:
-    14px 16px 16px;
+padding:
+14px 16px 16px;
 }
-
 .map-toolbar {
-  display: flex;
-
-  gap: 6px;
-
-  margin-bottom: 10px;
+display: flex;
+gap: 6px;
+margin-bottom: 10px;
 }
-
 .map-btn {
-  border:
-    1px solid #d1d5db;
-
-  background: white;
-
-  padding:
-    6px 9px;
-
-  border-radius: 7px;
-
-  font-size: 9px;
-  font-weight: 800;
-
-  cursor: pointer;
-
-  color: #6b7280;
+border:
+1px solid #d1d5db;
+background: white;
+padding:
+6px 9px;
+border-radius: 7px;
+font-size: 9px;
+font-weight: 800;
+cursor: pointer;
+color: #6b7280;
 }
-
 .map-btn.active {
-  background: #111827;
-  color: white;
-
-  border-color: #111827;
+background: #111827;
+color: white;
+border-color: #111827;
 }
-
 .map-box {
-  height: 415px;
-
-  position: relative;
-
-  background: #f8fafc;
-
-  border:
-    1px solid #eef0f3;
-
-  border-radius: 12px;
-
-  overflow: hidden;
+height: 415px;
+position: relative;
+background: #f8fafc;
+border:
+1px solid #eef0f3;
+border-radius: 12px;
+overflow: hidden;
 }
-
 #koreaMap {
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
 }
-
 .map-path {
-  stroke: white;
-  stroke-width: 1.3;
-
-  cursor: pointer;
-
-  transition:
-    opacity .15s,
-    stroke-width .15s;
+stroke: white;
+stroke-width: 1.3;
+cursor: pointer;
+transition:
+opacity .15s,
+stroke-width .15s;
 }
-
 .map-path:hover {
-  opacity: .82;
-
-  stroke: #111827;
-  stroke-width: 2;
+opacity: .82;
+stroke: #111827;
+stroke-width: 2;
 }
-
 .map-label {
-  pointer-events: none;
-
-  font-size: 9px;
-  font-weight: 900;
-
-  text-anchor: middle;
-
-  paint-order: stroke;
-  stroke: white;
-  stroke-width: 3px;
-  stroke-linejoin: round;
-
-  fill: #111827;
+pointer-events: none;
+font-size: 9px;
+font-weight: 900;
+text-anchor: middle;
+paint-order: stroke;
+stroke: white;
+stroke-width: 3px;
+stroke-linejoin: round;
+fill: #111827;
 }
-
 .map-legend {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  margin-top: 10px;
-
-  font-size: 8px;
-  color: #9ca3af;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 10px;
+font-size: 8px;
+color: #9ca3af;
 }
-
 .legend-gradient {
-  width: 120px;
-  height: 8px;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #f3f4f6,
-      #9ca3af,
-      #111827
-    );
+width: 120px;
+height: 8px;
+border-radius: 999px;
+background:
+linear-gradient(
+90deg,
+#f3f4f6,
+#9ca3af,
+#111827
+);
 }
-
 .map-info {
-  margin-top: 10px;
-
-  min-height: 58px;
-
-  padding:
-    10px 11px;
-
-  background: #f8fafc;
-
-  border-radius: 9px;
-
-  font-size: 9px;
-  line-height: 1.55;
-
-  color: #4b5563;
+margin-top: 10px;
+min-height: 58px;
+padding:
+10px 11px;
+background: #f8fafc;
+border-radius: 9px;
+font-size: 9px;
+line-height: 1.55;
+color: #4b5563;
 }
-
 .map-error {
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-
-  padding: 30px;
-
-  color: #9ca3af;
-
-  font-size: 10px;
-  line-height: 1.6;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 30px;
+color: #9ca3af;
+font-size: 10px;
+line-height: 1.6;
 }
-
 /* =========================================================
-   DEVELOPMENT
+DEVELOPMENT
 ========================================================= */
-
 .development-card {
-  margin-bottom: 24px;
+margin-bottom: 24px;
 }
-
 .dev-intro {
-  padding:
-    14px 18px;
-
-  display: flex;
-
-  gap: 10px;
-
-  align-items: center;
-
-  background: #f9fafb;
-
-  border-bottom:
-    1px solid #e5e7eb;
+padding:
+14px 18px;
+display: flex;
+gap: 10px;
+align-items: center;
+background: #f9fafb;
+border-bottom:
+1px solid #e5e7eb;
 }
-
 .dev-intro-badge {
-  padding:
-    5px 9px;
-
-  border-radius: 999px;
-
-  background: #111827;
-  color: white;
-
-  font-size: 9px;
-  font-weight: 800;
-
-  white-space: nowrap;
+padding:
+5px 9px;
+border-radius: 999px;
+background: #111827;
+color: white;
+font-size: 9px;
+font-weight: 800;
+white-space: nowrap;
 }
-
 .dev-intro-text {
-  font-size: 10px;
-
-  line-height: 1.5;
-
-  color: #6b7280;
+font-size: 10px;
+line-height: 1.5;
+color: #6b7280;
 }
-
 .dev-list {
-  display: grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
-  gap: 12px;
-
-  padding:
-    16px 18px 18px;
+display: grid;
+grid-template-columns:
+repeat(5,1fr);
+gap: 12px;
+padding:
+16px 18px 18px;
 }
-
 .dev-card {
-  min-height: 300px;
-
-  padding: 15px;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius: 12px;
-
-  background: white;
+min-height: 300px;
+padding: 15px;
+border:
+1px solid #e5e7eb;
+border-radius: 12px;
+background: white;
 }
-
 .dev-card:hover {
-  border-color: #9ca3af;
-
-  box-shadow:
-    0 5px 16px
-    rgba(0,0,0,.06);
+border-color: #9ca3af;
+box-shadow:
+0 5px 16px
+rgba(0,0,0,.06);
 }
-
 .dev-card-top {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: flex-start;
-
-  gap: 8px;
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 8px;
 }
-
 .dev-rank-area {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
+display: flex;
+align-items: center;
+gap: 8px;
 }
-
 .dev-rank {
-  width: 28px;
-  height: 28px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #111827;
-  color: white;
-
-  font-size: 10px;
-  font-weight: 900;
+width: 28px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 50%;
+background: #111827;
+color: white;
+font-size: 10px;
+font-weight: 900;
 }
-
 .dev-region {
-  font-size: 16px;
-  font-weight: 900;
+font-size: 16px;
+font-weight: 900;
 }
-
 .dev-status {
-  padding:
-    5px 7px;
-
-  border-radius: 999px;
-
-  font-size: 8px;
-  font-weight: 900;
-
-  white-space: nowrap;
+padding:
+5px 7px;
+border-radius: 999px;
+font-size: 8px;
+font-weight: 900;
+white-space: nowrap;
 }
-
 .dev-status.high {
-  color: #b91c1c;
-  background: #fef2f2;
+color: #b91c1c;
+background: #fef2f2;
 }
-
 .dev-status.mid {
-  color: #b45309;
-  background: #fffbeb;
+color: #b45309;
+background: #fffbeb;
 }
-
 .dev-status.select {
-  color: #1d4ed8;
-  background: #eff6ff;
+color: #1d4ed8;
+background: #eff6ff;
 }
-
 .dev-status.caution {
-  color: #6b7280;
-  background: #f3f4f6;
+color: #6b7280;
+background: #f3f4f6;
 }
-
 .dev-score-row {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 8px;
-
-  margin-top: 14px;
+display: grid;
+grid-template-columns:
+1fr 1fr;
+gap: 8px;
+margin-top: 14px;
 }
-
 .dev-score-box {
-  padding:
-    9px 10px;
-
-  background: #f8fafc;
-
-  border-radius: 8px;
+padding:
+9px 10px;
+background: #f8fafc;
+border-radius: 8px;
 }
-
 .dev-score-label {
-  margin-bottom: 3px;
-
-  font-size: 8px;
-  color: #9ca3af;
+margin-bottom: 3px;
+font-size: 8px;
+color: #9ca3af;
 }
-
 .dev-score-value {
-  font-size: 16px;
-  font-weight: 900;
+font-size: 16px;
+font-weight: 900;
 }
-
 .risk-high {
-  color: #dc2626;
+color: #dc2626;
 }
-
 .risk-low {
-  color: #2563eb;
+color: #2563eb;
 }
-
 .dev-score-detail {
-  margin-top: 10px;
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 5px;
+margin-top: 10px;
+display: grid;
+grid-template-columns:
+1fr 1fr;
+gap: 5px;
 }
-
 .score-mini {
-  background: #f9fafb;
-
-  padding:
-    6px 7px;
-
-  border-radius: 6px;
+background: #f9fafb;
+padding:
+6px 7px;
+border-radius: 6px;
 }
-
 .score-mini-label {
-  display: block;
-
-  font-size: 7px;
-  color: #9ca3af;
+display: block;
+font-size: 7px;
+color: #9ca3af;
 }
-
 .score-mini-value {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 10px;
-  font-weight: 900;
+display: block;
+margin-top: 2px;
+font-size: 10px;
+font-weight: 900;
 }
-
 .dev-data {
-  margin-top: 12px;
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:
-    7px 8px;
+margin-top: 12px;
+display: grid;
+grid-template-columns:
+1fr 1fr;
+gap:
+7px 8px;
 }
-
 .dev-data-item {
-  border-bottom:
-    1px solid #f1f2f4;
-
-  padding-bottom: 5px;
+border-bottom:
+1px solid #f1f2f4;
+padding-bottom: 5px;
 }
-
 .dev-data-label {
-  display: block;
-
-  font-size: 8px;
-
-  color: #9ca3af;
+display: block;
+font-size: 8px;
+color: #9ca3af;
 }
-
 .dev-data-value {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 10px;
-  font-weight: 800;
+display: block;
+margin-top: 2px;
+font-size: 10px;
+font-weight: 800;
 }
-
 .dev-reason {
-  margin-top: 11px;
-
-  padding:
-    8px 9px;
-
-  border-radius: 7px;
-
-  background: #f8fafc;
-
-  font-size: 9px;
-
-  line-height: 1.5;
-
-  color: #4b5563;
+margin-top: 11px;
+padding:
+8px 9px;
+border-radius: 7px;
+background: #f8fafc;
+font-size: 9px;
+line-height: 1.5;
+color: #4b5563;
 }
-
 .dev-note {
-  padding:
-    0 18px 15px;
-
-  font-size: 9px;
-  color: #9ca3af;
+padding:
+0 18px 15px;
+font-size: 9px;
+color: #9ca3af;
 }
-
 /* =========================================================
-   STORE TABLE
+STORE TABLE
 ========================================================= */
-
 .store-panel {
-  background: white;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius: 14px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 3px 12px
-    rgba(0,0,0,0.035);
+background: white;
+border:
+1px solid #e5e7eb;
+border-radius: 14px;
+overflow: hidden;
+box-shadow:
+0 3px 12px
+rgba(0,0,0,0.035);
 }
-
 .store-panel-head {
-  padding:
-    18px 20px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 15px;
-
-  border-bottom:
-    1px solid #e5e7eb;
+padding:
+18px 20px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 15px;
+border-bottom:
+1px solid #e5e7eb;
 }
-
 .store-panel-head h2 {
-  margin: 0;
-
-  font-size: 18px;
-  font-weight: 800;
+margin: 0;
+font-size: 18px;
+font-weight: 800;
 }
-
 .store-panel-head p {
-  margin: 5px 0 0;
-
-  font-size: 10px;
-  color: #9ca3af;
+margin: 5px 0 0;
+font-size: 10px;
+color: #9ca3af;
 }
-
 .filters {
-  display: flex;
-
-  gap: 8px;
+display: flex;
+gap: 8px;
 }
-
 .filters input,
 .filters select {
-  height: 38px;
-
-  padding:
-    0 11px;
-
-  border:
-    1px solid #d1d5db;
-
-  border-radius: 8px;
-
-  background: white;
-
-  outline: none;
-
-  font-size: 12px;
+height: 38px;
+padding:
+0 11px;
+border:
+1px solid #d1d5db;
+border-radius: 8px;
+background: white;
+outline: none;
+font-size: 12px;
 }
-
 .filters input {
-  width: 220px;
+width: 220px;
 }
-
 .table-wrap {
-  overflow-x: auto;
+overflow-x: auto;
 }
-
 .store-table {
-  width: 100%;
-
-  min-width: 1350px;
-
-  border-collapse: collapse;
+width: 100%;
+min-width: 1350px;
+border-collapse: collapse;
 }
-
 .store-table th {
-  padding:
-    12px 10px;
-
-  background: #f9fafb;
-
-  border-bottom:
-    1px solid #e5e7eb;
-
-  font-size: 10px;
-
-  color: #4b5563;
-
-  white-space: nowrap;
+padding:
+12px 10px;
+background: #f9fafb;
+border-bottom:
+1px solid #e5e7eb;
+font-size: 10px;
+color: #4b5563;
+white-space: nowrap;
 }
-
 .store-table td {
-  padding:
-    12px 10px;
-
-  text-align: center;
-
-  border-bottom:
-    1px solid #f0f1f3;
-
-  font-size: 11px;
-
-  white-space: nowrap;
+padding:
+12px 10px;
+text-align: center;
+border-bottom:
+1px solid #f0f1f3;
+font-size: 11px;
+white-space: nowrap;
 }
-
 .store-table tbody tr {
-  cursor: pointer;
+cursor: pointer;
 }
-
 .store-table tbody tr:hover {
-  background: #f8fafc;
+background: #f8fafc;
 }
-
 .store-name {
-  text-align: left !important;
-
-  font-weight: 800;
-
-  color: #111827;
+text-align: left !important;
+font-weight: 800;
+color: #111827;
 }
-
 .sub-hint {
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 8px;
-  font-weight: 400;
-
-  color: #9ca3af;
+display: block;
+margin-top: 2px;
+font-size: 8px;
+font-weight: 400;
+color: #9ca3af;
 }
-
 /* =========================================================
-   BADGES
+BADGES
 ========================================================= */
-
 .badge {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  min-width: 58px;
-
-  padding:
-    4px 7px;
-
-  border-radius: 999px;
-
-  font-size: 10px;
-  font-weight: 800;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+min-width: 58px;
+padding:
+4px 7px;
+border-radius: 999px;
+font-size: 10px;
+font-weight: 800;
 }
-
 .up {
-  background: #fef2f2;
-  color: #dc2626;
+background: #fef2f2;
+color: #dc2626;
 }
-
 .down {
-  background: #eff6ff;
-  color: #2563eb;
+background: #eff6ff;
+color: #2563eb;
 }
-
 .neutral {
-  background: #f3f4f6;
-  color: #6b7280;
+background: #f3f4f6;
+color: #6b7280;
 }
-
 .expire-danger {
-  background: #fef2f2;
-  color: #b91c1c;
+background: #fef2f2;
+color: #b91c1c;
 }
-
 .expire-warning {
-  background: #fff7ed;
-  color: #c2410c;
+background: #fff7ed;
+color: #c2410c;
 }
-
 /* =========================================================
-   DRAWER
+DRAWER
 ========================================================= */
-
 .overlay {
-  position: fixed;
-
-  inset: 0;
-
-  background:
-    rgba(17,24,39,.45);
-
-  opacity: 0;
-  visibility: hidden;
-
-  z-index: 1000;
-
-  transition: .2s;
+position: fixed;
+inset: 0;
+background:
+rgba(17,24,39,.45);
+opacity: 0;
+visibility: hidden;
+z-index: 1000;
+transition: .2s;
 }
-
 .overlay.open {
-  opacity: 1;
-  visibility: visible;
+opacity: 1;
+visibility: visible;
 }
-
 .drawer {
-  position: fixed;
-
-  top: 0;
-  right: 0;
-
-  width:
-    min(650px,94vw);
-
-  height: 100vh;
-
-  background: white;
-
-  transform:
-    translateX(100%);
-
-  transition: .25s;
-
-  z-index: 1001;
-
-  display: flex;
-  flex-direction: column;
-
-  box-shadow:
-    -15px 0 40px
-    rgba(0,0,0,.18);
+position: fixed;
+top: 0;
+right: 0;
+width:
+min(650px,94vw);
+height: 100vh;
+background: white;
+transform:
+translateX(100%);
+transition: .25s;
+z-index: 1001;
+display: flex;
+flex-direction: column;
+box-shadow:
+-15px 0 40px
+rgba(0,0,0,.18);
 }
-
 .drawer.open {
-  transform:
-    translateX(0);
+transform:
+translateX(0);
 }
-
 .drawer-head {
-  padding:
-    22px 24px;
-
-  background: #111827;
-  color: white;
-
-  display: flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
+padding:
+22px 24px;
+background: #111827;
+color: white;
+display: flex;
+align-items:
+flex-start;
+justify-content:
+space-between;
 }
-
 .drawer-head h2 {
-  margin: 0;
-
-  font-size: 22px;
+margin: 0;
+font-size: 22px;
 }
-
 .drawer-head p {
-  margin: 5px 0 0;
-
-  font-size: 10px;
-  color: #9ca3af;
+margin: 5px 0 0;
+font-size: 10px;
+color: #9ca3af;
 }
-
 .close {
-  width: 36px;
-  height: 36px;
-
-  border: 0;
-
-  border-radius: 8px;
-
-  background:
-    rgba(255,255,255,.1);
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 20px;
+width: 36px;
+height: 36px;
+border: 0;
+border-radius: 8px;
+background:
+rgba(255,255,255,.1);
+color: white;
+cursor: pointer;
+font-size: 20px;
 }
-
 .drawer-body {
-  padding: 24px;
-
-  overflow-y: auto;
+padding: 24px;
+overflow-y: auto;
 }
-
 .detail-title {
-  margin:
-    0 0 12px;
-
-  font-size: 14px;
-  font-weight: 800;
+margin:
+0 0 12px;
+font-size: 14px;
+font-weight: 800;
 }
-
 .detail-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap: 9px;
-
-  margin-bottom: 27px;
+display: grid;
+grid-template-columns:
+repeat(3,1fr);
+gap: 9px;
+margin-bottom: 27px;
 }
-
 .detail-item {
-  padding: 12px;
-
-  background: #f8fafc;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius: 9px;
+padding: 12px;
+background: #f8fafc;
+border:
+1px solid #e5e7eb;
+border-radius: 9px;
 }
-
 .detail-label {
-  margin-bottom: 5px;
-
-  font-size: 9px;
-
-  color: #9ca3af;
+margin-bottom: 5px;
+font-size: 9px;
+color: #9ca3af;
 }
-
 .detail-value {
-  font-size: 12px;
-  font-weight: 800;
+font-size: 12px;
+font-weight: 800;
 }
-
 /* =========================================================
-   TIMELINE
+TIMELINE
 ========================================================= */
-
 .timeline {
-  position: relative;
-
-  margin-left: 8px;
+position: relative;
+margin-left: 8px;
 }
-
 .timeline::before {
-  content: "";
-
-  position: absolute;
-
-  left: 7px;
-  top: 7px;
-  bottom: 7px;
-
-  width: 2px;
-
-  background: #e5e7eb;
+content: "";
+position: absolute;
+left: 7px;
+top: 7px;
+bottom: 7px;
+width: 2px;
+background: #e5e7eb;
 }
-
 .timeline-item {
-  position: relative;
-
-  padding:
-    0 0 24px 34px;
+position: relative;
+padding:
+0 0 24px 34px;
 }
-
 .timeline-dot {
-  position: absolute;
-
-  left: 0;
-  top: 5px;
-
-  width: 16px;
-  height: 16px;
-
-  border-radius: 50%;
-
-  background: #111827;
-
-  border:
-    4px solid white;
-
-  box-shadow:
-    0 0 0 2px #111827;
+position: absolute;
+left: 0;
+top: 5px;
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: #111827;
+border:
+4px solid white;
+box-shadow:
+0 0 0 2px #111827;
 }
-
 .timeline-date {
-  margin-bottom: 5px;
-
-  font-size: 10px;
-  color: #6b7280;
+margin-bottom: 5px;
+font-size: 10px;
+color: #6b7280;
 }
-
 .timeline-type {
-  display: inline-block;
-
-  padding:
-    4px 7px;
-
-  margin-bottom: 7px;
-
-  background: #f3f4f6;
-
-  border-radius: 6px;
-
-  font-size: 9px;
-  font-weight: 800;
+display: inline-block;
+padding:
+4px 7px;
+margin-bottom: 7px;
+background: #f3f4f6;
+border-radius: 6px;
+font-size: 9px;
+font-weight: 800;
 }
-
 .timeline-change {
-  margin-bottom: 7px;
-
-  font-size: 15px;
-  font-weight: 800;
+margin-bottom: 7px;
+font-size: 15px;
+font-weight: 800;
 }
-
 .timeline-detail {
-  padding:
-    10px 11px;
-
-  background: #f8fafc;
-
-  border-radius: 8px;
-
-  font-size: 11px;
-
-  line-height: 1.6;
+padding:
+10px 11px;
+background: #f8fafc;
+border-radius: 8px;
+font-size: 11px;
+line-height: 1.6;
 }
-
 .no-data {
-  padding:
-    30px 20px;
-
-  text-align: center;
-
-  border:
-    1px dashed #d1d5db;
-
-  border-radius: 9px;
-
-  color: #9ca3af;
-
-  font-size: 11px;
+padding:
+30px 20px;
+text-align: center;
+border:
+1px dashed #d1d5db;
+border-radius: 9px;
+color: #9ca3af;
+font-size: 11px;
 }
-
 .footer {
-  padding:
-    24px 0 5px;
-
-  text-align: center;
-
-  color: #9ca3af;
-
-  font-size: 9px;
+padding:
+24px 0 5px;
+text-align: center;
+color: #9ca3af;
+font-size: 9px;
 }
-
 /* =========================================================
-   RESPONSIVE
+RESPONSIVE
 ========================================================= */
-
 @media(max-width:1200px) {
-
-  .dashboard-grid {
-    grid-template-columns:
-      1fr 1fr;
-  }
-
-  .dev-list {
-    grid-template-columns:
-      repeat(3,1fr);
-  }
-
+.dashboard-grid {
+grid-template-columns:
+1fr 1fr;
 }
-
+.dev-list {
+grid-template-columns:
+repeat(3,1fr);
+}
+}
 @media(max-width:900px) {
-
-  .kpi-grid {
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .dashboard-grid {
-    grid-template-columns:
-      1fr;
-  }
-
-  .dev-list {
-    grid-template-columns:
-      1fr 1fr;
-  }
-
+.kpi-grid {
+grid-template-columns:
+repeat(2,1fr);
 }
-
+.dashboard-grid {
+grid-template-columns:
+1fr;
+}
+.dev-list {
+grid-template-columns:
+1fr 1fr;
+}
+}
 @media(max-width:700px) {
-
-  .container {
-    padding: 14px;
-  }
-
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .header-right {
-    text-align: left;
-  }
-
-  .store-panel-head {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .filters {
-    flex-direction: column;
-  }
-
-  .filters input,
-  .filters select {
-    width: 100%;
-  }
-
-  .detail-grid {
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .dev-list {
-    grid-template-columns:
-      1fr;
-  }
-
+.container {
+padding: 14px;
 }
-
+.header {
+flex-direction: column;
+align-items: flex-start;
+}
+.header-right {
+text-align: left;
+}
+.store-panel-head {
+flex-direction: column;
+align-items: stretch;
+}
+.filters {
+flex-direction: column;
+}
+.filters input,
+.filters select {
+width: 100%;
+}
+.detail-grid {
+grid-template-columns:
+repeat(2,1fr);
+}
+.dev-list {
+grid-template-columns:
+1fr;
+}
+}
 </style>
-
 </head>
-
-
 <body>
-
-
 <header class="header">
-
-  <div>
-
-    <h1>
-      TOPTEN Store Portfolio Team
-    </h1>
-
-    <div class="header-sub">
-      Store · Lease · Contract · Development Dashboard
-    </div>
-
-  </div>
-
-
-  <div class="header-right">
-
-    <div class="unit">
-      금액 단위 : 백만원
-    </div>
-
-    <div
-      class="updated"
-      id="updated"
-    >
-      데이터 로딩 중...
-    </div>
-
-  </div>
-
-</header>
-
-
-<main class="container">
-
-
-<div class="section-title">
-
-  <h2>
-    전체 운영 Summary
-  </h2>
-
-  <p>
-    점포 · 매출 · 임차구조 종합 현황
-  </p>
-
+<div>
+<h1>
+TOPTEN Store Portfolio Team
+</h1>
+<div class="header-sub">
+Store · Lease · Contract · Development Dashboard
 </div>
-
-
-<section
-  class="kpi-grid"
-  id="summaryKpi"
-></section>
-
-
-<section class="dashboard-grid">
-
-
-<div class="card">
-
-  <div class="card-head">
-
-    <h3>
-      유통채널별 현황
-    </h3>
-
-    <p>
-      대분류 합계 기준
-    </p>
-
-  </div>
-
-
-  <div class="summary-table-wrap">
-
-    <table class="summary-table">
-
-      <thead>
-
-        <tr>
-
-          <th>구분</th>
-          <th>매장수</th>
-          <th>평균면적</th>
-          <th>고정임차</th>
-          <th>수수료임차</th>
-          <th>수수료율</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody
-        id="summaryBody"
-      ></tbody>
-
-    </table>
-
-  </div>
-
-
-  <div class="lease-summary">
-
-    <div class="lease-header">
-
-      <strong>
-        임차조건 Summary
-      </strong>
-
-      <span>
-        금액 단위 백만원
-      </span>
-
-    </div>
-
-
-    <div class="total-deposit">
-
-      <div class="total-deposit-label">
-        총 보증금
-      </div>
-
-      <div
-        class="total-deposit-value"
-        id="totalDeposit"
-      >
-        -
-      </div>
-
-    </div>
-
-
-    <div class="lease-columns">
-
-      <div class="lease-box">
-
-        <div class="lease-box-title">
-          고정임차
-        </div>
-
-        <div
-          class="lease-list"
-          id="fixedLease"
-        ></div>
-
-      </div>
-
-
-      <div class="lease-box">
-
-        <div class="lease-box-title">
-          수수료임차
-        </div>
-
-        <div
-          class="lease-list"
-          id="commissionLease"
-        ></div>
-
-      </div>
-
-    </div>
-
-  </div>
-
 </div>
-
-
-<div class="card">
-
-  <div class="card-head">
-
-    <h3>
-      26년 월평균 채널별 TOP 3
-    </h3>
-
-    <p>
-      가두 · 유통 · 밸런스 별도 순위 / 영업이익율 양수 빨강 · 음수 파랑
-    </p>
-
-  </div>
-
-  <div
-    id="categoryRanking"
-  ></div>
-
+<div class="header-right">
+<div class="unit">
+금액 단위 : 백만원
 </div>
-
-
-<div class="card">
-
-  <div class="card-head">
-
-    <h3>
-      전국 Store Network
-    </h3>
-
-    <p>
-      매장 분포 · 인구대비 점포밀도 · 출점잠재력
-    </p>
-
-  </div>
-
-
-  <div class="map-wrap">
-
-    <div class="map-toolbar">
-
-      <button
-        class="map-btn active"
-        data-map-mode="count"
-      >
-        매장 분포
-      </button>
-
-      <button
-        class="map-btn"
-        data-map-mode="density"
-      >
-        점포 밀도
-      </button>
-
-      <button
-        class="map-btn"
-        data-map-mode="potential"
-      >
-        출점 잠재력
-      </button>
-
-    </div>
-
-
-    <div class="map-box">
-
-      <svg
-        id="koreaMap"
-      ></svg>
-
-    </div>
-
-
-    <div class="map-legend">
-
-      <span>
-        낮음
-      </span>
-
-      <div class="legend-gradient"></div>
-
-      <span>
-        높음
-      </span>
-
-    </div>
-
-
-    <div
-      class="map-info"
-      id="mapInfo"
-    >
-      지도에서 지역을 선택하면 상세 지표를 확인할 수 있습니다.
-    </div>
-
-  </div>
-
-</div>
-
-
-</section>
-
-
-<section class="card development-card">
-
-
-  <div class="card-head">
-
-    <h3>
-      출점 추가 검토지역 TOP 5
-    </h3>
-
-    <p>
-      시장규모 · 인구대비 점포공백 · 점포밀도 · 기존점 실적 · 영업이익 · 성장률 종합 스크리닝
-    </p>
-
-  </div>
-
-
-  <div class="dev-intro">
-
-    <div class="dev-intro-badge">
-      DEVELOPMENT SCREENING 3.0
-    </div>
-
-    <div class="dev-intro-text">
-
-      단순 매장 수가 아니라 절대 시장규모와 TOPTEN 점포밀도,
-      인구 대비 점포 공백, 기존점 월평균 매출,
-      영업이익률과 동매장 성장률을 함께 반영합니다.
-
-    </div>
-
-  </div>
-
-
-  <div
-    class="dev-list"
-    id="developmentList"
-  ></div>
-
-
-  <div class="dev-note">
-
-    ※ 시·도 단위 1차 스크리닝 지표입니다.
-    실제 출점 판단 시 시군구 및 세부상권 배후인구, 경쟁 SPA,
-    유동인구, 기존점 잠식, 임대조건 및 예상 손익 검토가 필요합니다.
-
-  </div>
-
-
-</section>
-
-
-<section class="store-panel">
-
-
-  <div class="store-panel-head">
-
-    <div>
-
-      <h2>
-        매장 현황
-      </h2>
-
-      <p>
-        매장명을 클릭하면 상세정보 및 계약 히스토리를 확인할 수 있습니다.
-      </p>
-
-    </div>
-
-
-    <div class="filters">
-
-      <input
-        type="text"
-        id="search"
-        placeholder="매장명 검색"
-      >
-
-      <select id="categoryFilter">
-
-        <option value="">
-          전체 대분류
-        </option>
-
-      </select>
-
-      <select id="regionFilter">
-
-        <option value="">
-          전체 지역
-        </option>
-
-      </select>
-
-    </div>
-
-  </div>
-
-
-  <div class="table-wrap">
-
-    <table class="store-table">
-
-      <thead>
-
-        <tr>
-
-          <th>매장명</th>
-          <th>오픈일자</th>
-          <th>대분류</th>
-          <th>지역</th>
-          <th>운영형태</th>
-          <th>26년 월평균</th>
-          <th>동매장 신장율</th>
-          <th>면적(평)</th>
-          <th>계약만료일</th>
-          <th>유통마진율</th>
-          <th>고정임차료</th>
-          <th>관리비</th>
-          <th>보증금</th>
-          <th>25년 영업이익율</th>
-
-        </tr>
-
-      </thead>
-
-
-      <tbody
-        id="storeBody"
-      ></tbody>
-
-    </table>
-
-  </div>
-
-</section>
-
-
-<div class="footer">
-  TOPTEN Store & Contract Management Portal
-</div>
-
-
-</main>
-
-
 <div
-  class="overlay"
-  id="overlay"
-></div>
-
-
-<aside
-  class="drawer"
-  id="drawer"
+class="updated"
+id="updated"
 >
-
-
+데이터 로딩 중...
+</div>
+</div>
+</header>
+<main class="container">
+<div class="section-title">
+<h2>
+전체 운영 Summary
+</h2>
+<p>
+점포 · 매출 · 임차구조 종합 현황
+</p>
+</div>
+<section
+class="kpi-grid"
+id="summaryKpi"
+></section>
+<section class="dashboard-grid">
+<div class="card">
+<div class="card-head">
+<h3>
+유통채널별 현황
+</h3>
+<p>
+대분류 합계 기준
+</p>
+</div>
+<div class="summary-controls">
+<div class="summary-filter-row">
+<span class="summary-filter-label">대분류</span>
+<div class="summary-filter-buttons" id="summaryCategoryFilters"></div>
+</div>
+<div class="summary-filter-row" id="summaryChannelFilterRow" style="display:none;">
+<span class="summary-filter-label">채널</span>
+<div class="summary-filter-buttons" id="summaryChannelFilters"></div>
+</div>
+<div class="summary-selection" id="summarySelection">
+선택 : <strong>전체</strong> · 컬럼명을 클릭하면 오름/내림차순 정렬
+</div>
+</div>
+<div class="summary-table-wrap">
+<table class="summary-table">
+<thead>
+<tr>
+<th><button class="summary-sort-btn" data-summary-sort="label">구분 <span class="summary-sort-indicator">↕</span></button></th>
+<th><button class="summary-sort-btn" data-summary-sort="매장수">매장수 <span class="summary-sort-indicator">↕</span></button></th>
+<th><button class="summary-sort-btn" data-summary-sort="전체면적_AVG">평균면적 <span class="summary-sort-indicator">↕</span></button></th>
+<th><button class="summary-sort-btn" data-summary-sort="고정임차_매장수">고정임차 <span class="summary-sort-indicator">↕</span></button></th>
+<th><button class="summary-sort-btn" data-summary-sort="수수료임차_매장수">수수료임차 <span class="summary-sort-indicator">↕</span></button></th>
+<th><button class="summary-sort-btn" data-summary-sort="수수료율_AVG">수수료율 <span class="summary-sort-indicator">↕</span></button></th>
+</tr>
+</thead>
+<tbody
+id="summaryBody"
+></tbody>
+</table>
+</div>
+<div class="lease-summary">
+<div class="lease-header">
+<strong>
+임차조건 Summary
+</strong>
+<span>
+금액 단위 백만원
+</span>
+</div>
+<div class="total-deposit">
+<div class="total-deposit-label">
+총 보증금
+</div>
+<div
+class="total-deposit-value"
+id="totalDeposit"
+>
+-
+</div>
+</div>
+<div class="lease-columns">
+<div class="lease-box">
+<div class="lease-box-title">
+고정임차
+</div>
+<div
+class="lease-list"
+id="fixedLease"
+></div>
+</div>
+<div class="lease-box">
+<div class="lease-box-title">
+수수료임차
+</div>
+<div
+class="lease-list"
+id="commissionLease"
+></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-head">
+<h3>
+26년 월평균 채널별 TOP 3
+</h3>
+<p>
+가두 · 유통 · 밸런스 별도 순위 / 영업이익율 양수 빨강 · 음수 파랑
+</p>
+</div>
+<div
+id="categoryRanking"
+></div>
+</div>
+<div class="card">
+<div class="card-head">
+<h3>
+전국 Store Network
+</h3>
+<p>
+매장 분포 · 인구대비 점포밀도 · 출점잠재력
+</p>
+</div>
+<div class="map-wrap">
+<div class="map-toolbar">
+<button
+class="map-btn active"
+data-map-mode="count"
+>
+매장 분포
+</button>
+<button
+class="map-btn"
+data-map-mode="density"
+>
+점포 밀도
+</button>
+<button
+class="map-btn"
+data-map-mode="potential"
+>
+출점 잠재력
+</button>
+</div>
+<div class="map-box">
+<svg
+id="koreaMap"
+></svg>
+</div>
+<div class="map-legend">
+<span>
+낮음
+</span>
+<div class="legend-gradient"></div>
+<span>
+높음
+</span>
+</div>
+<div
+class="map-info"
+id="mapInfo"
+>
+지도에서 지역을 선택하면 상세 지표를 확인할 수 있습니다.
+</div>
+</div>
+</div>
+</section>
+<section class="card development-card">
+<div class="card-head">
+<h3>
+출점 추가 검토지역 TOP 5
+</h3>
+<p>
+시장규모 · 인구대비 점포공백 · 점포밀도 · 기존점 실적 · 영업이익 · 성장률 종합 스크리닝
+</p>
+</div>
+<div class="dev-intro">
+<div class="dev-intro-badge">
+DEVELOPMENT SCREENING 3.0
+</div>
+<div class="dev-intro-text">
+단순 매장 수가 아니라 절대 시장규모와 TOPTEN 점포밀도,
+인구 대비 점포 공백, 기존점 월평균 매출,
+영업이익률과 동매장 성장률을 함께 반영합니다.
+</div>
+</div>
+<div
+class="dev-list"
+id="developmentList"
+></div>
+<div class="dev-note">
+※ 시·도 단위 1차 스크리닝 지표입니다.
+실제 출점 판단 시 시군구 및 세부상권 배후인구, 경쟁 SPA,
+유동인구, 기존점 잠식, 임대조건 및 예상 손익 검토가 필요합니다.
+</div>
+</section>
+<section class="store-panel">
+<div class="store-panel-head">
+<div>
+<h2>
+매장 현황
+</h2>
+<p>
+매장명을 클릭하면 상세정보 및 계약 히스토리를 확인할 수 있습니다.
+</p>
+</div>
+<div class="filters">
+<input
+type="text"
+id="search"
+placeholder="매장명 검색"
+>
+<select id="categoryFilter">
+<option value="">
+전체 대분류
+</option>
+</select>
+<select id="regionFilter">
+<option value="">
+전체 지역
+</option>
+</select>
+</div>
+</div>
+<div class="table-wrap">
+<table class="store-table">
+<thead>
+<tr>
+<th>매장명</th>
+<th>오픈일자</th>
+<th>대분류</th>
+<th>지역</th>
+<th>운영형태</th>
+<th>26년 월평균</th>
+<th>동매장 신장율</th>
+<th>면적(평)</th>
+<th>계약만료일</th>
+<th>유통마진율</th>
+<th>고정임차료</th>
+<th>관리비</th>
+<th>보증금</th>
+<th>25년 영업이익율</th>
+</tr>
+</thead>
+<tbody
+id="storeBody"
+></tbody>
+</table>
+</div>
+</section>
+<div class="footer">
+TOPTEN Store & Contract Management Portal
+</div>
+</main>
+<div
+class="overlay"
+id="overlay"
+></div>
+<aside
+class="drawer"
+id="drawer"
+>
 <div class="drawer-head">
-
-  <div>
-
-    <h2
-      id="detailName"
-    >
-      매장 상세
-    </h2>
-
-    <p>
-      Store Profile & Contract History
-    </p>
-
-  </div>
-
-
-  <button
-    class="close"
-    id="closeBtn"
-  >
-    ×
-  </button>
-
+<div>
+<h2
+id="detailName"
+>
+매장 상세
+</h2>
+<p>
+Store Profile & Contract History
+</p>
 </div>
-
-
+<button
+class="close"
+id="closeBtn"
+>
+×
+</button>
+</div>
 <div class="drawer-body">
-
-  <h3 class="detail-title">
-    매장 정보
-  </h3>
-
-  <div
-    class="detail-grid"
-    id="detailGrid"
-  ></div>
-
-  <h3 class="detail-title">
-    계약 히스토리
-  </h3>
-
-  <div
-    class="timeline"
-    id="timeline"
-  ></div>
-
+<h3 class="detail-title">
+매장 정보
+</h3>
+<div
+class="detail-grid"
+id="detailGrid"
+></div>
+<h3 class="detail-title">
+계약 히스토리
+</h3>
+<div
+class="timeline"
+id="timeline"
+></div>
 </div>
-
-
 </aside>
-
-
 <script>
-
-
 /* =========================================================
-   DATA
+DATA
 ========================================================= */
-
 let stores = [];
-
 let history = [];
-
 let summaries = [];
-
 let geoData = null;
-
 let mapMode = "count";
-
-
+let summaryCategory = "전체";
+let summaryChannel = "전체";
+let summarySortKey = "label";
+let summarySortDir = "asc";
 /* =========================================================
-   POPULATION
+POPULATION
 ========================================================= */
-
-const POPULATION = {
-
-  "서울": 9298000,
-  "부산": 3245000,
-  "대구": 2355000,
-  "인천": 3055000,
-  "광주": 1392000,
-  "대전": 1440000,
-  "울산": 1087000,
-  "세종": 391000,
-  "경기": 13720000,
-  "강원": 1517000,
-  "충북": 1593000,
-  "충남": 2135000,
-  "전북": 1735000,
-  "전남": 1790000,
-  "경북": 2530000,
-  "경남": 3220000,
-  "제주": 669000
-
+  const POPULATION = {
+"서울": 9298000,
+"부산": 3245000,
+"대구": 2355000,
+"인천": 3055000,
+"광주": 1392000,
+"대전": 1440000,
+"울산": 1087000,
+"세종": 391000,
+"경기": 13720000,
+"강원": 1517000,
+"충북": 1593000,
+"충남": 2135000,
+"전북": 1735000,
+"전남": 1790000,
+"경북": 2530000,
+"경남": 3220000,
+"제주": 669000
 };
 
-
 /* =========================================================
-   REGION NORMALIZE
+REGION NORMALIZE
 ========================================================= */
 
 function normalizeRegion(v) {
 
-  const s =
-    String(
-      v || ""
-    )
-    .trim();
+const s =
+String(
+v || ""
+)
+.trim();
 
+const regionMap = {
+"서울특별시": "서울",
+"서울": "서울",
+"부산광역시": "부산",
+"부산": "부산",
+"대구광역시": "대구",
+"대구": "대구",
+"인천광역시": "인천",
+"인천": "인천",
+"광주광역시": "광주",
+"광주": "광주",
+"대전광역시": "대전",
+"대전": "대전",
+"울산광역시": "울산",
+"울산": "울산",
+"세종특별자치시": "세종",
+"세종": "세종",
+"경기도": "경기",
+"경기": "경기",
+"강원특별자치도": "강원",
+"강원도": "강원",
+"강원": "강원",
+"충청북도": "충북",
+"충북": "충북",
+"충청남도": "충남",
+"충남": "충남",
+"전북특별자치도": "전북",
+"전라북도": "전북",
+"전북": "전북",
+"전라남도": "전남",
+"전남": "전남",
+"경상북도": "경북",
+"경북": "경북",
+"경상남도": "경남",
+"경남": "경남",
+"제주특별자치도": "제주",
+"제주": "제주"
+};
 
-  const regionMap = {
-
-    "서울특별시": "서울",
-    "서울": "서울",
-
-    "부산광역시": "부산",
-    "부산": "부산",
-
-    "대구광역시": "대구",
-    "대구": "대구",
-
-    "인천광역시": "인천",
-    "인천": "인천",
-
-    "광주광역시": "광주",
-    "광주": "광주",
-
-    "대전광역시": "대전",
-    "대전": "대전",
-
-    "울산광역시": "울산",
-    "울산": "울산",
-
-    "세종특별자치시": "세종",
-    "세종": "세종",
-
-    "경기도": "경기",
-    "경기": "경기",
-
-    "강원특별자치도": "강원",
-    "강원도": "강원",
-    "강원": "강원",
-
-    "충청북도": "충북",
-    "충북": "충북",
-
-    "충청남도": "충남",
-    "충남": "충남",
-
-    "전북특별자치도": "전북",
-    "전라북도": "전북",
-    "전북": "전북",
-
-    "전라남도": "전남",
-    "전남": "전남",
-
-    "경상북도": "경북",
-    "경북": "경북",
-
-    "경상남도": "경남",
-    "경남": "경남",
-
-    "제주특별자치도": "제주",
-    "제주": "제주"
-
-  };
-
-
-  return (
-    regionMap[s]
-    ||
-    s
-  );
+return (
+regionMap[s]
+||
+s
+);
 
 }
 
-
 /* =========================================================
-   UTILITIES
+UTILITIES
 ========================================================= */
 
 function text(v) {
 
-  if (
-    v === null ||
-    v === undefined ||
-    v === ""
-  ) {
-
-    return "-";
-
-  }
-
-  return String(v);
-
+if (
+v === null ||
+v === undefined ||
+v === ""
+) {
+return "-";
 }
 
+return String(v);
+
+}
 
 function num(v) {
 
-  if (
-    v === null ||
-    v === undefined ||
-    v === ""
-  ) {
-
-    return null;
-
-  }
-
-
-  if (
-    typeof v === "number"
-  ) {
-
-    return v;
-
-  }
-
-
-  const original =
-    String(v)
-      .trim();
-
-
-  const cleaned =
-    original
-      .replace(/,/g,"")
-      .replace(/%/g,"");
-
-
-  const n =
-    Number(cleaned);
-
-
-  if (
-    isNaN(n)
-  ) {
-
-    return null;
-
-  }
-
-
-  if (
-    original.includes("%")
-  ) {
-
-    return n / 100;
-
-  }
-
-
-  return n;
-
+if (
+v === null ||
+v === undefined ||
+v === ""
+) {
+return null;
 }
 
+if (
+typeof v === "number"
+) {
+return v;
+}
+
+const original =
+String(v)
+.trim();
+
+const cleaned =
+original
+.replace(/,/g,"")
+.replace(/%/g,"");
+
+const n =
+Number(cleaned);
+
+if (
+isNaN(n)
+) {
+return null;
+}
+
+if (
+original.includes("%")
+) {
+return n / 100;
+}
+
+return n;
+
+}
 
 function comma(v) {
 
-  const n =
-    num(v);
+const n =
+num(v);
 
-
-  if (
-    n === null
-  ) {
-
-    return "-";
-
-  }
-
-
-  return n.toLocaleString(
-    "ko-KR",
-    {
-      maximumFractionDigits:1
-    }
-  );
-
+if (
+n === null
+) {
+return "-";
 }
 
+return n.toLocaleString(
+"ko-KR",
+{
+maximumFractionDigits:1
+}
+);
+
+}
 
 function million(v) {
 
-  const n =
-    num(v);
+const n =
+num(v);
 
-
-  if (
-    n === null
-  ) {
-
-    return "-";
-
-  }
-
-
-  return (
-    n / 1000000
-  )
-  .toLocaleString(
-    "ko-KR",
-    {
-      maximumFractionDigits:1
-    }
-  );
-
+if (
+n === null
+) {
+return "-";
 }
 
+return (
+n / 1000000
+)
+.toLocaleString(
+"ko-KR",
+{
+maximumFractionDigits:1
+}
+);
+
+}
 
 function moneyOrText(v) {
 
-  if (
-    v === null ||
-    v === undefined ||
-    v === ""
-  ) {
+if (
+v === null ||
+v === undefined ||
+v === ""
+) {
+return "-";
+}
 
-    return "-";
+const n =
+num(v);
 
-  }
+if (
+n === null
+) {
+return String(v);
+}
 
-
-  const n =
-    num(v);
-
-
-  if (
-    n === null
-  ) {
-
-    return String(v);
-
-  }
-
-
-  return (
-    n / 1000000
-  )
-  .toLocaleString(
-    "ko-KR",
-    {
-      maximumFractionDigits:1
-    }
-  );
+return (
+n / 1000000
+)
+.toLocaleString(
+"ko-KR",
+{
+maximumFractionDigits:1
+}
+);
 
 }
 
+function summaryInteger(v) {
+
+const n = num(v);
+
+if (n === null) {
+return "-";
+}
+
+return Math.round(n).toLocaleString("ko-KR");
+
+}
 
 function percent(v) {
 
-  const n =
-    num(v);
+const n =
+num(v);
 
-
-  if (
-    n === null
-  ) {
-
-    return "-";
-
-  }
-
-
-  const value =
-
-    Math.abs(n) <= 1
-    ?
-    n * 100
-    :
-    n;
-
-
-  return (
-
-    value
-      .toFixed(1)
-      .replace(".0","")
-
-    +
-
-    "%"
-
-  );
-
+if (
+n === null
+) {
+return "-";
 }
 
+const value =
+Math.abs(n) <= 1
+?
+n * 100
+:
+n;
+
+return (
+value
+.toFixed(1)
+.replace(".0","")
++
+"%"
+);
+
+}
 
 function signedPercent(v) {
 
-  const n =
-    num(v);
+const n =
+num(v);
 
-
-  if (
-    n === null
-  ) {
-
-    return "-";
-
-  }
-
-
-  const value =
-
-    Math.abs(n) <= 1
-    ?
-    n * 100
-    :
-    n;
-
-
-  return (
-
-    (
-      value > 0
-      ?
-      "+"
-      :
-      ""
-    )
-
-    +
-
-    value
-      .toFixed(1)
-      .replace(".0","")
-
-    +
-
-    "%"
-
-  );
-
+if (
+n === null
+) {
+return "-";
 }
 
+const value =
+Math.abs(n) <= 1
+?
+n * 100
+:
+n;
+
+return (
+(
+value > 0
+?
+"+"
+:
+""
+)
++
+value
+.toFixed(1)
+.replace(".0","")
++
+"%"
+);
+
+}
 
 function dateFormat(v) {
 
-  if (
-    v === null ||
-    v === undefined ||
-    v === ""
-  ) {
-
-    return "-";
-
-  }
-
-
-  const s =
-    String(v)
-      .trim();
-
-
-  if (
-    /^\d+(\.\d+)?$/
-      .test(s)
-  ) {
-
-    const serial =
-      Number(s);
-
-
-    if (
-      serial > 20000 &&
-      serial < 80000
-    ) {
-
-      const epoch =
-        Date.UTC(
-          1899,
-          11,
-          30
-        );
-
-
-      return new Date(
-
-        epoch
-
-        +
-
-        serial * 86400000
-
-      )
-      .toISOString()
-      .slice(0,10);
-
-    }
-
-  }
-
-
-  if (
-    /^\d{4}-\d{2}-\d{2}$/
-      .test(s)
-  ) {
-
-    return s;
-
-  }
-
-
-  const d =
-    new Date(v);
-
-
-  if (
-    !isNaN(
-      d.getTime()
-    )
-  ) {
-
-    return [
-
-      d.getFullYear(),
-
-      String(
-        d.getMonth()+1
-      )
-      .padStart(
-        2,
-        "0"
-      ),
-
-      String(
-        d.getDate()
-      )
-      .padStart(
-        2,
-        "0"
-      )
-
-    ]
-    .join("-");
-
-  }
-
-
-  return s;
-
+if (
+v === null ||
+v === undefined ||
+v === ""
+) {
+return "-";
 }
 
+const s =
+String(v)
+.trim();
 
-function clamp(
-  value,
-  min,
-  max
+if (
+/^\d+(\.\d+)?$/
+.test(s)
 ) {
 
-  return Math.max(
-    min,
-    Math.min(
-      max,
-      value
-    )
-  );
+const serial =
+Number(s);
+
+if (
+serial > 20000 &&
+serial < 80000
+) {
+
+const epoch =
+Date.UTC(
+1899,
+11,
+30
+);
+
+return new Date(
+epoch
++
+serial * 86400000
+)
+.toISOString()
+.slice(0,10);
 
 }
 
+}
+
+if (
+/^\d{4}-\d{2}-\d{2}$/
+.test(s)
+) {
+return s;
+}
+
+const d =
+new Date(v);
+
+if (
+!isNaN(
+d.getTime()
+)
+) {
+
+return [
+d.getFullYear(),
+String(
+d.getMonth()+1
+)
+.padStart(
+2,
+"0"
+),
+String(
+d.getDate()
+)
+.padStart(
+2,
+"0"
+)
+]
+.join("-");
+
+}
+
+return s;
+
+}
+
+function clamp(
+value,
+min,
+max
+) {
+
+return Math.max(
+min,
+Math.min(
+max,
+value
+)
+);
+
+}
 
 function average(values) {
 
-  if (
-    !values.length
-  ) {
-
-    return null;
-
-  }
-
-
-  return (
-
-    values.reduce(
-      (sum,value) =>
-        sum + value,
-      0
-    )
-
-    /
-
-    values.length
-
-  );
-
+if (
+!values.length
+) {
+return null;
 }
 
+return (
+values.reduce(
+(sum,value) =>
+sum + value,
+0
+)
+/
+values.length
+);
+
+}
 
 function percentileRank(
-  value,
-  values
+value,
+values
 ) {
 
-  const valid =
+const valid =
+values
+.filter(
+v =>
+v !== null
+&&
+!isNaN(v)
+)
+.sort(
+(a,b) =>
+a - b
+);
 
-    values
-      .filter(
-        v =>
-          v !== null
-          &&
-          !isNaN(v)
-      )
-      .sort(
-        (a,b) =>
-          a - b
-      );
-
-
-  if (
-    !valid.length
-  ) {
-
-    return 50;
-
-  }
-
-
-  const below =
-
-    valid
-      .filter(
-        v =>
-          v <= value
-      )
-      .length;
-
-
-  return (
-    below
-    /
-    valid.length
-  )
-  *
-  100;
-
+if (
+!valid.length
+) {
+return 50;
 }
 
+const below =
+valid
+.filter(
+v =>
+v <= value
+)
+.length;
+
+return (
+below
+/
+valid.length
+)
+*
+100;
+
+}
 
 function profitClass(v) {
 
-  const n =
-    num(v);
+const n =
+num(v);
 
+if (
+n === null
+) {
+return "profit-neutral";
+}
 
-  if (
-    n === null
-  ) {
+if (
+n > 0
+) {
+return "profit-positive";
+}
 
-    return "profit-neutral";
+if (
+n < 0
+) {
+return "profit-negative";
+}
 
-  }
-
-
-  if (
-    n > 0
-  ) {
-
-    return "profit-positive";
-
-  }
-
-
-  if (
-    n < 0
-  ) {
-
-    return "profit-negative";
-
-  }
-
-
-  return "profit-neutral";
+return "profit-neutral";
 
 }
 
-
 /* =========================================================
-   SUMMARY
+SUMMARY
 ========================================================= */
 
 function getTotalSummary() {
 
-  return (
-
-    summaries.find(
-      row =>
-
-        String(
-          row["대분류"] || ""
-        )
-        .trim()
-
-        ===
-
-        "총합"
-    )
-
-    ||
-
-    summaries[0]
-
-  );
+return (
+summaries.find(
+row =>
+String(row["대분류"] || "").trim() === "총합"
+)
+||
+summaries[0]
+);
 
 }
 
+function summaryCategoryRows() {
+
+return summaries.filter(
+row => {
+
+const category = String(row["대분류"] || "").trim();
+const channel = String(row["유통채널"] || "").trim();
+
+return category && category !== "총합" && channel === "합계";
+
+}
+);
+
+}
+
+function summaryChannelsFor(category) {
+
+if (!category || category === "전체") {
+return [];
+}
+
+return summaries
+.filter(
+row =>
+String(row["대분류"] || "").trim() === category
+&&
+!["", "합계", "총합"].includes(
+String(row["유통채널"] || "").trim()
+)
+)
+.map(
+row =>
+String(row["유통채널"] || "").trim()
+);
+
+}
+
+function getSelectedSummaryRow() {
+
+if (summaryCategory === "전체") {
+return getTotalSummary();
+}
+
+if (summaryChannel !== "전체") {
+
+const exact = summaries.find(
+row =>
+String(row["대분류"] || "").trim() === summaryCategory
+&&
+String(row["유통채널"] || "").trim() === summaryChannel
+);
+
+if (exact) {
+return exact;
+}
+
+}
+
+return summaries.find(
+row =>
+String(row["대분류"] || "").trim() === summaryCategory
+&&
+String(row["유통채널"] || "").trim() === "합계"
+)
+||
+getTotalSummary();
+
+}
+
+function getVisibleSummaryRows() {
+
+let rows = [];
+
+if (summaryCategory === "전체") {
+
+rows = summaryCategoryRows();
+
+}
+
+else if (summaryChannel === "전체") {
+
+rows = summaries.filter(
+row =>
+String(row["대분류"] || "").trim() === summaryCategory
+&&
+!["", "합계", "총합"].includes(
+String(row["유통채널"] || "").trim()
+)
+);
+
+}
+
+else {
+
+rows = summaries.filter(
+row =>
+String(row["대분류"] || "").trim() === summaryCategory
+&&
+String(row["유통채널"] || "").trim() === summaryChannel
+);
+
+}
+
+const sorted = [...rows];
+
+sorted.sort(
+(a,b) => {
+
+let av;
+let bv;
+
+if (summarySortKey === "label") {
+
+av = summaryCategory === "전체"
+? String(a["대분류"] || "")
+: String(a["유통채널"] || "");
+
+bv = summaryCategory === "전체"
+? String(b["대분류"] || "")
+: String(b["유통채널"] || "");
+
+return summarySortDir === "asc"
+? av.localeCompare(bv,"ko")
+: bv.localeCompare(av,"ko");
+
+}
+
+av = num(a[summarySortKey]);
+bv = num(b[summarySortKey]);
+
+if (av === null && bv === null) return 0;
+if (av === null) return 1;
+if (bv === null) return -1;
+
+return summarySortDir === "asc"
+? av - bv
+: bv - av;
+
+}
+);
+
+return sorted;
+
+}
+
+function renderSummaryFilters() {
+
+const categoryBox =
+document.getElementById("summaryCategoryFilters");
+
+const channelBox =
+document.getElementById("summaryChannelFilters");
+
+const channelRow =
+document.getElementById("summaryChannelFilterRow");
+
+const selection =
+document.getElementById("summarySelection");
+
+if (
+!categoryBox ||
+!channelBox ||
+!channelRow ||
+!selection
+) {
+return;
+}
+
+const categories =
+summaryCategoryRows()
+.map(
+row =>
+String(row["대분류"] || "").trim()
+);
+
+const categoryValues =
+[
+"전체",
+...categories
+];
+
+categoryBox.innerHTML =
+categoryValues
+.map(
+value => `
+<button
+type="button"
+class="summary-filter-btn ${summaryCategory === value ? "active" : ""}"
+data-summary-category="${value}"
+>
+${value}
+</button>
+`
+)
+.join("");
+
+categoryBox
+.querySelectorAll("[data-summary-category]")
+.forEach(
+button => {
+
+button.addEventListener(
+"click",
+() => {
+
+summaryCategory =
+button.dataset.summaryCategory;
+
+summaryChannel =
+"전체";
+
+summarySortKey =
+"label";
+
+summarySortDir =
+"asc";
+
+renderSummary();
+
+}
+);
+
+}
+);
+
+const channels =
+summaryChannelsFor(
+summaryCategory
+);
+
+if (
+summaryCategory === "전체"
+||
+!channels.length
+) {
+
+channelRow.style.display =
+"none";
+
+channelBox.innerHTML =
+"";
+
+}
+
+else {
+
+channelRow.style.display =
+"flex";
+
+const channelValues =
+[
+"전체",
+...channels
+];
+
+channelBox.innerHTML =
+channelValues
+.map(
+value => `
+<button
+type="button"
+class="summary-filter-btn ${summaryChannel === value ? "active" : ""}"
+data-summary-channel="${value}"
+>
+${value}
+</button>
+`
+)
+.join("");
+
+channelBox
+.querySelectorAll("[data-summary-channel]")
+.forEach(
+button => {
+
+button.addEventListener(
+"click",
+() => {
+
+summaryChannel =
+button.dataset.summaryChannel;
+
+renderSummary();
+
+}
+);
+
+}
+);
+
+}
+
+const selectionText =
+summaryCategory === "전체"
+?
+"전체"
+:
+summaryChannel === "전체"
+?
+summaryCategory
+:
+`${summaryCategory} > ${summaryChannel}`;
+
+selection.innerHTML = `
+선택 : <strong>${selectionText}</strong>
+· 컬럼명을 클릭하면 오름/내림차순 정렬
+`;
+
+}
+
+function bindSummarySortButtons() {
+
+document
+.querySelectorAll("[data-summary-sort]")
+.forEach(
+button => {
+
+button.onclick = () => {
+
+const key =
+button.dataset.summarySort;
+
+if (
+summarySortKey === key
+) {
+
+summarySortDir =
+summarySortDir === "asc"
+?
+"desc"
+:
+"asc";
+
+}
+
+else {
+
+summarySortKey =
+key;
+
+summarySortDir =
+key === "label"
+?
+"asc"
+:
+"desc";
+
+}
+
+renderSummaryTable();
+updateSummarySortIndicators();
+
+};
+
+}
+);
+
+}
+
+function updateSummarySortIndicators() {
+
+document
+.querySelectorAll("[data-summary-sort]")
+.forEach(
+button => {
+
+const indicator =
+button.querySelector(
+".summary-sort-indicator"
+);
+
+const active =
+button.dataset.summarySort === summarySortKey;
+
+button.classList.toggle(
+"active",
+active
+);
+
+if (indicator) {
+
+indicator.textContent =
+active
+?
+(
+summarySortDir === "asc"
+?
+"▲"
+:
+"▼"
+)
+:
+"↕";
+
+}
+
+}
+);
+
+}
+
+function renderSummaryTable() {
+
+const rows =
+getVisibleSummaryRows();
+
+document
+.getElementById(
+"summaryBody"
+)
+.innerHTML =
+rows
+.map(
+row => {
+
+const label =
+summaryCategory === "전체"
+?
+text(row["대분류"])
+:
+text(row["유통채널"]);
+
+return `
+<tr>
+<td>${label}</td>
+<td>${summaryInteger(row["매장수"])}</td>
+<td>${summaryInteger(row["전체면적_AVG"])}</td>
+<td>${summaryInteger(row["고정임차_매장수"])}</td>
+<td>${summaryInteger(row["수수료임차_매장수"])}</td>
+<td>${percent(row["수수료율_AVG"])}</td>
+</tr>
+`;
+
+}
+)
+.join("");
+
+}
 
 function renderSummary() {
 
-  const total =
-    getTotalSummary();
-
-
-  if (
-    !total
-  ) {
-
-    return;
-
-  }
-
-
-  const kpis = [
-
-    [
-      "전체 매장",
-      comma(
-        total["매장수"]
-      ),
-      "개"
-    ],
-
-    [
-      "평균 면적",
-      comma(
-        total["전체면적_AVG"]
-      ),
-      "평"
-    ],
-
-    [
-      "고정임차 매장",
-      comma(
-        total["고정임차_매장수"]
-      ),
-      "개"
-    ],
-
-    [
-      "수수료임차 매장",
-      comma(
-        total["수수료임차_매장수"]
-      ),
-      "개"
-    ],
-
-    [
-      "평균 수수료율",
-      percent(
-        total["수수료율_AVG"]
-      ),
-      ""
-    ]
-
-  ];
-
-
-  document
-    .getElementById(
-      "summaryKpi"
-    )
-    .innerHTML =
-
-      kpis
-        .map(
-          item => `
-
-            <div class="kpi-card">
-
-              <div class="kpi-label">
-                ${item[0]}
-              </div>
-
-              <div class="kpi-value">
-                ${item[1]}${item[2]}
-              </div>
-
-              <div class="kpi-foot">
-                SummaryData 기준
-              </div>
-
-            </div>
-
-          `
-        )
-        .join("");
-
-
-  const channelRows =
-
-    summaries
-      .filter(
-        row =>
-
-          String(
-            row["유통채널"] || ""
-          )
-          .trim()
-
-          ===
-
-          "합계"
-      );
-
-
-  document
-    .getElementById(
-      "summaryBody"
-    )
-    .innerHTML =
-
-      channelRows
-        .map(
-          row => `
-
-            <tr>
-
-              <td>
-                ${text(
-                  row["대분류"]
-                )}
-              </td>
-
-              <td>
-                ${comma(
-                  row["매장수"]
-                )}
-              </td>
-
-              <td>
-                ${comma(
-                  row["전체면적_AVG"]
-                )}
-              </td>
-
-              <td>
-                ${comma(
-                  row["고정임차_매장수"]
-                )}
-              </td>
-
-              <td>
-                ${comma(
-                  row["수수료임차_매장수"]
-                )}
-              </td>
-
-              <td>
-                ${percent(
-                  row["수수료율_AVG"]
-                )}
-              </td>
-
-            </tr>
-
-          `
-        )
-        .join("");
-
-
-  const fixedDeposit =
-
-    num(
-      total[
-        "고정임차_보증금_TTL"
-      ]
-    )
-    || 0;
-
-
-  const commissionDeposit =
-
-    num(
-      total[
-        "수수료임차_보증금_TTL"
-      ]
-    )
-    || 0;
-
-
-  document
-    .getElementById(
-      "totalDeposit"
-    )
-    .textContent =
-
-      comma(
-        fixedDeposit
-        +
-        commissionDeposit
-      );
-
-
-  document
-    .getElementById(
-      "fixedLease"
-    )
-    .innerHTML = `
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          매장수
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "고정임차_매장수"
-            ]
-          )}개
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          보증금 TTL
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "고정임차_보증금_TTL"
-            ]
-          )}
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          보증금 AVG
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "고정임차_보증금_AVG"
-            ]
-          )}
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          월임차료 AVG
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "고정임차_월임차료_AVG"
-            ]
-          )}
-        </span>
-
-      </div>
-
-    `;
-
-
-  document
-    .getElementById(
-      "commissionLease"
-    )
-    .innerHTML = `
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          매장수
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "수수료임차_매장수"
-            ]
-          )}개
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          보증금 TTL
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "수수료임차_보증금_TTL"
-            ]
-          )}
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          보증금 AVG
-        </span>
-
-        <span class="lease-val">
-          ${comma(
-            total[
-              "수수료임차_보증금_AVG"
-            ]
-          )}
-        </span>
-
-      </div>
-
-
-      <div class="lease-row">
-
-        <span class="lease-key">
-          수수료율 AVG
-        </span>
-
-        <span class="lease-val">
-          ${percent(
-            total[
-              "수수료율_AVG"
-            ]
-          )}
-        </span>
-
-      </div>
-
-    `;
+const total =
+getTotalSummary();
+
+if (
+!total
+) {
+return;
+}
+
+const kpis = [
+
+[
+"전체 매장",
+summaryInteger(
+total["매장수"]
+),
+"개"
+],
+
+[
+"평균 면적",
+summaryInteger(
+total["전체면적_AVG"]
+),
+"평"
+],
+
+[
+"고정임차 매장",
+summaryInteger(
+total["고정임차_매장수"]
+),
+"개"
+],
+
+[
+"수수료임차 매장",
+summaryInteger(
+total["수수료임차_매장수"]
+),
+"개"
+],
+
+[
+"평균 수수료율",
+percent(
+total["수수료율_AVG"]
+),
+""
+]
+
+];
+
+document
+.getElementById(
+"summaryKpi"
+)
+.innerHTML =
+kpis
+.map(
+item => `
+<div class="kpi-card">
+<div class="kpi-label">
+${item[0]}
+</div>
+<div class="kpi-value">
+${item[1]}${item[2]}
+</div>
+<div class="kpi-foot">
+SummaryData 기준
+</div>
+</div>
+`
+)
+.join("");
+
+renderSummaryFilters();
+renderSummaryTable();
+bindSummarySortButtons();
+updateSummarySortIndicators();
+
+const selected =
+getSelectedSummaryRow();
+
+if (
+!selected
+) {
+return;
+}
+
+const fixedDeposit =
+num(
+selected["고정임차_보증금_TTL"]
+)
+||
+0;
+
+const commissionDeposit =
+num(
+selected["수수료임차_보증금_TTL"]
+)
+||
+0;
+
+document
+.getElementById(
+"totalDeposit"
+)
+.textContent =
+summaryInteger(
+fixedDeposit
++
+commissionDeposit
+);
+
+document
+.getElementById(
+"fixedLease"
+)
+.innerHTML = `
+
+<div class="lease-row">
+<span class="lease-key">
+매장수
+</span>
+<span class="lease-val">
+${summaryInteger(selected["고정임차_매장수"])}개
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+보증금 TTL
+</span>
+<span class="lease-val">
+${summaryInteger(selected["고정임차_보증금_TTL"])}
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+보증금 AVG
+</span>
+<span class="lease-val">
+${summaryInteger(selected["고정임차_보증금_AVG"])}
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+월임차료 AVG
+</span>
+<span class="lease-val">
+${summaryInteger(selected["고정임차_월임차료_AVG"])}
+</span>
+</div>
+
+`;
+
+document
+.getElementById(
+"commissionLease"
+)
+.innerHTML = `
+
+<div class="lease-row">
+<span class="lease-key">
+매장수
+</span>
+<span class="lease-val">
+${summaryInteger(selected["수수료임차_매장수"])}개
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+보증금 TTL
+</span>
+<span class="lease-val">
+${summaryInteger(selected["수수료임차_보증금_TTL"])}
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+보증금 AVG
+</span>
+<span class="lease-val">
+${summaryInteger(selected["수수료임차_보증금_AVG"])}
+</span>
+</div>
+
+<div class="lease-row">
+<span class="lease-key">
+수수료율 AVG
+</span>
+<span class="lease-val">
+${percent(selected["수수료율_AVG"])}
+</span>
+</div>
+
+`;
 
 }
 
-
 /* =========================================================
-   CATEGORY
+CATEGORY
 ========================================================= */
 
 function classifyStore(row) {
 
-  const category =
+const category =
+String(
+row["대분류"] || ""
+)
+.trim();
 
-    String(
-      row["대분류"] || ""
-    )
-    .trim();
-
-
-  if (
-    category.includes(
-      "밸런스"
-    )
-    ||
-    category.startsWith(
-      "B)"
-    )
-    ||
-    category.startsWith(
-      "B）"
-    )
-  ) {
-
-    return "밸런스";
-
-  }
-
-
-  if (
-    category.includes(
-      "가두"
-    )
-  ) {
-
-    return "가두";
-
-  }
-
-
-  return "유통";
-
-}
-
-
-function getTopThreeByGroup(
-  groupName
+if (
+category.includes(
+"밸런스"
+)
+||
+category.startsWith(
+"B)"
+)
+||
+category.startsWith(
+"B）"
+)
 ) {
 
-  return stores
-
-    .filter(
-      row =>
-
-        classifyStore(row)
-        ===
-        groupName
-    )
-
-    .map(
-      row => ({
-
-        row: row,
-
-        sales:
-          num(
-            row[
-              "26년_월평균"
-            ]
-          )
-
-      })
-    )
-
-    .filter(
-      item =>
-
-        item.sales !== null
-        &&
-        item.sales > 0
-    )
-
-    .sort(
-      (a,b) =>
-        b.sales - a.sales
-    )
-
-    .slice(
-      0,
-      3
-    );
+return "밸런스";
 
 }
 
+if (
+category.includes(
+"가두"
+)
+) {
+
+return "가두";
+
+}
+
+return "유통";
+
+}
+
+function getTopThreeByGroup(
+groupName
+) {
+
+return stores
+.filter(
+row =>
+classifyStore(row)
+===
+groupName
+)
+.map(
+row => ({
+
+row: row,
+
+sales:
+num(
+row[
+"26년_월평균"
+]
+)
+
+})
+)
+.filter(
+item =>
+item.sales !== null
+&&
+item.sales > 0
+)
+.sort(
+(a,b) =>
+b.sales - a.sales
+)
+.slice(
+0,
+3
+);
+
+}
 
 function rankBadgeHtml(rank) {
 
-  let badgeClass =
-    "rank1";
+let badgeClass =
+"rank1";
 
-  let badgeText =
-    "🥇";
+let badgeText =
+"🥇";
 
-
-  if (
-    rank === 2
-  ) {
-
-    badgeClass =
-      "rank2";
-
-    badgeText =
-      "🥈";
-
-  }
-
-
-  else if (
-    rank === 3
-  ) {
-
-    badgeClass =
-      "rank3";
-
-    badgeText =
-      "🥉";
-
-  }
-
-
-  return `
-
-    <div
-      class="
-        rank-badge
-        ${badgeClass}
-      "
-    >
-      ${badgeText}
-    </div>
-
-  `;
-
-}
-
-
-function renderRankingSection(
-  groupName
+if (
+rank === 2
 ) {
 
-  const ranked =
-    getTopThreeByGroup(
-      groupName
-    );
-
-
-  const rowsHtml =
-
-    ranked
-      .map(
-        (item,index) => {
-
-          const rank =
-            index + 1;
-
-
-          const profit =
-
-            item.row[
-              "25년_영업이익율"
-            ];
-
-
-          return `
-
-            <div class="rank-row">
-
-
-              ${rankBadgeHtml(
-                rank
-              )}
-
-
-              <div class="rank-store">
-
-                ${text(
-                  item.row[
-                    "매장명"
-                  ]
-                )}
-
-                <span class="rank-store-sub">
-
-                  ${normalizeRegion(
-                    item.row[
-                      "지역"
-                    ]
-                  )}
-
-                  ·
-
-                  ${text(
-                    item.row[
-                      "대분류"
-                    ]
-                  )}
-
-                </span>
-
-              </div>
-
-
-              <div class="rank-sales">
-
-                ${million(
-                  item.row[
-                    "26년_월평균"
-                  ]
-                )}
-
-              </div>
-
-
-              <div
-                class="
-                  ${profitClass(
-                    profit
-                  )}
-                "
-              >
-
-                ${signedPercent(
-                  profit
-                )}
-
-              </div>
-
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-
-  return `
-
-    <div class="ranking-section">
-
-
-      <div class="ranking-title">
-
-
-        <div class="ranking-title-left">
-
-          <span class="ranking-chip">
-
-            ${groupName}
-
-          </span>
-
-          <span class="ranking-title-text">
-
-            월평균 TOP 3
-
-          </span>
-
-        </div>
-
-
-        <div class="ranking-columns">
-
-          <div>
-            월평균
-          </div>
-
-          <div>
-            영업이익율
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-      <div class="ranking-list">
-
-        ${
-          rowsHtml
-
-          ||
-
-          `
-
-            <div
-              style="
-                padding:20px;
-                text-align:center;
-                color:#9ca3af;
-                font-size:10px;
-              "
-            >
-
-              해당 구분 데이터가 없습니다.
-
-            </div>
-
-          `
-        }
-
-      </div>
-
-
-    </div>
-
-  `;
+badgeClass =
+"rank2";
+
+badgeText =
+"🥈";
 
 }
 
+else if (
+rank === 3
+) {
+
+badgeClass =
+"rank3";
+
+badgeText =
+"🥉";
+
+}
+
+return `
+
+<div
+class="
+rank-badge
+${badgeClass}
+"
+>
+${badgeText}
+</div>
+
+`;
+
+}
+
+function renderRankingSection(
+groupName
+) {
+
+const ranked =
+getTopThreeByGroup(
+groupName
+);
+
+const rowsHtml =
+ranked
+.map(
+(item,index) => {
+
+const rank =
+index + 1;
+
+const profit =
+item.row[
+"25년_영업이익율"
+];
+
+return `
+
+<div class="rank-row">
+
+${rankBadgeHtml(
+rank
+)}
+
+<div class="rank-store">
+
+${text(
+item.row[
+"매장명"
+]
+)}
+
+<span class="rank-store-sub">
+
+${normalizeRegion(
+item.row[
+"지역"
+]
+)}
+
+·
+
+${text(
+item.row[
+"대분류"
+]
+)}
+
+</span>
+
+</div>
+
+<div class="rank-sales">
+
+${million(
+item.row[
+"26년_월평균"
+]
+)}
+
+</div>
+
+<div
+class="
+${profitClass(
+profit
+)}
+"
+>
+
+${signedPercent(
+profit
+)}
+
+</div>
+
+</div>
+
+`;
+
+}
+)
+.join("");
+
+return `
+
+<div class="ranking-section">
+
+<div class="ranking-title">
+
+<div class="ranking-title-left">
+
+<span class="ranking-chip">
+${groupName}
+</span>
+
+<span class="ranking-title-text">
+월평균 TOP 3
+</span>
+
+</div>
+
+<div class="ranking-columns">
+
+<div>
+월평균
+</div>
+
+<div>
+영업이익율
+</div>
+
+</div>
+
+</div>
+
+<div class="ranking-list">
+
+${
+rowsHtml
+||
+`
+
+<div
+style="
+padding:20px;
+text-align:center;
+color:#9ca3af;
+font-size:10px;
+"
+>
+해당 구분 데이터가 없습니다.
+</div>
+
+`
+}
+
+</div>
+
+</div>
+
+`;
+
+}
 
 function renderCategoryRanking() {
 
-  document
-    .getElementById(
-      "categoryRanking"
-    )
-    .innerHTML =
+document
+.getElementById(
+"categoryRanking"
+)
+.innerHTML =
 
-      renderRankingSection(
-        "가두"
-      )
+renderRankingSection(
+"가두"
+)
 
-      +
++
 
-      renderRankingSection(
-        "유통"
-      )
+renderRankingSection(
+"유통"
+)
 
-      +
++
 
-      renderRankingSection(
-        "밸런스"
-      );
+renderRankingSection(
+"밸런스"
+);
 
 }
 
-
 /* =========================================================
-   REGIONAL DATA
+REGIONAL DATA
 ========================================================= */
 
 function buildRegionalData() {
 
-  const map = {};
+const map = {};
 
+stores
+.forEach(
+row => {
 
-  stores
-    .forEach(
-      row => {
+const region =
+normalizeRegion(
+row["지역"]
+);
 
-        const region =
+if (
+!region
+) {
+return;
+}
 
-          normalizeRegion(
-            row["지역"]
-          );
+if (
+!map[region]
+) {
 
+map[region] = {
 
-        if (
-          !region
-        ) {
+region:
+region,
 
-          return;
+count:
+0,
 
-        }
+sales:
+[],
 
+profits:
+[],
 
-        if (
-          !map[region]
-        ) {
+growths:
+[]
 
-          map[region] = {
-
-            region:
-              region,
-
-            count:
-              0,
-
-            sales:
-              [],
-
-            profits:
-              [],
-
-            growths:
-              []
-
-          };
-
-        }
-
-
-        map[region].count += 1;
-
-
-        const sales =
-
-          num(
-            row[
-              "26년_월평균"
-            ]
-          );
-
-
-        const profit =
-
-          num(
-            row[
-              "25년_영업이익율"
-            ]
-          );
-
-
-        const growth =
-
-          num(
-            row[
-              "동매장_신장율"
-            ]
-          );
-
-
-        if (
-          sales !== null
-          &&
-          sales > 0
-        ) {
-
-          map[region]
-            .sales
-            .push(
-              sales
-            );
-
-        }
-
-
-        if (
-          profit !== null
-        ) {
-
-          map[region]
-            .profits
-            .push(
-              profit
-            );
-
-        }
-
-
-        if (
-          growth !== null
-        ) {
-
-          map[region]
-            .growths
-            .push(
-              growth
-            );
-
-        }
-
-      }
-    );
-
-
-  return Object
-    .values(
-      map
-    );
+};
 
 }
 
+map[region].count += 1;
+
+const sales =
+num(
+row[
+"26년_월평균"
+]
+);
+
+const profit =
+num(
+row[
+"25년_영업이익율"
+]
+);
+
+const growth =
+num(
+row[
+"동매장_신장율"
+]
+);
+
+if (
+sales !== null
+&&
+sales > 0
+) {
+
+map[region]
+.sales
+.push(
+sales
+);
+
+}
+
+if (
+profit !== null
+) {
+
+map[region]
+.profits
+.push(
+profit
+);
+
+}
+
+if (
+growth !== null
+) {
+
+map[region]
+.growths
+.push(
+growth
+);
+
+}
+
+}
+);
+
+return Object
+.values(
+map
+);
+
+}
 
 /* =========================================================
-   DEVELOPMENT SCORE
+DEVELOPMENT SCORE
 ========================================================= */
 
 function buildDevelopmentScores() {
 
-  const regions =
-    buildRegionalData();
-
-
-  const totalStoreCount =
-    stores.length || 1;
-
-
-  const totalPopulation =
-
-    Object
-      .values(
-        POPULATION
-      )
-      .reduce(
-        (sum,value) =>
-          sum + value,
-        0
-      );
-
-
-  let rows =
-
-    regions
-      .filter(
-        item =>
-          POPULATION[
-            item.region
-          ]
-      )
-
-      .map(
-        item => {
-
-
-          const population =
-            POPULATION[
-              item.region
-            ];
-
-
-          const avgSales =
-            average(
-              item.sales
-            );
-
-
-          const avgProfit =
-            average(
-              item.profits
-            );
-
-
-          const avgGrowth =
-            average(
-              item.growths
-            );
-
-
-          const storeShare =
-
-            (
-              item.count
-              /
-              totalStoreCount
-            )
-            *
-            100;
-
-
-          const populationShare =
-
-            (
-              population
-              /
-              totalPopulation
-            )
-            *
-            100;
-
-
-          const storesPer100k =
-
-            (
-              item.count
-              /
-              population
-            )
-            *
-            100000;
-
-
-          return {
-
-            region:
-              item.region,
-
-            count:
-              item.count,
-
-            population:
-              population,
-
-            avgSales:
-              avgSales,
-
-            avgProfit:
-              avgProfit,
-
-            avgGrowth:
-              avgGrowth,
-
-            storeShare:
-              storeShare,
-
-            populationShare:
-              populationShare,
-
-            storesPer100k:
-              storesPer100k
-
-          };
-
-        }
-      );
-
-
-  const populationValues =
-    rows.map(
-      row =>
-        row.population
-    );
-
-
-  const salesValues =
-    rows.map(
-      row =>
-        row.avgSales
-    );
-
-
-  const profitValues =
-    rows.map(
-      row =>
-        row.avgProfit
-    );
-
-
-  const growthValues =
-    rows.map(
-      row =>
-        row.avgGrowth
-    );
-
-
-  const densityValues =
-    rows.map(
-      row =>
-        row.storesPer100k
-    );
-
-
-  rows =
-
-    rows
-      .map(
-        row => {
-
-
-          const marketSizeScore =
-
-            percentileRank(
-              row.population,
-              populationValues
-            );
-
-
-          const salesScore =
-
-            row.avgSales === null
-
-            ?
-
-            50
-
-            :
-
-            percentileRank(
-              row.avgSales,
-              salesValues
-            );
-
-
-          const profitScore =
-
-            row.avgProfit === null
-
-            ?
-
-            50
-
-            :
-
-            percentileRank(
-              row.avgProfit,
-              profitValues
-            );
-
-
-          const growthScore =
-
-            row.avgGrowth === null
-
-            ?
-
-            50
-
-            :
-
-            percentileRank(
-              row.avgGrowth,
-              growthValues
-            );
-
-
-          const densityRank =
-
-            percentileRank(
-              row.storesPer100k,
-              densityValues
-            );
-
-
-          const densityOpportunity =
-
-            100
-            -
-            densityRank;
-
-
-          const shareGap =
-
-            row.populationShare
-            -
-            row.storeShare;
-
-
-          const penetrationScore =
-
-            clamp(
-
-              50
-              +
-              shareGap * 5,
-
-              0,
-
-              100
-
-            );
-
-
-          /*
-            MARKET POTENTIAL
-
-            시장규모           15%
-            인구대비 점포공백  20%
-            점포밀도           15%
-            기존점 매출        20%
-            영업이익           15%
-            성장률             15%
-          */
-
-
-          const marketPotential =
-
-            marketSizeScore
-            *
-            0.15
-
-            +
-
-            penetrationScore
-            *
-            0.20
-
-            +
-
-            densityOpportunity
-            *
-            0.15
-
-            +
-
-            salesScore
-            *
-            0.20
-
-            +
-
-            profitScore
-            *
-            0.15
-
-            +
-
-            growthScore
-            *
-            0.15;
-
-
-          let saturationRisk =
-
-            densityRank
-            *
-            0.35
-
-            +
-
-            (
-              100
-              -
-              penetrationScore
-            )
-            *
-            0.25
-
-            +
-
-            (
-              100
-              -
-              salesScore
-            )
-            *
-            0.15
-
-            +
-
-            (
-              100
-              -
-              profitScore
-            )
-            *
-            0.15
-
-            +
-
-            (
-              100
-              -
-              growthScore
-            )
-            *
-            0.10;
-
-
-          if (
-            row.avgProfit !== null
-            &&
-            row.avgProfit < 0
-          ) {
-
-            saturationRisk += 8;
-
-          }
-
-
-          if (
-            row.avgGrowth !== null
-            &&
-            row.avgGrowth < 0
-          ) {
-
-            saturationRisk += 6;
-
-          }
-
-
-          saturationRisk =
-
-            clamp(
-              saturationRisk,
-              0,
-              100
-            );
-
-
-          const reviewScore =
-
-            marketPotential
-            *
-            0.80
-
-            +
-
-            (
-              100
-              -
-              saturationRisk
-            )
-            *
-            0.20;
-
-
-          const existingPerformanceScore =
-
-            (
-              salesScore
-              +
-              profitScore
-            )
-            /
-            2;
-
-
-          return {
-
-            ...row,
-
-            marketSizeScore:
-              Math.round(
-                marketSizeScore
-              ),
-
-            penetrationScore:
-              Math.round(
-                penetrationScore
-              ),
-
-            densityOpportunity:
-              Math.round(
-                densityOpportunity
-              ),
-
-            existingPerformanceScore:
-              Math.round(
-                existingPerformanceScore
-              ),
-
-            growthScore:
-              Math.round(
-                growthScore
-              ),
-
-            salesScore:
-              salesScore,
-
-            marketPotential:
-              Math.round(
-                marketPotential
-              ),
-
-            saturationRisk:
-              Math.round(
-                saturationRisk
-              ),
-
-            reviewScore:
-              Math.round(
-                reviewScore
-              )
-
-          };
-
-        }
-      );
-
-
-  return rows;
+const regions =
+buildRegionalData();
+
+const totalStoreCount =
+stores.length || 1;
+
+const totalPopulation =
+Object
+.values(
+POPULATION
+)
+.reduce(
+(sum,value) =>
+sum + value,
+0
+);
+
+let rows =
+regions
+.filter(
+item =>
+POPULATION[
+item.region
+]
+)
+.map(
+item => {
+
+const population =
+POPULATION[
+item.region
+];
+
+const avgSales =
+average(
+item.sales
+);
+
+const avgProfit =
+average(
+item.profits
+);
+
+const avgGrowth =
+average(
+item.growths
+);
+
+const storeShare =
+(
+item.count
+/
+totalStoreCount
+)
+*
+100;
+
+const populationShare =
+(
+population
+/
+totalPopulation
+)
+*
+100;
+
+const storesPer100k =
+(
+item.count
+/
+population
+)
+*
+100000;
+
+return {
+
+region:
+item.region,
+
+count:
+item.count,
+
+population:
+population,
+
+avgSales:
+avgSales,
+
+avgProfit:
+avgProfit,
+
+avgGrowth:
+avgGrowth,
+
+storeShare:
+storeShare,
+
+populationShare:
+populationShare,
+
+storesPer100k:
+storesPer100k
+
+};
+
+}
+);
+
+const populationValues =
+rows.map(
+row =>
+row.population
+);
+
+const salesValues =
+rows.map(
+row =>
+row.avgSales
+);
+
+const profitValues =
+rows.map(
+row =>
+row.avgProfit
+);
+
+const growthValues =
+rows.map(
+row =>
+row.avgGrowth
+);
+
+const densityValues =
+rows.map(
+row =>
+row.storesPer100k
+);
+
+rows =
+rows
+.map(
+row => {
+
+const marketSizeScore =
+percentileRank(
+row.population,
+populationValues
+);
+
+const salesScore =
+row.avgSales === null
+?
+50
+:
+percentileRank(
+row.avgSales,
+salesValues
+);
+
+const profitScore =
+row.avgProfit === null
+?
+50
+:
+percentileRank(
+row.avgProfit,
+profitValues
+);
+
+const growthScore =
+row.avgGrowth === null
+?
+50
+:
+percentileRank(
+row.avgGrowth,
+growthValues
+);
+
+const densityRank =
+percentileRank(
+row.storesPer100k,
+densityValues
+);
+
+const densityOpportunity =
+100
+-
+densityRank;
+
+const shareGap =
+row.populationShare
+-
+row.storeShare;
+
+const penetrationScore =
+clamp(
+50
++
+shareGap * 5,
+0,
+100
+);
+
+/*
+MARKET POTENTIAL
+
+시장규모           15%
+인구대비 점포공백  20%
+점포밀도           15%
+기존점 매출        20%
+영업이익           15%
+성장률             15%
+*/
+
+const marketPotential =
+marketSizeScore
+*
+0.15
+
++
+
+penetrationScore
+*
+0.20
+
++
+
+densityOpportunity
+*
+0.15
+
++
+
+salesScore
+*
+0.20
+
++
+
+profitScore
+*
+0.15
+
++
+
+growthScore
+*
+0.15;
+
+let saturationRisk =
+densityRank
+*
+0.35
+
++
+
+(
+100
+-
+penetrationScore
+)
+*
+0.25
+
++
+
+(
+100
+-
+salesScore
+)
+*
+0.15
+
++
+
+(
+100
+-
+profitScore
+)
+*
+0.15
+
++
+
+(
+100
+-
+growthScore
+)
+*
+0.10;
+
+if (
+row.avgProfit !== null
+&&
+row.avgProfit < 0
+) {
+
+saturationRisk += 8;
 
 }
 
+if (
+row.avgGrowth !== null
+&&
+row.avgGrowth < 0
+) {
+
+saturationRisk += 6;
+
+}
+
+saturationRisk =
+clamp(
+saturationRisk,
+0,
+100
+);
+
+const reviewScore =
+marketPotential
+*
+0.80
+
++
+
+(
+100
+-
+saturationRisk
+)
+*
+0.20;
+
+const existingPerformanceScore =
+(
+salesScore
++
+profitScore
+)
+/
+2;
+
+return {
+
+...row,
+
+marketSizeScore:
+Math.round(
+marketSizeScore
+),
+
+penetrationScore:
+Math.round(
+penetrationScore
+),
+
+densityOpportunity:
+Math.round(
+densityOpportunity
+),
+
+existingPerformanceScore:
+Math.round(
+existingPerformanceScore
+),
+
+growthScore:
+Math.round(
+growthScore
+),
+
+salesScore:
+salesScore,
+
+marketPotential:
+Math.round(
+marketPotential
+),
+
+saturationRisk:
+Math.round(
+saturationRisk
+),
+
+reviewScore:
+Math.round(
+reviewScore
+)
+
+};
+
+}
+);
+
+return rows;
+
+}
 
 /* =========================================================
-   MAP
+MAP
 ========================================================= */
 
 const GEOJSON_URL =
-
-  "https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_provinces_geo_simple.json";
-
+"https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_provinces_geo_simple.json";
 
 function geoRegionName(feature) {
 
-  return normalizeRegion(
+return normalizeRegion(
 
-    feature
-      &&
-    feature.properties
-      ?
-    feature.properties.name
-      :
-    ""
+feature
+&&
+feature.properties
+?
+feature.properties.name
+:
+""
 
-  );
+);
 
 }
-
 
 function getMapMetric(
-  row
+row
 ) {
 
-  if (
-    mapMode === "density"
-  ) {
-
-    return row.storesPer100k;
-
-  }
-
-
-  if (
-    mapMode === "potential"
-  ) {
-
-    return row.marketPotential;
-
-  }
-
-
-  return row.count;
-
+if (
+mapMode === "density"
+) {
+return row.storesPer100k;
 }
 
+if (
+mapMode === "potential"
+) {
+return row.marketPotential;
+}
+
+return row.count;
+
+}
 
 function getMapMetricText(
-  row
+row
 ) {
 
-  if (
-    mapMode === "density"
-  ) {
+if (
+mapMode === "density"
+) {
 
-    return (
-      row.storesPer100k
-        .toFixed(2)
-      +
-      "개/10만명"
-    );
-
-  }
-
-
-  if (
-    mapMode === "potential"
-  ) {
-
-    return (
-      row.marketPotential
-      +
-      "점"
-    );
-
-  }
-
-
-  return (
-    row.count
-    +
-    "개"
-  );
+return (
+row.storesPer100k
+.toFixed(2)
++
+"개/10만명"
+);
 
 }
 
+if (
+mapMode === "potential"
+) {
+
+return (
+row.marketPotential
++
+"점"
+);
+
+}
+
+return (
+row.count
++
+"개"
+);
+
+}
 
 function mapColor(
-  value,
-  min,
-  max
+value,
+min,
+max
 ) {
 
-  if (
-    max === min
-  ) {
-
-    return "#9ca3af";
-
-  }
-
-
-  const ratio =
-
-    clamp(
-
-      (
-        value
-        -
-        min
-      )
-      /
-      (
-        max
-        -
-        min
-      ),
-
-      0,
-
-      1
-
-    );
-
-
-  const lightness =
-
-    92
-    -
-    ratio * 66;
-
-
-  return (
-
-    "hsl(220,15%,"
-    +
-    lightness
-    +
-    "%)"
-
-  );
-
+if (
+max === min
+) {
+return "#9ca3af";
 }
 
+const ratio =
+clamp(
+
+(
+value
+-
+min
+)
+/
+(
+max
+-
+min
+),
+
+0,
+
+1
+
+);
+
+const lightness =
+92
+-
+ratio * 66;
+
+return (
+
+"hsl(220,15%,"
++
+lightness
++
+"%)"
+
+);
+
+}
 
 function showMapInfo(
-  row
+row
 ) {
 
-  if (
-    !row
-  ) {
-
-    return;
-
-  }
-
-
-  document
-    .getElementById(
-      "mapInfo"
-    )
-    .innerHTML = `
-
-      <strong>
-        ${row.region}
-      </strong>
-
-      &nbsp;|&nbsp;
-
-      인구
-      ${comma(row.population)}명
-
-      &nbsp;·&nbsp;
-
-      TOPTEN
-      ${row.count}개
-
-      &nbsp;·&nbsp;
-
-      10만명당
-      ${row.storesPer100k.toFixed(2)}개
-
-      <br>
-
-      기존점 월평균
-      ${
-        row.avgSales === null
-        ?
-        "-"
-        :
-        million(
-          row.avgSales
-        )
-      }백만원
-
-      &nbsp;·&nbsp;
-
-      영업이익
-      ${signedPercent(
-        row.avgProfit
-      )}
-
-      &nbsp;·&nbsp;
-
-      신장률
-      ${signedPercent(
-        row.avgGrowth
-      )}
-
-      &nbsp;·&nbsp;
-
-      출점잠재력
-      <strong>
-        ${row.marketPotential}점
-      </strong>
-
-    `;
-
+if (
+!row
+) {
+return;
 }
 
+document
+.getElementById(
+"mapInfo"
+)
+.innerHTML = `
+
+<strong>
+${row.region}
+</strong>
+
+&nbsp;|&nbsp;
+
+인구
+${comma(row.population)}명
+
+&nbsp;·&nbsp;
+
+TOPTEN
+${row.count}개
+
+&nbsp;·&nbsp;
+
+10만명당
+${row.storesPer100k.toFixed(2)}개
+
+<br>
+
+기존점 월평균
+
+${
+row.avgSales === null
+?
+"-"
+:
+million(
+row.avgSales
+)
+}백만원
+
+&nbsp;·&nbsp;
+
+영업이익
+${signedPercent(
+row.avgProfit
+)}
+
+&nbsp;·&nbsp;
+
+신장률
+${signedPercent(
+row.avgGrowth
+)}
+
+&nbsp;·&nbsp;
+
+출점잠재력
+
+<strong>
+${row.marketPotential}점
+</strong>
+
+`;
+
+}
 
 function applyRegionFilter(
-  region
+region
 ) {
 
-  const regionFilter =
+const regionFilter =
+document
+.getElementById(
+"regionFilter"
+);
 
-    document
-      .getElementById(
-        "regionFilter"
-      );
+let matchingValue =
+"";
 
+Array
+.from(
+regionFilter.options
+)
+.forEach(
+option => {
 
-  let matchingValue =
-    "";
+if (
+normalizeRegion(
+option.value
+)
+===
+region
+) {
 
-
-  Array
-    .from(
-      regionFilter.options
-    )
-    .forEach(
-      option => {
-
-        if (
-          normalizeRegion(
-            option.value
-          )
-          ===
-          region
-        ) {
-
-          matchingValue =
-            option.value;
-
-        }
-
-      }
-    );
-
-
-  if (
-    matchingValue
-  ) {
-
-    regionFilter.value =
-      matchingValue;
-
-  }
-
-
-  else {
-
-    regionFilter.value =
-      "";
-
-  }
-
-
-  renderStores();
-
-
-  document
-    .querySelector(
-      ".store-panel"
-    )
-    .scrollIntoView(
-      {
-        behavior:
-          "smooth",
-
-        block:
-          "start"
-      }
-    );
+matchingValue =
+option.value;
 
 }
 
+}
+);
+
+if (
+matchingValue
+) {
+
+regionFilter.value =
+matchingValue;
+
+}
+
+else {
+
+regionFilter.value =
+"";
+
+}
+
+renderStores();
+
+document
+.querySelector(
+".store-panel"
+)
+.scrollIntoView(
+{
+behavior:
+"smooth",
+
+block:
+"start"
+}
+);
+
+}
 
 function renderMap() {
 
-  if (
-    !geoData
-  ) {
-
-    return;
-
-  }
-
-
-  const rows =
-    buildDevelopmentScores();
-
-
-  const rowMap = {};
-
-
-  rows
-    .forEach(
-      row => {
-
-        rowMap[
-          row.region
-        ] =
-          row;
-
-      }
-    );
-
-
-  const values =
-
-    rows
-      .map(
-        row =>
-          getMapMetric(
-            row
-          )
-      );
-
-
-  const min =
-
-    Math.min(
-      ...values
-    );
-
-
-  const max =
-
-    Math.max(
-      ...values
-    );
-
-
-  const svg =
-
-    d3
-      .select(
-        "#koreaMap"
-      );
-
-
-  svg
-    .selectAll(
-      "*"
-    )
-    .remove();
-
-
-  const node =
-
-    document
-      .getElementById(
-        "koreaMap"
-      );
-
-
-  const width =
-
-    node
-      .clientWidth
-    ||
-    420;
-
-
-  const height =
-
-    node
-      .clientHeight
-    ||
-    415;
-
-
-  svg
-    .attr(
-      "viewBox",
-      `0 0 ${width} ${height}`
-    );
-
-
-  const projection =
-
-    d3
-      .geoMercator()
-      .fitSize(
-        [
-          width - 20,
-          height - 20
-        ],
-        geoData
-      );
-
-
-  const path =
-
-    d3
-      .geoPath(
-        projection
-      );
-
-
-  const features =
-
-    geoData.features;
-
-
-  svg
-    .append(
-      "g"
-    )
-    .attr(
-      "transform",
-      "translate(10,10)"
-    )
-    .selectAll(
-      "path"
-    )
-    .data(
-      features
-    )
-    .join(
-      "path"
-    )
-    .attr(
-      "class",
-      "map-path"
-    )
-    .attr(
-      "d",
-      path
-    )
-    .attr(
-      "fill",
-      feature => {
-
-        const region =
-
-          geoRegionName(
-            feature
-          );
-
-
-        const row =
-
-          rowMap[
-            region
-          ];
-
-
-        if (
-          !row
-        ) {
-
-          return "#eef1f5";
-
-        }
-
-
-        return mapColor(
-
-          getMapMetric(
-            row
-          ),
-
-          min,
-
-          max
-
-        );
-
-      }
-    )
-    .on(
-      "click",
-      function(
-        event,
-        feature
-      ) {
-
-        const region =
-
-          geoRegionName(
-            feature
-          );
-
-
-        const row =
-
-          rowMap[
-            region
-          ];
-
-
-        showMapInfo(
-          row
-        );
-
-
-        applyRegionFilter(
-          region
-        );
-
-      }
-    )
-    .append(
-      "title"
-    )
-    .text(
-      feature => {
-
-        const region =
-
-          geoRegionName(
-            feature
-          );
-
-
-        const row =
-
-          rowMap[
-            region
-          ];
-
-
-        if (
-          !row
-        ) {
-
-          return (
-            region
-            +
-            " : 데이터 없음"
-          );
-
-        }
-
-
-        return (
-
-          region
-          +
-          " : "
-          +
-          getMapMetricText(
-            row
-          )
-
-        );
-
-      }
-    );
-
-
-  const labelGroup =
-
-    svg
-      .append(
-        "g"
-      )
-      .attr(
-        "transform",
-        "translate(10,10)"
-      );
-
-
-  features
-    .forEach(
-      feature => {
-
-        const region =
-
-          geoRegionName(
-            feature
-          );
-
-
-        const row =
-
-          rowMap[
-            region
-          ];
-
-
-        if (
-          !row
-        ) {
-
-          return;
-
-        }
-
-
-        const centroid =
-
-          path
-            .centroid(
-              feature
-            );
-
-
-        if (
-          !isFinite(
-            centroid[0]
-          )
-          ||
-          !isFinite(
-            centroid[1]
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        labelGroup
-          .append(
-            "text"
-          )
-          .attr(
-            "class",
-            "map-label"
-          )
-          .attr(
-            "x",
-            centroid[0]
-          )
-          .attr(
-            "y",
-            centroid[1]
-          )
-          .text(
-            region
-          );
-
-      }
-    );
+if (
+!geoData
+) {
+return;
+}
+
+const rows =
+buildDevelopmentScores();
+
+const rowMap = {};
+
+rows
+.forEach(
+row => {
+
+rowMap[
+row.region
+] =
+row;
+
+}
+);
+
+const values =
+rows
+.map(
+row =>
+getMapMetric(
+row
+)
+);
+
+const min =
+Math.min(
+...values
+);
+
+const max =
+Math.max(
+...values
+);
+
+const svg =
+d3
+.select(
+"#koreaMap"
+);
+
+svg
+.selectAll(
+"*"
+)
+.remove();
+
+const node =
+document
+.getElementById(
+"koreaMap"
+);
+
+const width =
+node
+.clientWidth
+||
+420;
+
+const height =
+node
+.clientHeight
+||
+415;
+
+svg
+.attr(
+"viewBox",
+`0 0 ${width} ${height}`
+);
+
+const projection =
+d3
+.geoMercator()
+.fitSize(
+[
+width - 20,
+height - 20
+],
+geoData
+);
+
+const path =
+d3
+.geoPath(
+projection
+);
+
+const features =
+geoData.features;
+
+svg
+.append(
+"g"
+)
+.attr(
+"transform",
+"translate(10,10)"
+)
+.selectAll(
+"path"
+)
+.data(
+features
+)
+.join(
+"path"
+)
+.attr(
+"class",
+"map-path"
+)
+.attr(
+"d",
+path
+)
+.attr(
+"fill",
+feature => {
+
+const region =
+geoRegionName(
+feature
+);
+
+const row =
+rowMap[
+region
+];
+
+if (
+!row
+) {
+return "#eef1f5";
+}
+
+return mapColor(
+
+getMapMetric(
+row
+),
+
+min,
+
+max
+
+);
+
+}
+)
+.on(
+"click",
+function(
+event,
+feature
+) {
+
+const region =
+geoRegionName(
+feature
+);
+
+const row =
+rowMap[
+region
+];
+
+showMapInfo(
+row
+);
+
+applyRegionFilter(
+region
+);
+
+}
+)
+.append(
+"title"
+)
+.text(
+feature => {
+
+const region =
+geoRegionName(
+feature
+);
+
+const row =
+rowMap[
+region
+];
+
+if (
+!row
+) {
+
+return (
+region
++
+" : 데이터 없음"
+);
 
 }
 
+return (
+
+region
++
+" : "
++
+getMapMetricText(
+row
+)
+
+);
+
+}
+);
+
+const labelGroup =
+svg
+.append(
+"g"
+)
+.attr(
+"transform",
+"translate(10,10)"
+);
+
+features
+.forEach(
+feature => {
+
+const region =
+geoRegionName(
+feature
+);
+
+const row =
+rowMap[
+region
+];
+
+if (
+!row
+) {
+return;
+}
+
+const centroid =
+path
+.centroid(
+feature
+);
+
+if (
+!isFinite(
+centroid[0]
+)
+||
+!isFinite(
+centroid[1]
+)
+) {
+return;
+}
+
+labelGroup
+.append(
+"text"
+)
+.attr(
+"class",
+"map-label"
+)
+.attr(
+"x",
+centroid[0]
+)
+.attr(
+"y",
+centroid[1]
+)
+.text(
+region
+);
+
+}
+);
+
+}
 
 /* =========================================================
-   DEVELOPMENT
+DEVELOPMENT
 ========================================================= */
 
 function developmentStatus(
-  score
+score
 ) {
 
-  if (
-    score >= 70
-  ) {
+if (
+score >= 70
+) {
 
-    return {
+return {
 
-      text:
-        "우선 검토",
+text:
+"우선 검토",
 
-      className:
-        "high"
+className:
+"high"
 
-    };
-
-  }
-
-
-  if (
-    score >= 60
-  ) {
-
-    return {
-
-      text:
-        "추가 검토",
-
-      className:
-        "mid"
-
-    };
-
-  }
-
-
-  if (
-    score >= 50
-  ) {
-
-    return {
-
-      text:
-        "선별 검토",
-
-      className:
-        "select"
-
-    };
-
-  }
-
-
-  return {
-
-    text:
-      "보수적 검토",
-
-    className:
-      "caution"
-
-  };
+};
 
 }
 
+if (
+score >= 60
+) {
+
+return {
+
+text:
+"추가 검토",
+
+className:
+"mid"
+
+};
+
+}
+
+if (
+score >= 50
+) {
+
+return {
+
+text:
+"선별 검토",
+
+className:
+"select"
+
+};
+
+}
+
+return {
+
+text:
+"보수적 검토",
+
+className:
+"caution"
+
+};
+
+}
 
 function buildReason(
-  row
+row
 ) {
 
-  const reasons = [];
+const reasons = [];
 
+if (
+row.marketSizeScore >= 75
+) {
 
-  if (
-    row.marketSizeScore >= 75
-  ) {
-
-    reasons.push(
-      "절대 시장규모 큼"
-    );
-
-  }
-
-
-  if (
-    row.penetrationScore >= 70
-  ) {
-
-    reasons.push(
-      "인구 대비 매장 공백"
-    );
-
-  }
-
-
-  if (
-    row.densityOpportunity >= 70
-  ) {
-
-    reasons.push(
-      "인구 대비 점포밀도 낮음"
-    );
-
-  }
-
-
-  if (
-    row.existingPerformanceScore >= 70
-  ) {
-
-    reasons.push(
-      "기존점 성과 우수"
-    );
-
-  }
-
-
-  if (
-    row.growthScore >= 70
-  ) {
-
-    reasons.push(
-      "기존점 성장세 양호"
-    );
-
-  }
-
-
-  if (
-    !reasons.length
-  ) {
-
-    reasons.push(
-      "시장·점포망 종합 선별검토"
-    );
-
-  }
-
-
-  return reasons
-    .slice(
-      0,
-      2
-    )
-    .join(
-      " · "
-    );
+reasons.push(
+"절대 시장규모 큼"
+);
 
 }
 
+if (
+row.penetrationScore >= 70
+) {
+
+reasons.push(
+"인구 대비 매장 공백"
+);
+
+}
+
+if (
+row.densityOpportunity >= 70
+) {
+
+reasons.push(
+"인구 대비 점포밀도 낮음"
+);
+
+}
+
+if (
+row.existingPerformanceScore >= 70
+) {
+
+reasons.push(
+"기존점 성과 우수"
+);
+
+}
+
+if (
+row.growthScore >= 70
+) {
+
+reasons.push(
+"기존점 성장세 양호"
+);
+
+}
+
+if (
+!reasons.length
+) {
+
+reasons.push(
+"시장·점포망 종합 선별검토"
+);
+
+}
+
+return reasons
+.slice(
+0,
+2
+)
+.join(
+" · "
+);
+
+}
 
 function renderDevelopmentCandidates() {
 
-  let candidates =
-
-    buildDevelopmentScores()
-      .filter(
-        row =>
-          row.count >= 2
-      );
-
-
-  if (
-    candidates.length < 5
-  ) {
-
-    candidates =
-      buildDevelopmentScores();
-
-  }
-
-
-  candidates =
-
-    candidates
-      .sort(
-        (a,b) =>
-          b.reviewScore
-          -
-          a.reviewScore
-      )
-      .slice(
-        0,
-        5
-      );
-
-
-  document
-    .getElementById(
-      "developmentList"
-    )
-    .innerHTML =
-
-      candidates
-        .map(
-          (row,index) => {
-
-
-            const status =
-
-              developmentStatus(
-                row.reviewScore
-              );
-
-
-            const riskClass =
-
-              row.saturationRisk >= 60
-
-              ?
-
-              "risk-high"
-
-              :
-
-              "risk-low";
-
-
-            return `
-
-              <div class="dev-card">
-
-
-                <div class="dev-card-top">
-
-
-                  <div class="dev-rank-area">
-
-                    <div class="dev-rank">
-
-                      ${index + 1}
-
-                    </div>
-
-                    <div class="dev-region">
-
-                      ${row.region}
-
-                    </div>
-
-                  </div>
-
-
-                  <div
-                    class="
-                      dev-status
-                      ${status.className}
-                    "
-                  >
-
-                    ${status.text}
-
-                  </div>
-
-
-                </div>
-
-
-                <div class="dev-score-row">
-
-
-                  <div class="dev-score-box">
-
-                    <div class="dev-score-label">
-                      출점 잠재력
-                    </div>
-
-                    <div class="dev-score-value">
-
-                      ${row.marketPotential}
-
-                    </div>
-
-                  </div>
-
-
-                  <div class="dev-score-box">
-
-                    <div class="dev-score-label">
-                      포화위험
-                    </div>
-
-                    <div
-                      class="
-                        dev-score-value
-                        ${riskClass}
-                      "
-                    >
-
-                      ${row.saturationRisk}
-
-                    </div>
-
-                  </div>
-
-
-                </div>
-
-
-                <div class="dev-score-detail">
-
-
-                  <div class="score-mini">
-
-                    <span class="score-mini-label">
-                      시장규모
-                    </span>
-
-                    <span class="score-mini-value">
-                      ${row.marketSizeScore}
-                    </span>
-
-                  </div>
-
-
-                  <div class="score-mini">
-
-                    <span class="score-mini-label">
-                      점포공백
-                    </span>
-
-                    <span class="score-mini-value">
-                      ${row.penetrationScore}
-                    </span>
-
-                  </div>
-
-
-                  <div class="score-mini">
-
-                    <span class="score-mini-label">
-                      점포밀도
-                    </span>
-
-                    <span class="score-mini-value">
-                      ${row.densityOpportunity}
-                    </span>
-
-                  </div>
-
-
-                  <div class="score-mini">
-
-                    <span class="score-mini-label">
-                      기존점성과
-                    </span>
-
-                    <span class="score-mini-value">
-                      ${row.existingPerformanceScore}
-                    </span>
-
-                  </div>
-
-
-                </div>
-
-
-                <div class="dev-data">
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      지역 인구
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${(
-                        row.population
-                        /
-                        10000
-                      )
-                      .toFixed(0)}만
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      현재 매장
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${row.count}개
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      10만명당 점포
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${row.storesPer100k
-                        .toFixed(2)
-                      }개
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      최종 검토점수
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${row.reviewScore}점
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      기존점 월평균
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${
-                        row.avgSales === null
-
-                        ?
-
-                        "-"
-
-                        :
-
-                        million(
-                          row.avgSales
-                        )
-                      }
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      평균 영업이익
-                    </span>
-
-                    <span
-                      class="
-                        dev-data-value
-                        ${profitClass(
-                          row.avgProfit
-                        )}
-                      "
-                    >
-
-                      ${signedPercent(
-                        row.avgProfit
-                      )}
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      평균 신장율
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${signedPercent(
-                        row.avgGrowth
-                      )}
-
-                    </span>
-
-                  </div>
-
-
-                  <div class="dev-data-item">
-
-                    <span class="dev-data-label">
-                      인구-매장 Gap
-                    </span>
-
-                    <span class="dev-data-value">
-
-                      ${
-                        (
-                          row.populationShare
-                          -
-                          row.storeShare
-                        )
-                        >
-                        0
-
-                        ?
-
-                        "+"
-
-                        :
-
-                        ""
-                      }
-
-                      ${(
-                        row.populationShare
-                        -
-                        row.storeShare
-                      )
-                      .toFixed(1)
-                      }%p
-
-                    </span>
-
-                  </div>
-
-
-                </div>
-
-
-                <div class="dev-reason">
-
-                  <strong>
-                    검토 포인트
-                  </strong>
-
-                  <br>
-
-                  ${buildReason(
-                    row
-                  )}
-
-                </div>
-
-
-              </div>
-
-            `;
-
-          }
-        )
-        .join("");
+let candidates =
+buildDevelopmentScores()
+.filter(
+row =>
+row.count >= 2
+);
+
+if (
+candidates.length < 5
+) {
+
+candidates =
+buildDevelopmentScores();
 
 }
 
+candidates =
+candidates
+.sort(
+(a,b) =>
+b.reviewScore
+-
+a.reviewScore
+)
+.slice(
+0,
+5
+);
+
+document
+.getElementById(
+"developmentList"
+)
+.innerHTML =
+candidates
+.map(
+(row,index) => {
+
+const status =
+developmentStatus(
+row.reviewScore
+);
+
+const riskClass =
+row.saturationRisk >= 60
+?
+"risk-high"
+:
+"risk-low";
+
+return `
+
+<div class="dev-card">
+
+<div class="dev-card-top">
+
+<div class="dev-rank-area">
+
+<div class="dev-rank">
+${index + 1}
+</div>
+
+<div class="dev-region">
+${row.region}
+</div>
+
+</div>
+
+<div
+class="
+dev-status
+${status.className}
+"
+>
+${status.text}
+</div>
+
+</div>
+
+<div class="dev-score-row">
+
+<div class="dev-score-box">
+
+<div class="dev-score-label">
+출점 잠재력
+</div>
+
+<div class="dev-score-value">
+${row.marketPotential}
+</div>
+
+</div>
+
+<div class="dev-score-box">
+
+<div class="dev-score-label">
+포화위험
+</div>
+
+<div
+class="
+dev-score-value
+${riskClass}
+"
+>
+${row.saturationRisk}
+</div>
+
+</div>
+
+</div>
+
+<div class="dev-score-detail">
+
+<div class="score-mini">
+
+<span class="score-mini-label">
+시장규모
+</span>
+
+<span class="score-mini-value">
+${row.marketSizeScore}
+</span>
+
+</div>
+
+<div class="score-mini">
+
+<span class="score-mini-label">
+점포공백
+</span>
+
+<span class="score-mini-value">
+${row.penetrationScore}
+</span>
+
+</div>
+
+<div class="score-mini">
+
+<span class="score-mini-label">
+점포밀도
+</span>
+
+<span class="score-mini-value">
+${row.densityOpportunity}
+</span>
+
+</div>
+
+<div class="score-mini">
+
+<span class="score-mini-label">
+기존점성과
+</span>
+
+<span class="score-mini-value">
+${row.existingPerformanceScore}
+</span>
+
+</div>
+
+</div>
+
+<div class="dev-data">
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+지역 인구
+</span>
+
+<span class="dev-data-value">
+
+${(
+row.population
+/
+10000
+)
+.toFixed(0)}만
+
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+현재 매장
+</span>
+
+<span class="dev-data-value">
+${row.count}개
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+10만명당 점포
+</span>
+
+<span class="dev-data-value">
+
+${row.storesPer100k
+.toFixed(2)
+}개
+
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+최종 검토점수
+</span>
+
+<span class="dev-data-value">
+${row.reviewScore}점
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+기존점 월평균
+</span>
+
+<span class="dev-data-value">
+
+${
+row.avgSales === null
+?
+"-"
+:
+million(
+row.avgSales
+)
+}
+
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+평균 영업이익
+</span>
+
+<span
+class="
+dev-data-value
+${profitClass(
+row.avgProfit
+)}
+"
+>
+
+${signedPercent(
+row.avgProfit
+)}
+
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+평균 신장율
+</span>
+
+<span class="dev-data-value">
+
+${signedPercent(
+row.avgGrowth
+)}
+
+</span>
+
+</div>
+
+<div class="dev-data-item">
+
+<span class="dev-data-label">
+인구-매장 Gap
+</span>
+
+<span class="dev-data-value">
+
+${
+(
+row.populationShare
+-
+row.storeShare
+)
+>
+0
+?
+"+"
+:
+""
+}
+
+${(
+row.populationShare
+-
+row.storeShare
+)
+.toFixed(1)
+}%p
+
+</span>
+
+</div>
+
+</div>
+
+<div class="dev-reason">
+
+<strong>
+검토 포인트
+</strong>
+
+<br>
+
+${buildReason(
+row
+)}
+
+</div>
+
+</div>
+
+`;
+
+}
+)
+.join("");
+
+}
 
 /* =========================================================
-   FILTER
+FILTER
 ========================================================= */
 
 function fillFilters() {
 
-  const categories =
+const categories =
+[
+...new Set(
 
-    [
-      ...new Set(
+stores
+.map(
+row =>
+row["대분류"]
+)
+.filter(Boolean)
 
-        stores
-          .map(
-            row =>
-              row["대분류"]
-          )
-          .filter(Boolean)
+)
+]
+.sort();
 
-      )
-    ]
-    .sort();
+const regions =
+[
+...new Set(
 
+stores
+.map(
+row =>
+row["지역"]
+)
+.filter(Boolean)
 
-  const regions =
+)
+]
+.sort();
 
-    [
-      ...new Set(
+const category =
+document
+.getElementById(
+"categoryFilter"
+);
 
-        stores
-          .map(
-            row =>
-              row["지역"]
-          )
-          .filter(Boolean)
+const region =
+document
+.getElementById(
+"regionFilter"
+);
 
-      )
-    ]
-    .sort();
+categories
+.forEach(
+value => {
 
+category.innerHTML += `
 
-  const category =
+<option
+value="${value}"
+>
+${value}
+</option>
 
-    document
-      .getElementById(
-        "categoryFilter"
-      );
+`;
 
+}
+);
 
-  const region =
+regions
+.forEach(
+value => {
 
-    document
-      .getElementById(
-        "regionFilter"
-      );
+region.innerHTML += `
 
+<option
+value="${value}"
+>
+${value}
+</option>
 
-  categories
-    .forEach(
-      value => {
+`;
 
-        category.innerHTML += `
-
-          <option
-            value="${value}"
-          >
-            ${value}
-          </option>
-
-        `;
-
-      }
-    );
-
-
-  regions
-    .forEach(
-      value => {
-
-        region.innerHTML += `
-
-          <option
-            value="${value}"
-          >
-            ${value}
-          </option>
-
-        `;
-
-      }
-    );
+}
+);
 
 }
 
-
 /* =========================================================
-   GROWTH
+GROWTH
 ========================================================= */
+  function growthBadge(v) {
 
-function growthBadge(v) {
+const n =
+num(v);
 
-  const n =
-    num(v);
+if (
+n === null
+) {
+return "-";
+}
 
+const value =
+Math.abs(n) <= 1
+?
+n * 100
+:
+n;
 
-  if (
-    n === null
-  ) {
+if (
+value > 0
+) {
 
-    return "-";
+return `
 
-  }
+<span class="
+badge
+up
+">
 
+▲${Math.abs(value)
+.toFixed(1)
+.replace(".0","")
+}%
 
-  const value =
+</span>
 
-    Math.abs(n) <= 1
-
-    ?
-
-    n * 100
-
-    :
-
-    n;
-
-
-  if (
-    value > 0
-  ) {
-
-    return `
-
-      <span class="
-        badge
-        up
-      ">
-
-        ▲${Math.abs(value)
-          .toFixed(1)
-          .replace(".0","")
-        }%
-
-      </span>
-
-    `;
-
-  }
-
-
-  if (
-    value < 0
-  ) {
-
-    return `
-
-      <span class="
-        badge
-        down
-      ">
-
-        ▼${Math.abs(value)
-          .toFixed(1)
-          .replace(".0","")
-        }%
-
-      </span>
-
-    `;
-
-  }
-
-
-  return `
-
-    <span class="
-      badge
-      neutral
-    ">
-
-      0%
-
-    </span>
-
-  `;
+`;
 
 }
 
+if (
+value < 0
+) {
+
+return `
+
+<span class="
+badge
+down
+">
+
+▼${Math.abs(value)
+.toFixed(1)
+.replace(".0","")
+}%
+
+</span>
+
+`;
+
+}
+
+return `
+
+<span class="
+badge
+neutral
+">
+
+0%
+
+</span>
+
+`;
+
+}
 
 /* =========================================================
-   CONTRACT EXPIRY
+CONTRACT EXPIRY
 ========================================================= */
 
 function expiryBadge(v) {
 
-  const formatted =
-    dateFormat(v);
+const formatted =
+dateFormat(v);
 
+if (
+formatted === "-"
+) {
+return "-";
+}
 
-  if (
-    formatted === "-"
-  ) {
+const target =
+new Date(
+formatted
++
+"T00:00:00"
+);
 
-    return "-";
+const now =
+new Date();
 
-  }
+const days =
+Math.ceil(
 
+(
+target
+-
+now
+)
 
-  const target =
+/
 
-    new Date(
-      formatted
-      +
-      "T00:00:00"
-    );
+86400000
 
+);
 
-  const now =
-    new Date();
+if (
+days <= 90
+) {
 
+return `
 
-  const days =
+<span class="
+badge
+expire-danger
+">
 
-    Math.ceil(
+${formatted}
 
-      (
-        target
-        -
-        now
-      )
+</span>
 
-      /
-
-      86400000
-
-    );
-
-
-  if (
-    days <= 90
-  ) {
-
-    return `
-
-      <span class="
-        badge
-        expire-danger
-      ">
-
-        ${formatted}
-
-      </span>
-
-    `;
-
-  }
-
-
-  if (
-    days <= 180
-  ) {
-
-    return `
-
-      <span class="
-        badge
-        expire-warning
-      ">
-
-        ${formatted}
-
-      </span>
-
-    `;
-
-  }
-
-
-  return formatted;
+`;
 
 }
 
+if (
+days <= 180
+) {
+
+return `
+
+<span class="
+badge
+expire-warning
+">
+
+${formatted}
+
+</span>
+
+`;
+
+}
+
+return formatted;
+
+}
 
 /* =========================================================
-   STORE TABLE
+STORE TABLE
 ========================================================= */
 
 function renderStores() {
 
-  const keyword =
-
-    document
-      .getElementById(
-        "search"
-      )
-      .value
-      .trim()
-      .toLowerCase();
-
-
-  const category =
-
-    document
-      .getElementById(
-        "categoryFilter"
-      )
-      .value;
-
-
-  const region =
-
-    document
-      .getElementById(
-        "regionFilter"
-      )
-      .value;
-
-
-  const filtered =
-
-    stores
-      .filter(
-        row => {
-
-
-          const name =
-
-            String(
-              row["매장명"]
-              ||
-              ""
-            )
-            .toLowerCase();
-
-
-          return (
-
-            name.includes(
-              keyword
-            )
-
-            &&
-
-            (
-              !category
-              ||
-              row["대분류"]
-              ===
-              category
-            )
-
-            &&
-
-            (
-              !region
-              ||
-              normalizeRegion(
-                row["지역"]
-              )
-              ===
-              normalizeRegion(
-                region
-              )
-            )
-
-          );
-
-        }
-      );
-
-
-  const tbody =
-
-    document
-      .getElementById(
-        "storeBody"
-      );
-
-
-  if (
-    !filtered.length
-  ) {
-
-    tbody.innerHTML = `
-
-      <tr>
-
-        <td
-          colspan="14"
-          style="
-            padding:40px;
-            color:#9ca3af;
-          "
-        >
-
-          검색 결과가 없습니다.
-
-        </td>
-
-      </tr>
-
-    `;
-
-
-    return;
-
-  }
-
-
-  tbody.innerHTML = "";
-
-
-  filtered
-    .forEach(
-      row => {
-
-
-        const tr =
-
-          document
-            .createElement(
-              "tr"
-            );
-
-
-        tr.innerHTML = `
-
-
-          <td class="store-name">
-
-            ${text(
-              row["매장명"]
-            )}
-
-            <span class="sub-hint">
-              상세보기
-            </span>
-
-          </td>
-
-
-          <td>
-
-            ${dateFormat(
-              row["오픈일자"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${text(
-              row["대분류"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${normalizeRegion(
-              row["지역"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${text(
-              row["운영형태"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${million(
-              row["26년_월평균"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${growthBadge(
-              row["동매장_신장율"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${comma(
-              row["전체면적_평"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${expiryBadge(
-              row["계약만료일"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${percent(
-              row["유통마진율"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${million(
-              row["고정임차료"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${moneyOrText(
-              row["관리비"]
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${million(
-              row["보증금"]
-            )}
-
-          </td>
-
-
-          <td
-            class="
-              ${profitClass(
-                row[
-                  "25년_영업이익율"
-                ]
-              )}
-            "
-          >
-
-            ${signedPercent(
-              row[
-                "25년_영업이익율"
-              ]
-            )}
-
-          </td>
-
-
-        `;
-
-
-        tr.addEventListener(
-          "click",
-          () =>
-            openDetail(
-              row
-            )
-        );
-
-
-        tbody
-          .appendChild(
-            tr
-          );
-
-      }
-    );
+const keyword =
+document
+.getElementById(
+"search"
+)
+.value
+.trim()
+.toLowerCase();
+
+const category =
+document
+.getElementById(
+"categoryFilter"
+)
+.value;
+
+const region =
+document
+.getElementById(
+"regionFilter"
+)
+.value;
+
+const filtered =
+stores
+.filter(
+row => {
+
+const name =
+String(
+row["매장명"]
+||
+""
+)
+.toLowerCase();
+
+return (
+
+name.includes(
+keyword
+)
+
+&&
+
+(
+!category
+||
+row["대분류"]
+===
+category
+)
+
+&&
+
+(
+!region
+||
+normalizeRegion(
+row["지역"]
+)
+===
+normalizeRegion(
+region
+)
+)
+
+);
+
+}
+);
+
+const tbody =
+document
+.getElementById(
+"storeBody"
+);
+
+if (
+!filtered.length
+) {
+
+tbody.innerHTML = `
+
+<tr>
+
+<td
+colspan="14"
+style="
+padding:40px;
+color:#9ca3af;
+"
+>
+
+검색 결과가 없습니다.
+
+</td>
+
+</tr>
+
+`;
+
+return;
 
 }
 
+tbody.innerHTML = "";
+
+filtered
+.forEach(
+row => {
+
+const tr =
+document
+.createElement(
+"tr"
+);
+
+tr.innerHTML = `
+
+<td class="store-name">
+
+${text(
+row["매장명"]
+)}
+
+<span class="sub-hint">
+상세보기
+</span>
+
+</td>
+
+<td>
+
+${dateFormat(
+row["오픈일자"]
+)}
+
+</td>
+
+<td>
+
+${text(
+row["대분류"]
+)}
+
+</td>
+
+<td>
+
+${normalizeRegion(
+row["지역"]
+)}
+
+</td>
+
+<td>
+
+${text(
+row["운영형태"]
+)}
+
+</td>
+
+<td>
+
+${million(
+row["26년_월평균"]
+)}
+
+</td>
+
+<td>
+
+${growthBadge(
+row["동매장_신장율"]
+)}
+
+</td>
+
+<td>
+
+${comma(
+row["전체면적_평"]
+)}
+
+</td>
+
+<td>
+
+${expiryBadge(
+row["계약만료일"]
+)}
+
+</td>
+
+<td>
+
+${percent(
+row["유통마진율"]
+)}
+
+</td>
+
+<td>
+
+${million(
+row["고정임차료"]
+)}
+
+</td>
+
+<td>
+
+${moneyOrText(
+row["관리비"]
+)}
+
+</td>
+
+<td>
+
+${million(
+row["보증금"]
+)}
+
+</td>
+
+<td
+class="
+${profitClass(
+row[
+"25년_영업이익율"
+]
+)}
+"
+>
+
+${signedPercent(
+row[
+"25년_영업이익율"
+]
+)}
+
+</td>
+
+`;
+
+tr.addEventListener(
+"click",
+() =>
+openDetail(
+row
+)
+);
+
+tbody
+.appendChild(
+tr
+);
+
+}
+);
+
+}
 
 /* =========================================================
-   HISTORY
+HISTORY
 ========================================================= */
 
 function historiesFor(name) {
 
-  return history
+return history
 
-    .filter(
-      row =>
+.filter(
+row =>
 
-        String(
-          row["매장명"]
-          ||
-          ""
-        )
-        .trim()
+String(
+row["매장명"]
+||
+""
+)
+.trim()
 
-        ===
+===
 
-        String(
-          name
-          ||
-          ""
-        )
-        .trim()
+String(
+name
+||
+""
+)
+.trim()
 
-    )
+)
 
-    .sort(
-      (a,b) =>
+.sort(
+(a,b) =>
 
-        new Date(
-          dateFormat(
-            b["변경일"]
-          )
-        )
+new Date(
+dateFormat(
+b["변경일"]
+)
+)
 
-        -
+-
 
-        new Date(
-          dateFormat(
-            a["변경일"]
-          )
-        )
+new Date(
+dateFormat(
+a["변경일"]
+)
+)
 
-    );
+);
 
 }
 
-
 /* =========================================================
-   DETAIL
+DETAIL
 ========================================================= */
 
 function openDetail(row) {
 
-  document
-    .getElementById(
-      "detailName"
-    )
-    .textContent =
+document
+.getElementById(
+"detailName"
+)
+.textContent =
 
-      text(
-        row[
-          "매장명"
-        ]
-      );
+text(
+row[
+"매장명"
+]
+);
 
+const items = [
 
-  const items = [
+[
+"오픈일자",
+dateFormat(
+row["오픈일자"]
+)
+],
 
-    [
-      "오픈일자",
-      dateFormat(
-        row["오픈일자"]
-      )
-    ],
+[
+"대분류",
+text(
+row["대분류"]
+)
+],
 
-    [
-      "대분류",
-      text(
-        row["대분류"]
-      )
-    ],
+[
+"지역",
+normalizeRegion(
+row["지역"]
+)
+],
 
-    [
-      "지역",
-      normalizeRegion(
-        row["지역"]
-      )
-    ],
+[
+"운영형태",
+text(
+row["운영형태"]
+)
+],
 
-    [
-      "운영형태",
-      text(
-        row["운영형태"]
-      )
-    ],
+[
+"전체면적",
+comma(
+row["전체면적_평"]
+)
++
+"평"
+],
 
-    [
-      "전체면적",
-      comma(
-        row["전체면적_평"]
-      )
-      +
-      "평"
-    ],
+[
+"계약만료일",
+dateFormat(
+row["계약만료일"]
+)
+],
 
-    [
-      "계약만료일",
-      dateFormat(
-        row["계약만료일"]
-      )
-    ],
+[
+"유통마진율",
+percent(
+row["유통마진율"]
+)
+],
 
-    [
-      "유통마진율",
-      percent(
-        row["유통마진율"]
-      )
-    ],
+[
+"고정임차료",
+million(
+row["고정임차료"]
+)
+],
 
-    [
-      "고정임차료",
-      million(
-        row["고정임차료"]
-      )
-    ],
+[
+"관리비",
+moneyOrText(
+row["관리비"]
+)
+],
 
-    [
-      "관리비",
-      moneyOrText(
-        row["관리비"]
-      )
-    ],
+[
+"보증금",
+million(
+row["보증금"]
+)
+],
 
-    [
-      "보증금",
-      million(
-        row["보증금"]
-      )
-    ],
+[
+"26년 월평균",
+million(
+row["26년_월평균"]
+)
+],
 
-    [
-      "26년 월평균",
-      million(
-        row["26년_월평균"]
-      )
-    ],
+[
+"25년 영업이익율",
+signedPercent(
+row[
+"25년_영업이익율"
+]
+)
+]
 
-    [
-      "25년 영업이익율",
-      signedPercent(
-        row[
-          "25년_영업이익율"
-        ]
-      )
-    ]
+];
 
-  ];
+document
+.getElementById(
+"detailGrid"
+)
+.innerHTML =
 
+items
+.map(
+item => `
 
-  document
-    .getElementById(
-      "detailGrid"
-    )
-    .innerHTML =
+<div class="detail-item">
 
-      items
-        .map(
-          item => `
+<div class="detail-label">
+${item[0]}
+</div>
 
-            <div class="detail-item">
+<div class="detail-value">
+${item[1]}
+</div>
 
-              <div class="detail-label">
-                ${item[0]}
-              </div>
+</div>
 
-              <div class="detail-value">
-                ${item[1]}
-              </div>
+`
+)
+.join("");
 
-            </div>
+renderHistory(
 
-          `
-        )
-        .join("");
+historiesFor(
+row["매장명"]
+)
 
+);
 
-  renderHistory(
+document
+.getElementById(
+"overlay"
+)
+.classList
+.add(
+"open"
+);
 
-    historiesFor(
-      row["매장명"]
-    )
-
-  );
-
-
-  document
-    .getElementById(
-      "overlay"
-    )
-    .classList
-    .add(
-      "open"
-    );
-
-
-  document
-    .getElementById(
-      "drawer"
-    )
-    .classList
-    .add(
-      "open"
-    );
+document
+.getElementById(
+"drawer"
+)
+.classList
+.add(
+"open"
+);
 
 }
 
-
 /* =========================================================
-   HISTORY RENDER
+HISTORY RENDER
 ========================================================= */
 
 function renderHistory(items) {
 
-  const timeline =
+const timeline =
+document
+.getElementById(
+"timeline"
+);
 
-    document
-      .getElementById(
-        "timeline"
-      );
+if (
+!items.length
+) {
 
+timeline.innerHTML = `
 
-  if (
-    !items.length
-  ) {
+<div class="no-data">
 
-    timeline.innerHTML = `
+등록된 계약 히스토리가 없습니다.
 
-      <div class="no-data">
+</div>
 
-        등록된 계약 히스토리가 없습니다.
+`;
 
-      </div>
-
-    `;
-
-
-    return;
-
-  }
-
-
-  timeline.innerHTML =
-
-    items
-      .map(
-        row => `
-
-
-          <div class="timeline-item">
-
-
-            <div class="timeline-dot">
-            </div>
-
-
-            <div class="timeline-date">
-
-              ${dateFormat(
-                row["변경일"]
-              )}
-
-            </div>
-
-
-            <div class="timeline-type">
-
-              ${text(
-                row["변경구분"]
-              )}
-
-            </div>
-
-
-            <div class="timeline-change">
-
-              ${percent(
-                row["변경전"]
-              )}
-
-              &nbsp;→&nbsp;
-
-              ${percent(
-                row["변경후"]
-              )}
-
-            </div>
-
-
-            <div class="timeline-detail">
-
-
-              ${
-                row["사유"]
-
-                ?
-
-                `
-
-                  <div>
-
-                    <strong>
-                      사유
-                    </strong>
-
-                    &nbsp;
-
-                    ${text(
-                      row["사유"]
-                    )}
-
-                  </div>
-
-                `
-
-                :
-
-                ""
-              }
-
-
-              ${
-                row["비고"]
-
-                ?
-
-                `
-
-                  <div>
-
-                    <strong>
-                      비고
-                    </strong>
-
-                    &nbsp;
-
-                    ${text(
-                      row["비고"]
-                    )}
-
-                  </div>
-
-                `
-
-                :
-
-                ""
-              }
-
-
-            </div>
-
-
-          </div>
-
-
-        `
-      )
-      .join("");
+return;
 
 }
 
+timeline.innerHTML =
 
-/* =========================================================
-   DRAWER CLOSE
-========================================================= */
+items
+.map(
+row => `
 
-function closeDrawer() {
+<div class="timeline-item">
 
-  document
-    .getElementById(
-      "overlay"
-    )
-    .classList
-    .remove(
-      "open"
-    );
+<div class="timeline-dot">
+</div>
 
+<div class="timeline-date">
 
-  document
-    .getElementById(
-      "drawer"
-    )
-    .classList
-    .remove(
-      "open"
-    );
+${dateFormat(
+row["변경일"]
+)}
+
+</div>
+
+<div class="timeline-type">
+
+${text(
+row["변경구분"]
+)}
+
+</div>
+
+<div class="timeline-change">
+
+${percent(
+row["변경전"]
+)}
+
+&nbsp;→&nbsp;
+
+${percent(
+row["변경후"]
+)}
+
+</div>
+
+<div class="timeline-detail">
+
+${
+row["사유"]
+
+?
+
+`
+
+<div>
+
+<strong>
+사유
+</strong>
+
+&nbsp;
+
+${text(
+row["사유"]
+)}
+
+</div>
+
+`
+
+:
+
+""
+}
+
+${
+row["비고"]
+
+?
+
+`
+
+<div>
+
+<strong>
+비고
+</strong>
+
+&nbsp;
+
+${text(
+row["비고"]
+)}
+
+</div>
+
+`
+
+:
+
+""
+}
+
+</div>
+
+</div>
+
+`
+)
+.join("");
 
 }
 
-
-document
-  .getElementById(
-    "closeBtn"
-  )
-  .onclick =
-    closeDrawer;
-
-
-document
-  .getElementById(
-    "overlay"
-  )
-  .onclick =
-    closeDrawer;
-
-
 /* =========================================================
-   EVENTS
+DRAWER CLOSE
 ========================================================= */
 
-document
-  .getElementById(
-    "search"
-  )
-  .addEventListener(
-    "input",
-    renderStores
-  );
-
+function closeDetail() {
 
 document
-  .getElementById(
-    "categoryFilter"
-  )
-  .addEventListener(
-    "change",
-    renderStores
-  );
-
-
-document
-  .getElementById(
-    "regionFilter"
-  )
-  .addEventListener(
-    "change",
-    renderStores
-  );
-
+.getElementById(
+"overlay"
+)
+.classList
+.remove(
+"open"
+);
 
 document
-  .querySelectorAll(
-    ".map-btn"
-  )
-  .forEach(
-    button => {
+.getElementById(
+"drawer"
+)
+.classList
+.remove(
+"open"
+);
 
-      button
-        .addEventListener(
-          "click",
-          () => {
+}
 
-            document
-              .querySelectorAll(
-                ".map-btn"
-              )
-              .forEach(
-                item =>
-                  item
-                    .classList
-                    .remove(
-                      "active"
-                    )
-              );
+/* =========================================================
+DATA LOAD
+========================================================= */
 
+async function loadJson(url) {
 
-            button
-              .classList
-              .add(
-                "active"
-              );
+const response =
+await fetch(
+url
++
+"?v="
++
+Date.now()
+);
 
+if (
+!response.ok
+) {
 
-            mapMode =
+throw new Error(
+`${url} 로드 실패`
+);
 
-              button
-                .dataset
-                .mapMode;
+}
 
+return response.json();
 
-            renderMap();
+}
 
-          }
-        );
+/* =========================================================
+MAP LOAD
+========================================================= */
 
-    }
-  );
+async function loadMap() {
 
+try {
+
+geoData =
+await d3.json(
+GEOJSON_URL
+);
+
+renderMap();
+
+}
+
+catch(error) {
+
+console.error(
+error
+);
+
+document
+.getElementById(
+"koreaMap"
+)
+.outerHTML = `
+
+<div class="map-error">
+
+전국 지도 데이터를 불러오지 못했습니다.<br>
+네트워크 연결 또는 GeoJSON 경로를 확인해주세요.
+
+</div>
+
+`;
+
+}
+
+}
+
+/* =========================================================
+EVENTS
+========================================================= */
+
+function bindEvents() {
+
+document
+.getElementById(
+"search"
+)
+.addEventListener(
+"input",
+renderStores
+);
+
+document
+.getElementById(
+"categoryFilter"
+)
+.addEventListener(
+"change",
+renderStores
+);
+
+document
+.getElementById(
+"regionFilter"
+)
+.addEventListener(
+"change",
+renderStores
+);
+
+document
+.getElementById(
+"closeBtn"
+)
+.addEventListener(
+"click",
+closeDetail
+);
+
+document
+.getElementById(
+"overlay"
+)
+.addEventListener(
+"click",
+closeDetail
+);
+
+document
+.addEventListener(
+"keydown",
+event => {
+
+if (
+event.key === "Escape"
+) {
+closeDetail();
+}
+
+}
+);
+
+document
+.querySelectorAll(
+"[data-map-mode]"
+)
+.forEach(
+button => {
+
+button.addEventListener(
+"click",
+() => {
+
+mapMode =
+button.dataset.mapMode;
+
+document
+.querySelectorAll(
+"[data-map-mode]"
+)
+.forEach(
+btn =>
+btn.classList.remove(
+"active"
+)
+);
+
+button
+.classList
+.add(
+"active"
+);
+
+renderMap();
+
+}
+);
+
+}
+);
 
 window
-  .addEventListener(
-    "resize",
-    () => {
-
-      if (
-        geoData
-      ) {
-
-        renderMap();
-
-      }
-
-    }
-  );
-
-
-/* =========================================================
-   LOAD
-========================================================= */
-
-async function loadData() {
-
-  try {
-
-
-    const ts =
-      Date.now();
-
-
-    const [
-
-      storeRes,
-      historyRes,
-      summaryRes,
-      geoRes
-
-    ] =
-
-      await Promise.all([
-
-
-        fetch(
-
-          "./StoreMaster.json?ts="
-          +
-          ts
-
-        ),
-
-
-        fetch(
-
-          "./ContractHistory.json?ts="
-          +
-          ts
-
-        ),
-
-
-        fetch(
-
-          "./SummaryData.json?ts="
-          +
-          ts
-
-        ),
-
-
-        fetch(
-          GEOJSON_URL
-        )
-
-
-      ]);
-
-
-    if (
-      !storeRes.ok
-    ) {
-
-      throw new Error(
-        "StoreMaster.json 오류"
-      );
-
-    }
-
-
-    if (
-      !historyRes.ok
-    ) {
-
-      throw new Error(
-        "ContractHistory.json 오류"
-      );
-
-    }
-
-
-    if (
-      !summaryRes.ok
-    ) {
-
-      throw new Error(
-        "SummaryData.json 오류"
-      );
-
-    }
-
-
-    if (
-      !geoRes.ok
-    ) {
-
-      throw new Error(
-        "지도 GeoJSON 오류"
-      );
-
-    }
-
-
-    stores =
-      await storeRes.json();
-
-
-    history =
-      await historyRes.json();
-
-
-    summaries =
-      await summaryRes.json();
-
-
-    geoData =
-      await geoRes.json();
-
-
-    renderSummary();
-
-    renderCategoryRanking();
-
-    fillFilters();
-
-    renderDevelopmentCandidates();
-
-    renderStores();
-
-    renderMap();
-
-
-    document
-      .getElementById(
-        "updated"
-      )
-      .textContent =
-
-        "조회 "
-
-        +
-
-        new Date()
-          .toLocaleString(
-            "ko-KR"
-          );
-
-
-  }
-
-
-  catch(error) {
-
-
-    console.error(
-      error
-    );
-
-
-    const mapBox =
-
-      document
-        .querySelector(
-          ".map-box"
-        );
-
-
-    if (
-      mapBox
-    ) {
-
-      mapBox.innerHTML = `
-
-        <div class="map-error">
-
-          데이터를 일부 불러오지 못했습니다.
-          <br>
-          StoreMaster / ContractHistory / SummaryData 또는 지도 데이터를 확인해주세요.
-
-        </div>
-
-      `;
-
-    }
-
-
-    alert(
-
-      "데이터 파일을 불러오지 못했습니다. StoreMaster / ContractHistory / SummaryData JSON 파일을 확인해주세요."
-
-    );
-
-
-  }
+.addEventListener(
+"resize",
+() => {
+
+if (
+geoData
+) {
+renderMap();
+}
+
+}
+);
 
 }
 
+/* =========================================================
+INITIALIZE
+========================================================= */
 
-loadData();
+async function init() {
 
+try {
+
+const [
+storeData,
+historyData,
+summaryData
+] = await Promise.all([
+
+loadJson(
+"./StoreMaster.json"
+),
+
+loadJson(
+"./ContractHistory.json"
+),
+
+loadJson(
+"./SummaryData.json"
+)
+
+]);
+
+stores =
+Array.isArray(
+storeData
+)
+?
+storeData
+:
+[];
+
+history =
+Array.isArray(
+historyData
+)
+?
+historyData
+:
+[];
+
+summaries =
+Array.isArray(
+summaryData
+)
+?
+summaryData
+:
+[];
+
+renderSummary();
+
+renderCategoryRanking();
+
+fillFilters();
+
+renderStores();
+
+renderDevelopmentCandidates();
+
+bindEvents();
+
+loadMap();
+
+document
+.getElementById(
+"updated"
+)
+.textContent =
+
+"최종 갱신 : "
++
+new Date()
+.toLocaleString(
+"ko-KR",
+{
+year:
+"numeric",
+
+month:
+"2-digit",
+
+day:
+"2-digit",
+
+hour:
+"2-digit",
+
+minute:
+"2-digit"
+}
+);
+
+}
+
+catch(error) {
+
+console.error(
+error
+);
+
+document
+.getElementById(
+"updated"
+)
+.textContent =
+"데이터 로딩 오류";
+
+alert(
+"JSON 데이터를 불러오지 못했습니다. StoreMaster.json / ContractHistory.json / SummaryData.json 파일명과 GitHub 경로를 확인해주세요."
+);
+
+}
+
+}
+
+init();
 
 </script>
-
-
-<!-- redeploy trigger -->
-
-
 </body>
-
 </html>
