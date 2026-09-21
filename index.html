@@ -2466,7 +2466,7 @@ const GEOJSON_URL =
 "https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_provinces_geo_simple.json";
 
 const DISTRICT_GEOJSON_URL =
-"https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_municipalities_geo_simple.json";
+"https://gist.githubusercontent.com/e9t/1c9f6c2fec1253ee7a32/raw/municipalities-geo-simple.json";
 
 /* KOSTAT 2013 시도 코드 */
 
@@ -8195,11 +8195,15 @@ try {
 const ts =
 Date.now();
 
+
+/* =========================================
+1. 핵심 JSON 먼저 로딩
+========================================= */
+
 const [
 storeRes,
 historyRes,
-summaryRes,
-geoRes
+summaryRes
 ] =
 await Promise.all([
 
@@ -8219,13 +8223,10 @@ fetch(
 "./SummaryData.json?ts="
 +
 ts
-),
-
-fetch(
-GEOJSON_URL
 )
 
 ]);
+
 
 if (
 !storeRes.ok
@@ -8237,6 +8238,7 @@ throw new Error(
 
 }
 
+
 if (
 !historyRes.ok
 ) {
@@ -8246,6 +8248,7 @@ throw new Error(
 );
 
 }
+
 
 if (
 !summaryRes.ok
@@ -8257,15 +8260,6 @@ throw new Error(
 
 }
 
-if (
-!geoRes.ok
-) {
-
-throw new Error(
-"지도 GeoJSON 오류"
-);
-
-}
 
 stores =
 await storeRes.json();
@@ -8276,8 +8270,10 @@ await historyRes.json();
 summaries =
 await summaryRes.json();
 
-geoData =
-await geoRes.json();
+
+/* =========================================
+2. 일반 대시보드 먼저 정상 출력
+========================================= */
 
 renderSummary();
 
@@ -8291,7 +8287,91 @@ renderStores();
 
 bindStoreSortButtons();
 
+
+/* =========================================
+3. 지도는 별도 로딩
+지도 실패해도 나머지는 유지
+========================================= */
+
+try {
+
+const geoRes =
+await fetch(
+GEOJSON_URL
+);
+
+
+if (
+!geoRes.ok
+) {
+
+throw new Error(
+"전국 지도 GeoJSON 오류"
+);
+
+}
+
+
+geoData =
+await geoRes.json();
+
+
 renderMap();
+
+}
+
+catch(mapError) {
+
+console.error(
+"지도 로딩 오류:",
+mapError
+);
+
+
+const mapBox =
+document.querySelector(
+".network-map-box"
+);
+
+
+if (
+mapBox
+) {
+
+mapBox.innerHTML = `
+
+<div
+style="
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:30px;
+font-size:11px;
+color:#9ca3af;
+line-height:1.7;
+"
+>
+
+전국 지도 데이터를 불러오지 못했습니다.
+
+<br>
+
+매장 · 매출 · 계약 데이터는 정상적으로 표시됩니다.
+
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =========================================
+4. 최종 업데이트 시간
+========================================= */
 
 document
 .getElementById(
@@ -8311,12 +8391,14 @@ new Date()
 catch(error) {
 
 console.error(
+"핵심 데이터 로딩 오류:",
 error
 );
 
+
 alert(
 
-"데이터 파일을 불러오지 못했습니다. StoreMaster / ContractHistory / SummaryData / 지도 데이터를 확인해주세요."
+"StoreMaster / ContractHistory / SummaryData 중 하나를 불러오지 못했습니다."
 
 );
 
@@ -8324,10 +8406,5 @@ alert(
 
 }
 
+
 loadData();
-
-</script>
-
-</body>
-
-</html>
