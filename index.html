@@ -855,12 +855,13 @@ overflow-x: auto;
 }
 .store-table {
 width: 100%;
-min-width: 1750px;
+min-width: 1580px;
 border-collapse: collapse;
+table-layout: auto;
 }
 .store-table th {
 padding:
-12px 10px;
+11px 6px;
 background: #f9fafb;
 border-bottom:
 1px solid #e5e7eb;
@@ -870,7 +871,7 @@ white-space: nowrap;
 }
 .store-table td {
 padding:
-12px 10px;
+11px 6px;
 text-align: center;
 border-bottom:
 1px solid #f0f1f3;
@@ -887,6 +888,10 @@ background: #f8fafc;
 text-align: left !important;
 font-weight: 800;
 color: #111827;
+max-width: 115px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 }
 .sub-hint {
 display: block;
@@ -6290,17 +6295,9 @@ row["동매장_신장율"]
 </td>
 
 
-<td
-class="
-${profitClass(
-row[
-"동기간_영업이익율_GAP(%p)"
-]
-)}
-"
->
+<td>
 
-${signedPercent(
+${growthBadge(
 row[
 "동기간_영업이익율_GAP(%p)"
 ]
