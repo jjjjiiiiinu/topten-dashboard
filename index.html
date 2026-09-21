@@ -2376,6 +2376,148 @@ maximumFractionDigits: 2
 
 }
 
+function historyDelta(row) {
+
+const raw =
+row["증감"];
+
+if (
+raw === null ||
+raw === undefined ||
+raw === ""
+) {
+return "";
+}
+
+const s =
+String(raw)
+.trim();
+
+/* 이미 %p 또는 %가 있으면 그대로 */
+if (
+s.includes("%")
+) {
+
+return (
+" ("
++
+(
+s.startsWith("+") ||
+s.startsWith("-")
+?
+s
+:
+"+" + s
+)
++
+")"
+);
+
+}
+
+const n =
+Number(
+s.replace(/,/g, "")
+);
+
+if (
+isNaN(n)
+) {
+return " (" + s + ")";
+}
+
+/* 금액 */
+if (
+Math.abs(n) >= 1000
+) {
+
+return (
+" ("
++
+(
+n > 0 ? "+" : ""
+)
++
+n.toLocaleString("ko-KR")
++
+")"
+);
+
+}
+
+/* 0은 그냥 0 */
+if (
+n === 0
+) {
+return " (0)";
+}
+
+return (
+" ("
++
+(
+n > 0 ? "+" : ""
+)
++
+n.toLocaleString(
+"ko-KR",
+{
+maximumFractionDigits: 2
+}
+)
++
+")"
+);
+
+}
+
+function historyTypeLabel(row) {
+
+const type =
+String(
+row["변경구분"] || ""
+)
+.trim();
+
+const before =
+String(
+row["변경전"] || ""
+)
+.trim();
+
+const after =
+String(
+row["변경후"] || ""
+)
+.trim();
+
+/* 이미 조정 항목이면 그대로 */
+if (
+type.includes("관리비")
+||
+type.includes("임차/수수료")
+) {
+return type;
+}
+
+/* 연장인데 전후 조건이 달라지면 조정 표시 */
+if (
+type.includes("연장")
+&&
+before !== after
+) {
+
+return (
+type
++
+" (임차/수수료 조정)"
+);
+
+}
+
+return type;
+
+}
 
 function dateFormat(v) {
 
@@ -6837,8 +6979,8 @@ row["변경일"]
 
 <div class="timeline-type">
 
-${text(
-row["변경구분"]
+${historyTypeLabel(
+row
 )}
 
 </div>
@@ -6853,6 +6995,10 @@ row["변경전"]
 
 ${historyValue(
 row["변경후"]
+)}
+
+${historyDelta(
+row
 )}
 
 </div>
