@@ -2266,6 +2266,8 @@ value
 function signedPercent(v) {
   function historyValue(v) {
 
+function historyValue(v) {
+
 if (
 v === null ||
 v === undefined ||
@@ -2278,61 +2280,50 @@ const raw =
 String(v)
 .trim();
 
+const cleaned =
+raw
+.replace(/,/g, "")
+.replace(/%/g, "");
+
+const n =
+Number(cleaned);
+
 if (
-raw.includes("%")
+isNaN(n)
 ) {
 return raw;
 }
 
-const n =
-Number(
-raw.replace(/,/g,"")
-);
-
+/* 1,000 이상이면 금액으로 판단 */
 if (
-!isNaN(n)
+Math.abs(n) >= 1000
 ) {
 return n.toLocaleString("ko-KR");
 }
 
-return raw;
-
-}
-
-const n =
-num(v);
-
+/* 원본에 %가 있으면 수수료율 */
 if (
-n === null
+raw.includes("%")
 ) {
-return "-";
+return n.toLocaleString("ko-KR", {
+maximumFractionDigits: 2
+}) + "%";
 }
 
-const value =
+/* 1 이하 소수값은 수수료율로 판단 */
+if (
 Math.abs(n) <= 1
-?
-n * 100
-:
-n;
-
-return (
-(
-value > 0
-?
-"+"
-:
-""
-)
-+
-value
-.toFixed(1)
-.replace(".0","")
-+
-"%"
-);
-
+) {
+return (n * 100)
+.toLocaleString("ko-KR", {
+maximumFractionDigits: 2
+}) + "%";
 }
 
+/* 그 외 값은 원 숫자 */
+return n.toLocaleString("ko-KR");
+
+}
 
 function dateFormat(v) {
 
@@ -2375,8 +2366,6 @@ serial * 86400000
 )
 .toISOString()
 .slice(0,10);
-
-}
 
 }
 
