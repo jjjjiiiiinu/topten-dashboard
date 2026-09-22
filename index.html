@@ -1717,6 +1717,193 @@ normalizeRegion(
 province
 );
 
+const districtRaw =
+String(
+district || ""
+)
+.trim();
+
+const districtClean =
+clean(
+districtRaw
+);
+
+
+/* =========================================================
+1. HTML 내장 인구 데이터 우선 사용
+========================================================= */
+
+const localData =
+DISTRICT_POPULATION[
+p
+];
+
+if (
+localData
+) {
+
+for (
+const [
+name,
+population
+]
+of Object.entries(
+localData
+)
+) {
+
+const nameClean =
+clean(
+name
+);
+
+if (
+nameClean === districtClean
+) {
+return population;
+}
+
+
+/*
+GeoJSON 이름이
+창원시의창구
+형태로 들어오는 경우 대응
+*/
+if (
+nameClean.includes(
+districtClean
+)
+||
+districtClean.includes(
+nameClean
+)
+) {
+return population;
+}
+
+}
+
+}
+
+
+/* =========================================================
+2. DistrictPopulation.json 데이터 사용
+========================================================= */
+
+const targetBase =
+districtClean.replace(
+/(특별자치시|특별자치도|자치구|시|군|구)$/g,
+""
+);
+
+const row =
+districtPopulation.find(
+item => {
+
+const itemProvince =
+normalizeRegion(
+
+item["지역"]
+
+||
+
+item["시도"]
+
+||
+
+item["광역시도"]
+
+||
+
+""
+
+);
+
+const itemDistrict =
+clean(
+
+item["시군구"]
+
+||
+
+item["시군구명"]
+
+||
+
+item["행정구역"]
+
+||
+
+""
+
+);
+
+const itemBase =
+itemDistrict.replace(
+/(특별자치시|특별자치도|자치구|시|군|구)$/g,
+""
+);
+
+return (
+
+itemProvince === p
+
+&&
+
+(
+
+itemDistrict === districtClean
+
+||
+
+itemBase === targetBase
+
+||
+
+itemDistrict.includes(
+districtClean
+)
+
+||
+
+districtClean.includes(
+itemDistrict
+)
+
+)
+
+);
+
+}
+);
+
+if (
+!row
+) {
+return null;
+}
+
+return num(
+
+row["인구"]
+
+||
+
+row["인구수"]
+
+||
+
+row["주민등록인구"]
+
+);
+
+}
+
+const p =
+normalizeRegion(
+province
+);
+
 
 const target =
 clean(
