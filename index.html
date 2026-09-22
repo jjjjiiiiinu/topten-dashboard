@@ -147,7 +147,14 @@ button,input,select{font:inherit}
 .network-rank-list{padding:8px 12px 12px}
 
 .network-rank-row{display:grid;gap:8px;align-items:center;margin-bottom:8px;cursor:pointer}
-.network-rank-row.province{grid-template-columns:75px 1fr 42px}
+.network-rank-row.province{
+grid-template-columns:
+75px
+minmax(60px,120px)
+42px
+68px
+60px;
+}
 
 /* 시군구는 막대 길이를 짧게 */
 .network-rank-row.district{
@@ -1710,14 +1717,24 @@ normalizeRegion(
 province
 );
 
-const d =
+
+const target =
 clean(
 district
 );
 
+
+const targetBase =
+target.replace(
+/(특별자치시|특별자치도|자치구|시|군|구)$/g,
+""
+);
+
+
 const row =
 districtPopulation.find(
 item => {
+
 
 const itemProvince =
 normalizeRegion(
@@ -1738,6 +1755,7 @@ item["광역시도"]
 
 );
 
+
 const itemDistrict =
 clean(
 
@@ -1757,20 +1775,42 @@ item["행정구역"]
 
 );
 
+
+const itemBase =
+itemDistrict.replace(
+/(특별자치시|특별자치도|자치구|시|군|구)$/g,
+""
+);
+
+
 return (
+
 itemProvince === p
+
 &&
-itemDistrict === d
+
+(
+
+itemDistrict === target
+
+||
+
+itemBase === targetBase
+
+)
+
 );
 
 }
 );
+
 
 if (
 !row
 ) {
 return null;
 }
+
 
 return num(
 
@@ -5012,7 +5052,8 @@ document
 "networkRankingTitle"
 )
 .textContent =
-"지역별 매장수";
+"시도별 매장수 · 인구 · 10만명당";
+
 
 const rows =
 buildRegionalData()
@@ -5021,6 +5062,7 @@ buildRegionalData()
 b.count -
 a.count
 );
+
 
 const max =
 Math.max(
@@ -5031,6 +5073,7 @@ row.count
 )
 );
 
+
 document
 .getElementById(
 "networkRanking"
@@ -5038,12 +5081,39 @@ document
 .innerHTML =
 
 rows
-.slice(
-0,
-10
-)
 .map(
-row => `
+row => {
+
+
+const population =
+POPULATION[
+row.region
+]
+||
+null;
+
+
+const density =
+
+population
+
+?
+
+(
+row.count
+/
+population
+*
+100000
+)
+.toFixed(2)
+
+:
+
+"-";
+
+
+return `
 
 <div
 class="network-rank-row province"
@@ -5051,8 +5121,11 @@ data-region="${row.region}"
 >
 
 <div class="network-rank-name">
+
 ${row.region}
+
 </div>
+
 
 <div class="network-rank-track">
 
@@ -5066,15 +5139,37 @@ width:${(row.count/max*100).toFixed(1)}%;
 
 </div>
 
+
 <div class="network-rank-value">
+
 ${row.count}개
-</div>
 
 </div>
 
-`
+
+<div class="network-rank-population">
+
+${populationText(
+population
+)}
+
+</div>
+
+
+<div class="network-rank-density">
+
+${density}
+
+</div>
+
+</div>
+
+`;
+
+}
 )
 .join("");
+
 
 document
 .querySelectorAll(
@@ -5105,6 +5200,27 @@ await ensureDistrictGeo();
 
 renderDistrictMap(
 region
+);
+
+}
+
+catch(error) {
+
+console.error(
+error
+);
+
+showMapError(
+region
++
+" 시군구 지도를 불러오지 못했습니다."
+);
+
+}
+
+};
+
+}
 );
 
 }
