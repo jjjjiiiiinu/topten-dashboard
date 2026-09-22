@@ -3474,9 +3474,15 @@ row,
 district
 ) {
 
+const districtRaw =
+String(
+district || ""
+)
+.trim();
+
 const districtClean =
 clean(
-district
+districtRaw
 );
 
 if (
@@ -3485,6 +3491,11 @@ if (
 return false;
 }
 
+
+/* =========================================
+1. 주소 우선
+========================================= */
+
 const address =
 clean(
 storeAddress(
@@ -3492,8 +3503,6 @@ row
 )
 );
 
-
-/* 주소에 GeoJSON 시군구명이 그대로 존재 */
 if (
 address
 &&
@@ -3505,20 +3514,17 @@ return true;
 }
 
 
-/*
-GeoJSON이
-"용인시 기흥구"
-처럼 표기됐을 경우
-시/구를 각각 확인
-*/
+/* =========================================
+2. 복합 행정구역 처리
+예:
+용인시 기흥구
+수원시 권선구
+청주시 흥덕구
+========================================= */
+
 const parts =
-String(
-district || ""
-)
-.trim()
-.split(
-/\s+/
-)
+districtRaw
+.split(/\s+/)
 .filter(Boolean);
 
 if (
@@ -3546,14 +3552,29 @@ return true;
 }
 
 
-/*
-주소가 없는 구형 데이터만
-매장명으로 보조 매칭
-*/
-const storeName =
+/* =========================================
+3. 매장명 정리
+예:
+삼척(점) → 삼척
+삼척점 → 삼척
+========================================= */
+
+let storeName =
 clean(
 row["매장명"]
 );
+
+storeName =
+storeName
+.replace(/\(점\)/g,"")
+.replace(/\(.*?\)/g,"")
+.replace(/점$/g,"")
+.replace(/[()（）]/g,"");
+
+
+/* =========================================
+4. 행정구역명이 그대로 매장명에 있는 경우
+========================================= */
 
 if (
 storeName.includes(
@@ -3563,10 +3584,45 @@ districtClean
 return true;
 }
 
-return false;
+
+/* =========================================
+5. 단일 시/군/구만 보조 매칭
+삼척시 → 삼척
+안동시 → 안동
+영주시 → 영주
+부여군 → 부여
+
+※ 용인시 기흥구처럼 복합행정구역에는
+이 로직을 사용하지 않음
+========================================= */
+
+if (
+parts.length === 1
+) {
+
+const districtBase =
+districtClean
+.replace(
+/(특별자치시|특별자치도|자치시|자치구|시|군|구)$/g,
+""
+);
+
+if (
+districtBase.length >= 2
+&&
+storeName.includes(
+districtBase
+)
+) {
+return true;
+}
 
 }
 
+
+return false;
+
+}
 
 function getMapMetric(row) {
 
