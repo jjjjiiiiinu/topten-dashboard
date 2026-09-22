@@ -6877,14 +6877,14 @@ return response.json();
 
 }
 
-
 async function loadData() {
 
-const ts =
-Date.now();
+const ts = Date.now();
 
 
-/* 핵심 데이터 */
+/* =========================================================
+1. 핵심 JSON 로딩
+========================================================= */
 
 try {
 
@@ -6892,128 +6892,195 @@ try {
 stores,
 history,
 summaries
-] =
-await Promise.all([
+] = await Promise.all([
 
 fetchJson(
-"./StoreMaster.json?ts="
-+
-ts,
+"./StoreMaster.json?ts=" + ts,
 "StoreMaster.json"
 ),
 
 fetchJson(
-"./ContractHistory.json?ts="
-+
-ts,
+"./ContractHistory.json?ts=" + ts,
 "ContractHistory.json"
 ),
 
 fetchJson(
-"./SummaryData.json?ts="
-+
-ts,
+"./SummaryData.json?ts=" + ts,
 "SummaryData.json"
 )
 
 ]);
 
-
-/*
-시군구 인구 데이터는 선택사항.
-없어도 사이트는 정상 작동.
-*/
-districtPopulation =
-await fetchOptionalJson(
-
-"./DistrictPopulation.json?ts="
-+
-ts
-
-);
-
-
-renderSummary();
-
-renderCategoryRanking();
-
-fillFilters();
-
-renderDevelopmentCandidates();
-
-renderStores();
-
-bindStoreSortButtons();
-
-renderNationalSummary();
-
-renderProvinceRanking();
-
-renderNetworkStoreList(
-stores
-);
-
-document
-.getElementById(
-"updated"
-)
-.textContent =
-
-"조회 "
-+
-new Date()
-.toLocaleString(
-"ko-KR"
-);
+console.log("[LOAD OK] StoreMaster:", stores.length);
+console.log("[LOAD OK] ContractHistory:", history.length);
+console.log("[LOAD OK] SummaryData:", summaries.length);
 
 }
 
 catch(error) {
 
-console.error(
-error
-);
-
-alert(
-
-"핵심 데이터 파일을 불러오지 못했습니다: "
-+
-error.message
-
-);
+console.error("[CORE DATA LOAD ERROR]", error);
 
 document
-.getElementById(
-"updated"
-)
+.getElementById("updated")
 .textContent =
-"데이터 로딩 실패";
+"핵심 데이터 로딩 실패";
+
+alert(
+"핵심 데이터 파일을 불러오지 못했습니다.\n\n"
++
+error.message
+);
 
 return;
 
 }
 
 
-/* 전국지도는 핵심 데이터와 별도 로딩 */
+/* =========================================================
+2. 시군구 인구 JSON
+없어도 전체 사이트는 정상 작동
+========================================================= */
 
 try {
 
-geoData =
-await fetchJson(
-
-GEOJSON_URL,
-
-"전국 지도"
-
+districtPopulation =
+await fetchOptionalJson(
+"./DistrictPopulation.json?ts=" + ts
 );
 
-renderProvinceMap();
+console.log(
+"[LOAD OK] DistrictPopulation:",
+districtPopulation.length
+);
+
+}
+
+catch(error) {
+
+console.warn(
+"[DISTRICT POPULATION LOAD ERROR]",
+error
+);
+
+districtPopulation = [];
+
+}
+
+
+/* =========================================================
+3. 개별 화면 렌더링
+하나가 실패해도 전체 Dashboard 중단 금지
+========================================================= */
+
+const safeRender = (
+name,
+fn
+) => {
+
+try {
+
+fn();
+
+console.log(
+"[RENDER OK]",
+name
+);
 
 }
 
 catch(error) {
 
 console.error(
+"[RENDER ERROR]",
+name,
+error
+);
+
+}
+
+};
+
+
+safeRender(
+"renderSummary",
+() => renderSummary()
+);
+
+safeRender(
+"renderCategoryRanking",
+() => renderCategoryRanking()
+);
+
+safeRender(
+"fillFilters",
+() => fillFilters()
+);
+
+safeRender(
+"renderDevelopmentCandidates",
+() => renderDevelopmentCandidates()
+);
+
+safeRender(
+"renderStores",
+() => renderStores()
+);
+
+safeRender(
+"bindStoreSortButtons",
+() => bindStoreSortButtons()
+);
+
+safeRender(
+"renderNationalSummary",
+() => renderNationalSummary()
+);
+
+safeRender(
+"renderProvinceRanking",
+() => renderProvinceRanking()
+);
+
+safeRender(
+"renderNetworkStoreList",
+() => renderNetworkStoreList(stores)
+);
+
+
+document
+.getElementById("updated")
+.textContent =
+"조회 "
++
+new Date().toLocaleString("ko-KR");
+
+
+/* =========================================================
+4. 전국 지도 로딩
+지도 오류도 나머지 Dashboard와 분리
+========================================================= */
+
+try {
+
+geoData =
+await fetchJson(
+GEOJSON_URL,
+"전국 지도"
+);
+
+renderProvinceMap();
+
+console.log(
+"[MAP OK] 전국 지도"
+);
+
+}
+
+catch(error) {
+
+console.error(
+"[MAP LOAD ERROR]",
 error
 );
 
@@ -7025,8 +7092,6 @@ showMapError(
 
 }
 
-
-loadData();
 
 </script>
 
