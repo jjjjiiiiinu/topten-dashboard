@@ -219,7 +219,7 @@ white-space:nowrap;
 .store-table td{padding:11px 6px;text-align:center;border-bottom:1px solid #f0f1f3;font-size:11px;white-space:nowrap}
 .store-table tbody tr{cursor:pointer}
 .store-table tbody tr:hover{background:#f8fafc}
-.store-name{text-align:center!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
+.store-name{text-align:left!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
 .sub-hint{display:block;margin-top:2px;font-size:8px;font-weight:400;color:#9ca3af}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-width:58px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:800}
 .up{background:#fef2f2;color:#dc2626}
@@ -519,7 +519,7 @@ white-space:nowrap;
           <div class="decision-head">
             <div>
               <strong id="decisionSummaryTitle">출점 진단 Summary</strong>
-              <span id="decisionSummarySub">점포밀도 · 실적 · 성장률 종합</span>
+              <span id="decisionSummarySub">인구 5만명 이상 · 5만명당 점포밀도 · 실적 종합</span>
             </div>
             <span class="decision-badge" id="decisionOverallBadge">-</span>
           </div>
@@ -531,7 +531,7 @@ white-space:nowrap;
           <div class="decision-head">
             <div>
               <strong id="priorityTitle">출점 우선 검토 TOP 5</strong>
-              <span>인구 · 점포공백 · 기존점 성과를 함께 반영</span>
+              <span>인구 5만명 이상 · 점포공백 · 기존점 성과 반영</span>
             </div>
           </div>
           <div class="decision-list" id="priorityList"></div>
@@ -541,7 +541,7 @@ white-space:nowrap;
           <div class="decision-head">
             <div>
               <strong id="unservedTitle">미출점 인구 상위 TOP 5</strong>
-              <span>현재 TOPTEN 점포가 없는 지역 우선 확인</span>
+              <span>인구 5만명 이상 · 현재 TOPTEN 미출점 지역</span>
             </div>
           </div>
           <div class="decision-list" id="unservedList"></div>
@@ -3820,11 +3820,14 @@ function extractCoordinateRows(rows, brand = "") {
 
 
 /* ========================================
-   NETWORK DECISION SUPPORT V5
+   NETWORK DECISION SUPPORT V6
 ======================================== */
+const DECISION_MIN_POPULATION = 50000;
+const DECISION_DENSITY_BASE = 50000;
+
 function nationalDensityBenchmark(){
   const population = Object.values(POPULATION).reduce((a,b)=>a+(num(b)||0),0);
-  return population > 0 ? stores.length / population * 100000 : null;
+  return population > 0 ? stores.length / population * DECISION_DENSITY_BASE : null;
 }
 
 function decisionClassByDensity(density, benchmark){
@@ -3858,7 +3861,7 @@ function getDecisionRows(){
       );
       const population = getDistrictPopulation(selectedProvince, district);
       const metrics = networkMetrics(matchingStores);
-      const density = population > 0 ? matchingStores.length / population * 100000 : null;
+      const density = population > 0 ? matchingStores.length / population * DECISION_DENSITY_BASE : null;
       return {
         name: district,
         province: selectedProvince,
@@ -3878,7 +3881,7 @@ function getDecisionRows(){
   return Object.keys(POPULATION).map(region => {
     const base = map.get(region) || {count:0,sales:[],profits:[],growths:[]};
     const population = POPULATION[region] || null;
-    const density = population > 0 ? base.count / population * 100000 : null;
+    const density = population > 0 ? base.count / population * DECISION_DENSITY_BASE : null;
     return {
       name: region,
       province: region,
@@ -3910,7 +3913,7 @@ function decisionOpportunityScore(row, rows, benchmark){
     ? 50
     : percentileRank(num(row.avgSales), salesValues);
 
-  const noStoreBonus = row.count === 0 && pop >= 100000 ? 8 : 0;
+  const noStoreBonus = row.count === 0 && pop >= DECISION_MIN_POPULATION ? 8 : 0;
   return Math.round(clamp(popScore*0.45 + gapScore*0.35 + perfScore*0.20 + noStoreBonus,0,100));
 }
 
@@ -3945,7 +3948,7 @@ function renderNetworkDecisionSupport(){
 
   const rows = getDecisionRows();
   const benchmark = nationalDensityBenchmark();
-  const validRows = rows.filter(r=>num(r.population)!==null && num(r.population)>0);
+  const validRows = rows.filter(r=>num(r.population)!==null && num(r.population)>=DECISION_MIN_POPULATION);
   const shortage = validRows.filter(r=>r.classification.key==="shortage").length;
   const review = validRows.filter(r=>r.classification.key==="review").length;
   const saturated = validRows.filter(r=>r.classification.key==="saturated").length;
@@ -3966,7 +3969,7 @@ function renderNetworkDecisionSupport(){
   }
 
   const scopeMetrics = networkMetrics(scopeRows);
-  const scopeDensity = scopePopulation > 0 ? scopeRows.length / scopePopulation * 100000 : null;
+  const scopeDensity = scopePopulation > 0 ? scopeRows.length / scopePopulation * DECISION_DENSITY_BASE : null;
   const scopeClass = decisionClassByDensity(scopeDensity, benchmark);
   const compare = scopeDensity!==null && benchmark ? (scopeDensity/benchmark-1)*100 : null;
 
@@ -3976,7 +3979,7 @@ function renderNetworkDecisionSupport(){
   badge.className = "decision-badge " + scopeClass.key;
 
   grid.innerHTML = [
-    decisionKpi("현재 점포밀도", scopeDensity===null?"-":scopeDensity.toFixed(2)+"개"),
+    decisionKpi("5만명당 점포", scopeDensity===null?"-":scopeDensity.toFixed(2)+"개"),
     decisionKpi("전국평균 대비", compare===null?"-":(compare>0?"+":"")+compare.toFixed(0)+"%", compare!==null&&compare>30?"red":compare!==null&&compare<-30?"blue":""),
     decisionKpi("부족 지역", shortage+"곳", "blue"),
     decisionKpi("검토 지역", review+"곳", "amber"),
@@ -3985,7 +3988,7 @@ function renderNetworkDecisionSupport(){
   ].join("");
 
   document.getElementById("decisionSummaryFoot").textContent =
-    `진단기준: 전국 10만명당 점포 ${benchmark===null?"-":benchmark.toFixed(2)}개 · 70% 이하 부족 / 70~130% 검토 / 130% 이상 포화. 인구 미연결 지역은 진단에서 제외.`;
+    `진단기준: 인구 5만명 이상 지역 · 전국 5만명당 점포 ${benchmark===null?"-":benchmark.toFixed(2)}개 · 70% 이하 부족 / 70~130% 검토 / 130% 이상 포화. 인구 미연결 및 5만명 미만 지역은 진단에서 제외.`;
 
   const scored = validRows.map(r=>({
     ...r,
@@ -4382,10 +4385,10 @@ loadData();
 
 
 /* ========================================
-   NETWORK DECISION SUPPORT V5
+   NETWORK DECISION SUPPORT V6
    - 지도/우측요약과 선택지역 매장 높이 분리
    - 선택지역 매장은 하단 전체폭
-   - 출점 부족/검토/포화 및 미출점 지역 표시
+   - 인구 5만명 이상 지역 기준 출점 부족/검토/포화 및 미출점 지역 표시
 ======================================== */
 .network-wide-zone{
   padding:0 18px 18px;
