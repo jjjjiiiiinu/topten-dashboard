@@ -633,7 +633,7 @@ let storeSortDir = "desc";
    POPULATION DATA
 ======================================== */
 
-const POPULATION = {
+let POPULATION = {
   "서울": 9298000,
   "부산": 3245000,
   "대구": 2355000,
@@ -659,6 +659,153 @@ const POPULATION = {
   실시간 주민등록인구가 아니므로
   향후 기준연월을 통일해 갱신해야 합니다.
 */
+
+/* ========================================
+   POPULATION AUTO LOAD (NO EXTRA JSON FILE)
+   - KOSIS Open API 사용
+   - GitHub Pages에서 별도 JSON 파일을 추가하지 않음
+   - KOSIS 인증키가 있으면 최신 시도/시군구 인구로 자동 교체
+   - 인증키가 없거나 호출 실패 시 위 기본 시도 인구값을 유지
+
+   설정 방법
+   1) 아래 KOSIS_API_KEY에 본인 키를 입력하거나
+   2) 브라우저 콘솔에서 1회 실행:
+      localStorage.setItem("TOPTEN_KOSIS_API_KEY", "발급키")
+
+   주의: GitHub Pages 저장소가 공개 저장소라면 소스에 키를 직접
+   넣기보다 localStorage 방식을 권장합니다.
+======================================== */
+
+const KOSIS_API_KEY = "";
+let populationPeriod = "기준값";
+let populationLoadState = "fallback";
+
+function getKosisApiKey() {
+  return String(
+    KOSIS_API_KEY ||
+    localStorage.getItem("TOPTEN_KOSIS_API_KEY") ||
+    ""
+  ).trim();
+}
+
+function splitKosisAdministrativeName(name) {
+  const raw = String(name || "").trim().replace(/\s+/g, " ");
+  if (!raw || raw === "전국") return null;
+
+  const provincePatterns = [
+    ["서울특별시", "서울"],
+    ["부산광역시", "부산"],
+    ["대구광역시", "대구"],
+    ["인천광역시", "인천"],
+    ["광주광역시", "광주"],
+    ["대전광역시", "대전"],
+    ["울산광역시", "울산"],
+    ["세종특별자치시", "세종"],
+    ["경기도", "경기"],
+    ["강원특별자치도", "강원"],
+    ["강원도", "강원"],
+    ["충청북도", "충북"],
+    ["충청남도", "충남"],
+    ["전북특별자치도", "전북"],
+    ["전라북도", "전북"],
+    ["전라남도", "전남"],
+    ["경상북도", "경북"],
+    ["경상남도", "경남"],
+    ["제주특별자치도", "제주"]
+  ];
+
+  for (const [full, short] of provincePatterns) {
+    if (raw === full) {
+      return { province: short, district: "" };
+    }
+    if (raw.startsWith(full + " ")) {
+      return {
+        province: short,
+        district: raw.slice(full.length).trim()
+      };
+    }
+  }
+
+  return null;
+}
+
+async function loadPopulationFromKosis() {
+  const apiKey = getKosisApiKey();
+  if (!apiKey) {
+    populationLoadState = "fallback";
+    return false;
+  }
+
+  const params = new URLSearchParams({
+    method: "getList",
+    apiKey,
+    orgId: "101",
+    tblId: "DT_1B040A3",
+    objL1: "ALL",
+    itmId: "T20",
+    prdSe: "Y",
+    newEstPrdCnt: "1",
+    format: "json",
+    jsonVD: "Y"
+  });
+
+  const url =
+    "https://kosis.kr/openapi/Param/statisticsParameterData.do?" +
+    params.toString();
+
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("KOSIS HTTP " + response.status);
+    }
+
+    const rows = await response.json();
+    if (!Array.isArray(rows) || !rows.length) {
+      throw new Error("KOSIS 응답 데이터 없음");
+    }
+
+    const nextDistrictPopulation = [];
+    const nextProvincePopulation = { ...POPULATION };
+    let latestPeriod = "";
+
+    rows.forEach(row => {
+      if (String(row.ITM_ID || "") !== "T20") return;
+
+      const value = Number(String(row.DT || "").replace(/,/g, ""));
+      if (!Number.isFinite(value)) return;
+
+      latestPeriod = String(row.PRD_DE || latestPeriod || "");
+
+      const parsed = splitKosisAdministrativeName(row.C1_NM);
+      if (!parsed) return;
+
+      if (!parsed.district) {
+        nextProvincePopulation[parsed.province] = value;
+      } else {
+        nextDistrictPopulation.push({
+          지역: parsed.province,
+          시군구: parsed.district,
+          인구: value,
+          기준연도: latestPeriod,
+          출처: "KOSIS"
+        });
+      }
+    });
+
+    if (nextDistrictPopulation.length) {
+      districtPopulation = nextDistrictPopulation;
+    }
+
+    POPULATION = nextProvincePopulation;
+    populationPeriod = latestPeriod || "최신";
+    populationLoadState = "kosis";
+    return true;
+  } catch (error) {
+    console.warn("KOSIS 인구 자동조회 실패 - 기본값 사용:", error);
+    populationLoadState = "fallback";
+    return false;
+  }
+}
 
 const GEOJSON_URL =
   "https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_provinces_geo_simple.json";
@@ -1884,12 +2031,16 @@ function updateMapLegend() {
   document.getElementById("mapLegendTitle").textContent =
     label[mapMode] + " · 낮음 → 높음";
 
+  const populationStatus = populationLoadState === "kosis"
+    ? `KOSIS ${populationPeriod}년 인구`
+    : "시도 인구 기본 기준값";
+
   document.getElementById("mapDataStatus").textContent =
     networkLevel === "district"
       ? districtPopulation.length
-        ? "시군구 인구 데이터 연결됨"
-        : "시군구 인구 데이터 미연결"
-      : "시도 인구 기준값 · 행정경계 2013년";
+        ? `${populationStatus} · 시군구 연결됨`
+        : `${populationStatus} · KOSIS 키 설정 시 시군구 자동연결`
+      : `${populationStatus} · 행정경계 2013년`;
 }
 
 /* COMPETITOR MARKERS */
@@ -1910,6 +2061,113 @@ function validMarker(row) {
     lng > 120 &&
     lng < 135
   );
+}
+
+
+/* ========================================
+   UNIQLO AUTO LOAD (NO EXTRA JSON FILE)
+   - 별도 UniqloStores.json 불필요
+   - OpenStreetMap Overpass API에서 한국 내 UNIQLO/유니클로 매장을
+     좌표와 함께 자동 조회하여 빨간 점으로 표시
+   - 공식 UNIQLO 매장검색 페이지는 JS/CORS 구조 때문에 GitHub Pages
+     정적 HTML에서 직접 전수 수집이 불안정하므로 지도 좌표는 OSM을
+     사용하고, 체크박스/렌더링은 기존 로직을 그대로 사용
+======================================== */
+
+const UNIQLO_OVERPASS_ENDPOINTS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter"
+];
+
+async function loadUniqloStoresByCode() {
+  const query = `
+[out:json][timeout:30];
+area["ISO3166-1"="KR"][admin_level=2]->.searchArea;
+(
+  nwr["brand"~"UNIQLO",i](area.searchArea);
+  nwr["name"~"UNIQLO|유니클로",i](area.searchArea);
+);
+out center tags;
+  `.trim();
+
+  let lastError = null;
+
+  for (const endpoint of UNIQLO_OVERPASS_ENDPOINTS) {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 18000);
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: "data=" + encodeURIComponent(query),
+        signal: controller.signal
+      });
+
+      clearTimeout(timer);
+
+      if (!response.ok) {
+        throw new Error("Overpass HTTP " + response.status);
+      }
+
+      const data = await response.json();
+      const seen = new Set();
+
+      const rows = (data.elements || []).map(item => {
+        const lat = item.lat ?? item.center?.lat;
+        const lng = item.lon ?? item.center?.lon;
+        const tags = item.tags || {};
+
+        const name =
+          tags["name:ko"] ||
+          tags.name ||
+          tags.brand ||
+          "UNIQLO";
+
+        const address = [
+          tags["addr:province"],
+          tags["addr:city"],
+          tags["addr:district"],
+          tags["addr:street"],
+          tags["addr:housenumber"]
+        ].filter(Boolean).join(" ");
+
+        return {
+          브랜드: "유니클로",
+          매장명: name,
+          주소: address,
+          lat: Number(lat),
+          lng: Number(lng),
+          source: "OpenStreetMap"
+        };
+      }).filter(validMarker)
+        .filter(row => {
+          const key =
+            row.매장명 + "|" +
+            row.lat.toFixed(5) + "|" +
+            row.lng.toFixed(5);
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+
+      if (rows.length) {
+        uniqloStores = rows;
+        return true;
+      }
+
+      throw new Error("유니클로 좌표 0건");
+    } catch (error) {
+      lastError = error;
+      console.warn("유니클로 자동조회 실패:", endpoint, error);
+    }
+  }
+
+  console.warn("유니클로 자동조회 최종 실패:", lastError);
+  uniqloStores = [];
+  return false;
 }
 
 function updateCompetitorStatus() {
@@ -1952,6 +2210,29 @@ function renderCompetitorMarkers(
       .filter(validMarker)
       .filter(row => {
         if (!province) return true;
+
+        const lng = Number(
+          row.lng ?? row.lon ?? row.longitude
+        );
+        const lat = Number(
+          row.lat ?? row.latitude
+        );
+
+        const provinceFeature = geoData?.features?.find(
+          feature => geoRegionName(feature) === province
+        );
+
+        if (
+          provinceFeature &&
+          Number.isFinite(lng) &&
+          Number.isFinite(lat)
+        ) {
+          return d3.geoContains(
+            provinceFeature,
+            [lng, lat]
+          );
+        }
+
         return normalizeRegion(
           row["지역"] ||
           row.province ||
@@ -2607,7 +2888,19 @@ function renderNetworkStoreList(rows) {
     item.onclick = () => openDetail(row);
     box.appendChild(item);
   });
+
+  requestAnimationFrame(() => {
+    const firstRow = box.querySelector(".network-store-row");
+    if (!firstRow) return;
+
+    const rowHeight = firstRow.getBoundingClientRect().height || 31;
+    const visibleRows = Math.min(sorted.length, 20);
+
+    box.style.maxHeight = Math.ceil(rowHeight * visibleRows) + "px";
+    box.style.overflowY = sorted.length > 20 ? "auto" : "hidden";
+  });
 }
+
 
 /* ========================================
    PROVINCE RANKING
@@ -3532,26 +3825,15 @@ async function loadData() {
     return;
   }
 
-  /* OPTIONAL DATA */
+  /* OPTIONAL / AUTO DATA - 별도 인구/유니클로 JSON 파일 없음 */
 
-  const [
-    populationRows,
-    uniqloRows,
-    coordinateRows
-  ] = await Promise.all([
-    fetchOptionalJson(
-      "./DistrictPopulation.json?ts=" + ts
-    ),
-    fetchOptionalJson(
-      "./UniqloStores.json?ts=" + ts
-    ),
+  const [, , coordinateRows] = await Promise.all([
+    loadPopulationFromKosis(),
+    loadUniqloStoresByCode(),
     fetchOptionalJson(
       "./ToptenCoordinates.json?ts=" + ts
     )
   ]);
-
-  districtPopulation = populationRows;
-  uniqloStores = extractCoordinateRows(uniqloRows);
 
   toptenPoints = coordinateRows.length
     ? extractCoordinateRows(coordinateRows)
@@ -3645,37 +3927,38 @@ loadData();
 </script>
 
 
-<!-- NETWORK LAYOUT INTEGRATED FIX V3 -->
+<!-- NETWORK LAYOUT FIX V4 : FIXED MAP + 20 ROW SCROLL -->
 <style>
 
-/* 1. PC 좌우 레이아웃 */
+/* PC: 오른쪽 패널 높이가 커져도 지도 높이는 절대 따라가지 않음 */
 @media (min-width:1131px) {
-
   .network-layout {
     display:grid !important;
-    grid-template-columns:
-      minmax(0,1.65fr)
-      minmax(500px,1fr) !important;
+    grid-template-columns:minmax(0,1.55fr) minmax(500px,1fr) !important;
     gap:16px !important;
-    align-items:stretch !important;
+    align-items:start !important;
+  }
+
+  .network-map-panel,
+  .network-side {
+    min-width:0;
   }
 
   .network-map-panel {
-    display:flex !important;
-    flex-direction:column !important;
-    min-width:0;
+    display:block !important;
   }
 
   .network-side {
     display:flex !important;
     flex-direction:column !important;
-    min-width:0;
+    gap:12px !important;
   }
 
   .network-map-box {
-    flex:1 1 auto !important;
-    height:auto !important;
-    min-height:620px !important;
+    flex:none !important;
+    height:590px !important;
+    min-height:0 !important;
+    max-height:590px !important;
   }
 
   #koreaMap {
@@ -3685,25 +3968,35 @@ loadData();
   }
 
   .network-store-list {
-    display:flex;
-    flex-direction:column;
-    flex:1 1 auto;
-    min-height:0;
+    display:block !important;
+    flex:none !important;
+    min-height:0 !important;
   }
 
+  /* 선택지역 매장: 최대 20개 행까지만 노출, 초과 시 스크롤 */
   .network-store-scroll {
-    flex:1 1 auto;
-    max-height:none !important;
-    min-height:180px;
+    flex:none !important;
+    min-height:0 !important;
+    max-height:620px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    scrollbar-gutter:stable;
+  }
+
+  .network-store-row {
+    min-height:31px !important;
+    padding:6px 11px !important;
+  }
+
+  .network-store-columns {
+    padding:7px 11px !important;
   }
 
   .map-legend {
-    flex:0 0 auto;
     margin-top:8px;
   }
 
   .competitor-toolbar {
-    flex:0 0 auto;
     margin-top:6px !important;
     min-height:32px;
     display:flex;
@@ -3712,7 +4005,7 @@ loadData();
   }
 }
 
-/* 2. 시도/시군구 데이터 컬럼 공통 */
+/* 시도/시군구 데이터 컬럼 */
 .network-region-ranking {
   min-width:0;
   overflow:hidden;
@@ -3750,7 +4043,7 @@ loadData();
   width:100%;
   box-sizing:border-box;
   padding:0 14px 12px;
-  max-height:420px;
+  max-height:365px;
   overflow-y:auto;
   overflow-x:hidden;
   scrollbar-gutter:stable;
@@ -3758,9 +4051,9 @@ loadData();
 
 #networkRanking .network-rank-row {
   width:100%;
-  min-height:35px;
+  min-height:32px;
   margin:0;
-  padding:7px 0;
+  padding:6px 0;
   border-bottom:1px solid #edf0f3;
 }
 
@@ -3780,15 +4073,25 @@ loadData();
   white-space:nowrap;
 }
 
-/* 3. 작은 화면 대응 */
 @media (max-width:1130px) {
   .network-map-box {
     height:570px !important;
     min-height:0 !important;
+    max-height:570px !important;
+  }
+
+  .network-store-scroll {
+    max-height:620px !important;
+    overflow-y:auto !important;
   }
 }
 
 @media (max-width:740px) {
+  .network-map-box {
+    height:465px !important;
+    max-height:465px !important;
+  }
+
   .network-column-header,
   #networkRanking .network-rank-row.province,
   #networkRanking .network-rank-row.district {
@@ -3811,15 +4114,17 @@ loadData();
     padding-left:9px;
     padding-right:9px;
   }
+
+  .network-store-scroll {
+    max-height:560px !important;
+  }
 }
 
 </style>
 
 <script>
 (function() {
-  const ranking =
-    document.getElementById("networkRanking");
-
+  const ranking = document.getElementById("networkRanking");
   if (!ranking) return;
 
   const parent = ranking.parentElement;
@@ -3838,33 +4143,19 @@ loadData();
     parent.insertBefore(header, ranking);
   }
 
-  // 지도 영역 높이 변경 시 다시 그리기
-  const mapBox =
-    document.getElementById("networkMapBox");
-
-  if (!mapBox || typeof ResizeObserver === "undefined") {
-    return;
-  }
+  /* 지도는 폭 변화에만 재렌더링.
+     오른쪽 목록 높이가 바뀌어도 지도 높이를 다시 맞추지 않는다. */
+  const mapBox = document.getElementById("networkMapBox");
+  if (!mapBox || typeof ResizeObserver === "undefined") return;
 
   let lastWidth = 0;
-  let lastHeight = 0;
   let frame = null;
 
   const observer = new ResizeObserver(entries => {
-    const rect = entries[0].contentRect;
-    const width = Math.round(rect.width);
-    const height = Math.round(rect.height);
-
-    if (!width || !height) return;
-
-    if (
-      Math.abs(width-lastWidth) < 3 &&
-      Math.abs(height-lastHeight) < 3
-    ) return;
+    const width = Math.round(entries[0]?.contentRect?.width || 0);
+    if (!width || Math.abs(width - lastWidth) < 3) return;
 
     lastWidth = width;
-    lastHeight = height;
-
     if (frame !== null) cancelAnimationFrame(frame);
 
     frame = requestAnimationFrame(() => {
@@ -3881,7 +4172,7 @@ loadData();
   observer.observe(mapBox);
 })();
 </script>
-<!-- END NETWORK LAYOUT INTEGRATED FIX V3 -->
+<!-- END NETWORK LAYOUT FIX V4 -->
 
 
 
