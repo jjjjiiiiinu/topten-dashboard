@@ -219,7 +219,7 @@ white-space:nowrap;
 .store-table td{padding:11px 6px;text-align:center;border-bottom:1px solid #f0f1f3;font-size:11px;white-space:nowrap}
 .store-table tbody tr{cursor:pointer}
 .store-table tbody tr:hover{background:#f8fafc}
-.store-name{text-align:left!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
+.store-name{text-align:center!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
 .sub-hint{display:block;margin-top:2px;font-size:8px;font-weight:400;color:#9ca3af}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-width:58px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:800}
 .up{background:#fef2f2;color:#dc2626}
@@ -491,21 +491,60 @@ white-space:nowrap;
           <div class="network-rank-list" id="networkRanking"></div>
         </div>
 
-        <div class="network-store-list">
-          <div class="network-store-list-head">
-            <strong>선택지역 매장</strong>
-            <span class="network-store-count" id="networkStoreCount">-</span>
+      </div>
+    </div>
+
+    <!-- 선택지역 매장 : 지도 하단 전체폭 -->
+    <div class="network-wide-zone">
+      <div class="network-store-list network-store-list-wide">
+        <div class="network-store-list-head">
+          <strong>선택지역 매장</strong>
+          <span class="network-store-count" id="networkStoreCount">-</span>
+        </div>
+        <div class="network-store-columns">
+          <div>매장명</div>
+          <div>월평균</div>
+          <div>영업이익율</div>
+          <div>신장율</div>
+          <div>오픈일자</div>
+          <div>면적</div>
+        </div>
+        <div class="network-store-scroll" id="networkStoreList"></div>
+        <div class="network-note" id="networkNote" style="display:none"></div>
+      </div>
+
+      <!-- 출점 의사결정 지원 -->
+      <div class="network-decision-grid">
+        <div class="decision-card">
+          <div class="decision-head">
+            <div>
+              <strong id="decisionSummaryTitle">출점 진단 Summary</strong>
+              <span id="decisionSummarySub">점포밀도 · 실적 · 성장률 종합</span>
+            </div>
+            <span class="decision-badge" id="decisionOverallBadge">-</span>
           </div>
-          <div class="network-store-columns">
-            <div>매장명</div>
-            <div>월평균</div>
-            <div>영업이익율</div>
-            <div>신장율</div>
-            <div>오픈일자</div>
-            <div>면적</div>
+          <div class="decision-kpis" id="decisionSummaryGrid"></div>
+          <div class="decision-foot" id="decisionSummaryFoot"></div>
+        </div>
+
+        <div class="decision-card">
+          <div class="decision-head">
+            <div>
+              <strong id="priorityTitle">출점 우선 검토 TOP 5</strong>
+              <span>인구 · 점포공백 · 기존점 성과를 함께 반영</span>
+            </div>
           </div>
-          <div class="network-store-scroll" id="networkStoreList"></div>
-          <div class="network-note" id="networkNote" style="display:none"></div>
+          <div class="decision-list" id="priorityList"></div>
+        </div>
+
+        <div class="decision-card">
+          <div class="decision-head">
+            <div>
+              <strong id="unservedTitle">미출점 인구 상위 TOP 5</strong>
+              <span>현재 TOPTEN 점포가 없는 지역 우선 확인</span>
+            </div>
+          </div>
+          <div class="decision-list" id="unservedList"></div>
         </div>
       </div>
     </div>
@@ -2418,6 +2457,8 @@ function renderProvinceMap() {
 
   document.getElementById("networkNote")
     .style.display = "none";
+
+  renderNetworkDecisionSupport();
 }
 
 /* ========================================
@@ -2586,6 +2627,7 @@ function renderDistrictMap(province) {
 
       renderNetworkStoreList(row.stores);
       renderDistrictRanking(districtRows, district);
+      renderNetworkDecisionSupport();
 
       group.selectAll(".district-path")
         .classed("selected", f =>
@@ -2670,6 +2712,8 @@ function renderDistrictMap(province) {
   } else {
     note.style.display = "none";
   }
+
+  renderNetworkDecisionSupport();
 }
 
 /* ========================================
@@ -3060,6 +3104,7 @@ function renderDistrictRanking(rows, active = "") {
 
         renderNetworkStoreList(row.stores);
         renderDistrictRanking(rows, district);
+        renderNetworkDecisionSupport();
 
         d3.select("#koreaMap")
           .selectAll(".district-path")
@@ -3772,6 +3817,195 @@ function extractCoordinateRows(rows, brand = "") {
     .filter(validMarker);
 }
 
+
+
+/* ========================================
+   NETWORK DECISION SUPPORT V5
+======================================== */
+function nationalDensityBenchmark(){
+  const population = Object.values(POPULATION).reduce((a,b)=>a+(num(b)||0),0);
+  return population > 0 ? stores.length / population * 100000 : null;
+}
+
+function decisionClassByDensity(density, benchmark){
+  const d = num(density);
+  const b = num(benchmark);
+  if (d === null || b === null || b <= 0) return {key:"review", label:"검토"};
+  if (d <= b * 0.70) return {key:"shortage", label:"부족"};
+  if (d >= b * 1.30) return {key:"saturated", label:"포화"};
+  return {key:"review", label:"검토"};
+}
+
+function decisionKpi(label, value, tone=""){
+  return `<div class="decision-kpi"><div class="decision-kpi-label">${label}</div><div class="decision-kpi-value ${tone}">${value}</div></div>`;
+}
+
+function getDecisionRows(){
+  const benchmark = nationalDensityBenchmark();
+
+  if (networkLevel === "district" && selectedProvince && districtGeoData){
+    const features = districtGeoData.features.filter(
+      feature => districtProvince(feature) === selectedProvince
+    );
+    const provinceStores = stores.filter(
+      row => normalizeRegion(row["지역"]) === selectedProvince
+    );
+
+    return features.map(feature => {
+      const district = districtName(feature);
+      const matchingStores = provinceStores.filter(
+        row => storeMatchesDistrict(row, district)
+      );
+      const population = getDistrictPopulation(selectedProvince, district);
+      const metrics = networkMetrics(matchingStores);
+      const density = population > 0 ? matchingStores.length / population * 100000 : null;
+      return {
+        name: district,
+        province: selectedProvince,
+        count: matchingStores.length,
+        population,
+        density,
+        avgSales: metrics.avgSales,
+        avgProfit: metrics.avgProfit,
+        classification: decisionClassByDensity(density, benchmark),
+        stores: matchingStores
+      };
+    });
+  }
+
+  const regional = buildRegionalData();
+  const map = new Map(regional.map(r=>[r.region,r]));
+  return Object.keys(POPULATION).map(region => {
+    const base = map.get(region) || {count:0,sales:[],profits:[],growths:[]};
+    const population = POPULATION[region] || null;
+    const density = population > 0 ? base.count / population * 100000 : null;
+    return {
+      name: region,
+      province: region,
+      count: base.count || 0,
+      population,
+      density,
+      avgSales: average(base.sales || []),
+      avgProfit: average(base.profits || []),
+      classification: decisionClassByDensity(density, benchmark),
+      stores: stores.filter(r=>normalizeRegion(r["지역"])===region)
+    };
+  });
+}
+
+function decisionOpportunityScore(row, rows, benchmark){
+  const validPops = rows.map(r=>num(r.population)).filter(v=>v!==null && v>0);
+  const maxPop = validPops.length ? Math.max(...validPops) : 1;
+  const pop = num(row.population) || 0;
+  const popScore = clamp(pop / maxPop * 100, 0, 100);
+
+  const d = num(row.density);
+  const b = num(benchmark);
+  const gapScore = d === null || b === null || b <= 0
+    ? 50
+    : clamp((1 - d / b) * 100 + 50, 0, 100);
+
+  const salesValues = rows.map(r=>num(r.avgSales)).filter(v=>v!==null && v>0);
+  const perfScore = num(row.avgSales) === null
+    ? 50
+    : percentileRank(num(row.avgSales), salesValues);
+
+  const noStoreBonus = row.count === 0 && pop >= 100000 ? 8 : 0;
+  return Math.round(clamp(popScore*0.45 + gapScore*0.35 + perfScore*0.20 + noStoreBonus,0,100));
+}
+
+function renderDecisionList(targetId, rows, mode){
+  const box = document.getElementById(targetId);
+  if (!box) return;
+  if (!rows.length){
+    box.innerHTML = '<div class="decision-empty">표시할 데이터가 없습니다.</div>';
+    return;
+  }
+
+  box.innerHTML = rows.slice(0,5).map((row,index)=>{
+    const c = mode === "priority"
+      ? {key:"priority",label:"우선검토"}
+      : row.classification;
+    const scoreText = mode === "priority" && row.opportunityScore !== undefined
+      ? `점수 ${row.opportunityScore}`
+      : `${row.count}개점`;
+    return `<div class="decision-row">
+      <div class="decision-rank">${index+1}</div>
+      <div class="decision-region" title="${row.name}">${row.name}<span class="decision-sub">${scoreText}</span></div>
+      <div class="decision-num">${populationText(row.population)}</div>
+      <div class="decision-num">${row.density===null||row.density===undefined?"-":row.density.toFixed(2)}</div>
+      <div class="decision-status ${c.key}">${c.label}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderNetworkDecisionSupport(){
+  const grid = document.getElementById("decisionSummaryGrid");
+  if (!grid) return;
+
+  const rows = getDecisionRows();
+  const benchmark = nationalDensityBenchmark();
+  const validRows = rows.filter(r=>num(r.population)!==null && num(r.population)>0);
+  const shortage = validRows.filter(r=>r.classification.key==="shortage").length;
+  const review = validRows.filter(r=>r.classification.key==="review").length;
+  const saturated = validRows.filter(r=>r.classification.key==="saturated").length;
+
+  let scopeRows = stores;
+  let scopePopulation = Object.values(POPULATION).reduce((a,b)=>a+(num(b)||0),0);
+  let scopeLabel = "전국";
+
+  if (selectedProvince){
+    scopeRows = stores.filter(r=>normalizeRegion(r["지역"])===selectedProvince);
+    scopePopulation = POPULATION[selectedProvince] || null;
+    scopeLabel = selectedProvince;
+  }
+  if (selectedProvince && selectedDistrict){
+    scopeRows = stores.filter(r=>normalizeRegion(r["지역"])===selectedProvince && storeMatchesDistrict(r, selectedDistrict));
+    scopePopulation = getDistrictPopulation(selectedProvince, selectedDistrict);
+    scopeLabel = selectedProvince + " " + selectedDistrict;
+  }
+
+  const scopeMetrics = networkMetrics(scopeRows);
+  const scopeDensity = scopePopulation > 0 ? scopeRows.length / scopePopulation * 100000 : null;
+  const scopeClass = decisionClassByDensity(scopeDensity, benchmark);
+  const compare = scopeDensity!==null && benchmark ? (scopeDensity/benchmark-1)*100 : null;
+
+  document.getElementById("decisionSummaryTitle").textContent = scopeLabel + " 출점 진단 Summary";
+  const badge = document.getElementById("decisionOverallBadge");
+  badge.textContent = scopeClass.label;
+  badge.className = "decision-badge " + scopeClass.key;
+
+  grid.innerHTML = [
+    decisionKpi("현재 점포밀도", scopeDensity===null?"-":scopeDensity.toFixed(2)+"개"),
+    decisionKpi("전국평균 대비", compare===null?"-":(compare>0?"+":"")+compare.toFixed(0)+"%", compare!==null&&compare>30?"red":compare!==null&&compare<-30?"blue":""),
+    decisionKpi("부족 지역", shortage+"곳", "blue"),
+    decisionKpi("검토 지역", review+"곳", "amber"),
+    decisionKpi("포화 지역", saturated+"곳", "red"),
+    decisionKpi("평균 월매출", scopeMetrics.avgSales===null?"-":million(scopeMetrics.avgSales))
+  ].join("");
+
+  document.getElementById("decisionSummaryFoot").textContent =
+    `진단기준: 전국 10만명당 점포 ${benchmark===null?"-":benchmark.toFixed(2)}개 · 70% 이하 부족 / 70~130% 검토 / 130% 이상 포화. 인구 미연결 지역은 진단에서 제외.`;
+
+  const scored = validRows.map(r=>({
+    ...r,
+    opportunityScore: decisionOpportunityScore(r, validRows, benchmark)
+  })).sort((a,b)=>b.opportunityScore-a.opportunityScore || (b.population||0)-(a.population||0));
+
+  const unserved = validRows
+    .filter(r=>r.count===0)
+    .sort((a,b)=>(b.population||0)-(a.population||0));
+
+  document.getElementById("priorityTitle").textContent =
+    (selectedProvince ? selectedProvince + " " : "") + "출점 우선 검토 TOP 5";
+  document.getElementById("unservedTitle").textContent =
+    (selectedProvince ? selectedProvince + " " : "") + "미출점 인구 상위 TOP 5";
+
+  renderDecisionList("priorityList", scored, "priority");
+  renderDecisionList("unservedList", unserved, "unserved");
+}
+
+
 /* ========================================
    MAIN DATA LOAD
 ======================================== */
@@ -3854,6 +4088,7 @@ async function loadData() {
   loadPopulationFromKosis().then(() => {
     renderNationalSummary();
     renderProvinceRanking();
+    renderNetworkDecisionSupport();
     if (geoData) renderMap();
   });
 
@@ -4142,6 +4377,201 @@ loadData();
   .network-store-scroll {
     max-height:560px !important;
   }
+}
+
+
+
+/* ========================================
+   NETWORK DECISION SUPPORT V5
+   - 지도/우측요약과 선택지역 매장 높이 분리
+   - 선택지역 매장은 하단 전체폭
+   - 출점 부족/검토/포화 및 미출점 지역 표시
+======================================== */
+.network-wide-zone{
+  padding:0 18px 18px;
+}
+.network-store-list-wide{
+  width:100%;
+  margin-top:0;
+}
+.network-store-list-wide .network-store-columns,
+.network-store-list-wide .network-store-row{
+  grid-template-columns:minmax(170px,2fr) repeat(5,minmax(90px,1fr)) !important;
+}
+.network-store-list-wide .network-store-columns>div,
+.network-store-list-wide .network-store-row>div{
+  text-align:center !important;
+}
+.network-store-list-wide .network-store-name{
+  text-align:center !important;
+}
+.network-store-list-wide .network-store-scroll{
+  max-height:620px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  scrollbar-gutter:stable;
+}
+.network-store-list-wide .network-store-row{
+  min-height:31px !important;
+  padding:6px 13px !important;
+}
+.network-decision-grid{
+  display:grid;
+  grid-template-columns:1.05fr 1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+.decision-card{
+  min-width:0;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+}
+.decision-head{
+  min-height:57px;
+  padding:11px 13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  background:#f9fafb;
+  border-bottom:1px solid #e5e7eb;
+}
+.decision-head strong{
+  display:block;
+  font-size:11px;
+  font-weight:900;
+  color:#111827;
+}
+.decision-head span{
+  display:block;
+  margin-top:3px;
+  font-size:8px;
+  color:#9ca3af;
+}
+.decision-badge{
+  flex:0 0 auto;
+  margin:0 !important;
+  padding:5px 8px;
+  border-radius:999px;
+  font-size:9px !important;
+  font-weight:900;
+  background:#f3f4f6;
+  color:#6b7280 !important;
+}
+.decision-badge.shortage{background:#eff6ff;color:#1d4ed8 !important}
+.decision-badge.review{background:#fffbeb;color:#b45309 !important}
+.decision-badge.saturated{background:#fef2f2;color:#b91c1c !important}
+.decision-kpis{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  padding:11px;
+}
+.decision-kpi{
+  padding:9px 8px;
+  border-radius:8px;
+  background:#f8fafc;
+  text-align:center;
+}
+.decision-kpi-label{
+  margin-bottom:4px;
+  font-size:8px;
+  color:#9ca3af;
+}
+.decision-kpi-value{
+  font-size:13px;
+  font-weight:900;
+  color:#111827;
+}
+.decision-kpi-value.blue{color:#2563eb}
+.decision-kpi-value.red{color:#dc2626}
+.decision-kpi-value.amber{color:#b45309}
+.decision-foot{
+  padding:0 12px 11px;
+  color:#6b7280;
+  font-size:8px;
+  line-height:1.55;
+}
+.decision-list{
+  max-height:232px;
+  overflow-y:auto;
+}
+.decision-row{
+  display:grid;
+  grid-template-columns:28px minmax(92px,1.25fr) 72px 62px 60px;
+  gap:7px;
+  align-items:center;
+  min-height:42px;
+  padding:7px 11px;
+  border-bottom:1px solid #f1f2f4;
+}
+.decision-row:last-child{border-bottom:none}
+.decision-rank{
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#111827;color:#fff;font-size:8px;font-weight:900;
+}
+.decision-region{
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:9px;font-weight:900;color:#111827;
+}
+.decision-sub{
+  display:block;margin-top:2px;font-size:7px;font-weight:500;color:#9ca3af;
+}
+.decision-num{
+  text-align:right;font-size:8px;font-weight:800;color:#374151;white-space:nowrap;
+}
+.decision-status{
+  justify-self:end;
+  padding:4px 6px;
+  border-radius:999px;
+  font-size:8px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.decision-status.shortage{background:#eff6ff;color:#1d4ed8}
+.decision-status.review{background:#fffbeb;color:#b45309}
+.decision-status.saturated{background:#fef2f2;color:#b91c1c}
+.decision-status.priority{background:#ecfdf5;color:#047857}
+.decision-empty{padding:30px 14px;text-align:center;font-size:9px;color:#9ca3af}
+
+/* 기존 V4에서 우측 선택지역 매장을 늘리던 속성 무효화 */
+@media (min-width:1131px){
+  .network-layout{
+    grid-template-columns:minmax(0,1.55fr) minmax(500px,1fr) !important;
+    align-items:start !important;
+  }
+  .network-map-box{
+    height:590px !important;
+    min-height:590px !important;
+    max-height:590px !important;
+  }
+  .network-side{
+    align-self:start !important;
+  }
+  .network-wide-zone .network-store-scroll{
+    max-height:620px !important;
+  }
+}
+@media(max-width:1130px){
+  .network-wide-zone{padding:0 18px 18px}
+  .network-decision-grid{grid-template-columns:1fr 1fr}
+  .decision-card:first-child{grid-column:1/-1}
+}
+@media(max-width:740px){
+  .network-wide-zone{padding:0 10px 10px}
+  .network-decision-grid{grid-template-columns:1fr}
+  .decision-card:first-child{grid-column:auto}
+  .network-store-list-wide .network-store-columns,
+  .network-store-list-wide .network-store-row{
+    grid-template-columns:minmax(110px,1.5fr) 60px 65px 60px 78px 48px !important;
+  }
+  .network-store-list-wide{overflow-x:auto}
+  .network-store-list-wide .network-store-scroll{min-width:560px}
+  .network-store-list-wide .network-store-columns{min-width:560px}
+  .decision-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 </style>
