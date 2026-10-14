@@ -219,7 +219,7 @@ white-space:nowrap;
 .store-table td{padding:11px 6px;text-align:center;border-bottom:1px solid #f0f1f3;font-size:11px;white-space:nowrap}
 .store-table tbody tr{cursor:pointer}
 .store-table tbody tr:hover{background:#f8fafc}
-.store-name{text-align:left!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
+.store-name{text-align:center!important;font-weight:800;color:#111827;max-width:115px;overflow:hidden;text-overflow:ellipsis}
 .sub-hint{display:block;margin-top:2px;font-size:8px;font-weight:400;color:#9ca3af}
 .badge{display:inline-flex;align-items:center;justify-content:center;min-width:58px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:800}
 .up{background:#fef2f2;color:#dc2626}
@@ -700,24 +700,23 @@ let POPULATION = {
 */
 
 /* ========================================
-   POPULATION AUTO LOAD (NO EXTRA JSON FILE)
-   - KOSIS Open API 사용
-   - GitHub Pages에서 별도 JSON 파일을 추가하지 않음
-   - KOSIS 인증키가 있으면 최신 시도/시군구 인구로 자동 교체
-   - 인증키가 없거나 호출 실패 시 위 기본 시도 인구값을 유지
-
-   설정 방법
-   1) 아래 KOSIS_API_KEY에 본인 키를 입력하거나
-   2) 브라우저 콘솔에서 1회 실행:
-      localStorage.setItem("TOPTEN_KOSIS_API_KEY", "발급키")
-
-   주의: GitHub Pages 저장소가 공개 저장소라면 소스에 키를 직접
-   넣기보다 localStorage 방식을 권장합니다.
+   POPULATION AUTO LOAD V2 (NO EXTRA JSON FILE)
+   우선순위
+   1) 행정안전부 주민등록 인구 형식 2026-06 CSV를 외부에서 직접 조회
+      - 사용자의 GitHub 저장소에 JSON/CSV 파일을 추가하지 않음
+      - 브라우저에서 원격 CSV를 읽어 시도/시군구 인구 배열을 생성
+   2) 실패 시 KOSIS hosted proxy 조회
+   3) 실패 시 기존 시도 기본값 유지
 ======================================== */
 
 const KOSIS_API_KEY = "";
+const MOIS_POPULATION_CSV_URL =
+  "https://raw.githubusercontent.com/rainymon/2026-pop/main/202606_202606.csv";
+const KOSIS_PROXY_BASE = "https://k-skill-proxy.nomadamas.org";
+
 let populationPeriod = "기준값";
 let populationLoadState = "fallback";
+let populationStatusDetail = "시도 기본값";
 
 function getKosisApiKey() {
   return String(
@@ -727,33 +726,33 @@ function getKosisApiKey() {
   ).trim();
 }
 
+const PROVINCE_FULL_NAMES = [
+  ["서울특별시", "서울"],
+  ["부산광역시", "부산"],
+  ["대구광역시", "대구"],
+  ["인천광역시", "인천"],
+  ["광주광역시", "광주"],
+  ["대전광역시", "대전"],
+  ["울산광역시", "울산"],
+  ["세종특별자치시", "세종"],
+  ["경기도", "경기"],
+  ["강원특별자치도", "강원"],
+  ["강원도", "강원"],
+  ["충청북도", "충북"],
+  ["충청남도", "충남"],
+  ["전북특별자치도", "전북"],
+  ["전라북도", "전북"],
+  ["전라남도", "전남"],
+  ["경상북도", "경북"],
+  ["경상남도", "경남"],
+  ["제주특별자치도", "제주"]
+];
+
 function splitKosisAdministrativeName(name) {
   const raw = String(name || "").trim().replace(/\s+/g, " ");
   if (!raw || raw === "전국") return null;
 
-  const provincePatterns = [
-    ["서울특별시", "서울"],
-    ["부산광역시", "부산"],
-    ["대구광역시", "대구"],
-    ["인천광역시", "인천"],
-    ["광주광역시", "광주"],
-    ["대전광역시", "대전"],
-    ["울산광역시", "울산"],
-    ["세종특별자치시", "세종"],
-    ["경기도", "경기"],
-    ["강원특별자치도", "강원"],
-    ["강원도", "강원"],
-    ["충청북도", "충북"],
-    ["충청남도", "충남"],
-    ["전북특별자치도", "전북"],
-    ["전라북도", "전북"],
-    ["전라남도", "전남"],
-    ["경상북도", "경북"],
-    ["경상남도", "경남"],
-    ["제주특별자치도", "제주"]
-  ];
-
-  for (const [full, short] of provincePatterns) {
+  for (const [full, short] of PROVINCE_FULL_NAMES) {
     if (raw === full) {
       return { province: short, district: "" };
     }
@@ -764,16 +763,210 @@ function splitKosisAdministrativeName(name) {
       };
     }
   }
-
   return null;
 }
 
-async function loadPopulationFromKosis() {
-  const apiKey = getKosisApiKey();
-  if (!apiKey) {
-    populationLoadState = "fallback";
-    return false;
+function parseCsvLine(line) {
+  const out = [];
+  let cur = "";
+  let quoted = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (quoted && line[i + 1] === '"') {
+        cur += '"';
+        i += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (ch === ',' && !quoted) {
+      out.push(cur);
+      cur = "";
+    } else {
+      cur += ch;
+    }
   }
+  out.push(cur);
+  return out;
+}
+
+function decodePopulationCsv(buffer) {
+  const bytes = new Uint8Array(buffer);
+  const decoders = ["euc-kr", "utf-8"];
+
+  for (const label of decoders) {
+    try {
+      const decoded = new TextDecoder(label).decode(bytes);
+      if (decoded.includes("행정구역") && decoded.includes("총인구수")) {
+        return decoded;
+      }
+    } catch (error) {}
+  }
+
+  return new TextDecoder("utf-8").decode(bytes);
+}
+
+function cleanAdministrativeLabel(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")
+    .replace(/\([^)]*\)\s*$/, "")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function adminCodeFromLabel(value) {
+  const match = String(value || "").match(/\((\d{10})\)\s*$/);
+  return match ? match[1] : "";
+}
+
+function applyPopulationRows(rows, period, sourceLabel) {
+  if (!Array.isArray(rows) || !rows.length) return false;
+
+  const nextProvince = { ...POPULATION };
+  const districts = [];
+
+  rows.forEach(row => {
+    const province = normalizeRegion(row.지역 || row.시도 || "");
+    const district = String(row.시군구 || "").trim();
+    const population = num(row.인구);
+
+    if (!province || population === null || population <= 0) return;
+
+    if (!district) {
+      nextProvince[province] = population;
+    } else {
+      districts.push({
+        지역: province,
+        시군구: district,
+        인구: population,
+        기준연월: period,
+        출처: sourceLabel
+      });
+    }
+  });
+
+  // 시군구가 일정 수 이상 잡혀야 정상 데이터로 인정
+  if (districts.length < 100) return false;
+
+  POPULATION = nextProvince;
+  districtPopulation = districts;
+  populationPeriod = period || "최신";
+  populationLoadState = "live";
+  populationStatusDetail = `${sourceLabel} · 시군구 ${districts.length}개`;
+  return true;
+}
+
+async function loadPopulationFromMoisCsv() {
+  const response = await fetch(MOIS_POPULATION_CSV_URL, {
+    cache: "force-cache"
+  });
+  if (!response.ok) {
+    throw new Error("주민등록 인구 CSV HTTP " + response.status);
+  }
+
+  const buffer = await response.arrayBuffer();
+  const csvText = decodePopulationCsv(buffer);
+  const lines = csvText.split(/\r?\n/).filter(Boolean);
+  if (lines.length < 2) throw new Error("주민등록 인구 CSV 내용 없음");
+
+  const header = parseCsvLine(lines[0]).map(v => v.trim());
+  const areaIndex = header.findIndex(v => v.replace(/^\uFEFF/, "") === "행정구역");
+  const populationIndex = header.findIndex(v => v.includes("총인구수"));
+  if (areaIndex < 0 || populationIndex < 0) {
+    throw new Error("주민등록 인구 CSV 컬럼 확인 실패");
+  }
+
+  const rows = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const cols = parseCsvLine(lines[i]);
+    if (cols.length <= Math.max(areaIndex, populationIndex)) continue;
+
+    const rawArea = cols[areaIndex];
+    const code = adminCodeFromLabel(rawArea);
+    const label = cleanAdministrativeLabel(rawArea);
+    const population = Number(String(cols[populationIndex] || "").replace(/[^0-9.-]/g, ""));
+    if (!label || !code || !Number.isFinite(population) || population <= 0) continue;
+
+    const parsed = splitKosisAdministrativeName(label);
+    if (!parsed) continue;
+
+    // 시도: 2자리 + 8개의 0
+    const isProvince = /^\d{2}0{8}$/.test(code);
+    // 시군구: 앞 5자리 + 5개의 0. 시도 행은 제외
+    const isDistrict = /^\d{5}0{5}$/.test(code) && !isProvince;
+
+    if (isProvince) {
+      rows.push({ 지역: parsed.province, 시군구: "", 인구: population });
+    } else if (isDistrict && parsed.district) {
+      rows.push({ 지역: parsed.province, 시군구: parsed.district, 인구: population });
+    }
+  }
+
+  if (!applyPopulationRows(rows, "2026-06", "행정안전부 주민등록인구")) {
+    throw new Error("시군구 주민등록 인구 파싱 결과 부족");
+  }
+  return true;
+}
+
+function normalizeKosisProxyRows(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload?.rows)) return payload.rows;
+  if (Array.isArray(payload?.result)) return payload.result;
+  if (Array.isArray(payload?.items)) return payload.items;
+  return [];
+}
+
+async function loadPopulationFromKosisProxy() {
+  // KOSIS 통계표: 주민등록인구현황. 시군구 차원을 함께 요청.
+  const params = new URLSearchParams({
+    tableId: "DT_1B040A3",
+    prdSe: "Y",
+    start: "2025",
+    end: "2025",
+    objL1: "ALL",
+    objL2: "ALL"
+  });
+
+  const response = await fetch(
+    KOSIS_PROXY_BASE + "/v1/kosis/data?" + params.toString(),
+    { cache: "no-store" }
+  );
+  if (!response.ok) throw new Error("KOSIS proxy HTTP " + response.status);
+
+  const payload = await response.json();
+  const sourceRows = normalizeKosisProxyRows(payload);
+  if (!sourceRows.length) throw new Error("KOSIS proxy 응답 데이터 없음");
+
+  const rows = [];
+  sourceRows.forEach(row => {
+    const value = Number(String(row.DT ?? row.value ?? row.VALUE ?? "").replace(/,/g, ""));
+    if (!Number.isFinite(value) || value <= 0) return;
+
+    const l1 = String(row.C1_NM ?? row.OBJ_L1_NM ?? row.objL1Nm ?? "").trim();
+    const l2 = String(row.C2_NM ?? row.OBJ_L2_NM ?? row.objL2Nm ?? "").trim();
+    const combined = [l1, l2].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+    const parsed = splitKosisAdministrativeName(combined) || splitKosisAdministrativeName(l1);
+    if (!parsed) return;
+
+    rows.push({
+      지역: parsed.province,
+      시군구: parsed.district || l2,
+      인구: value
+    });
+  });
+
+  if (!applyPopulationRows(rows, "2025", "KOSIS")) {
+    throw new Error("KOSIS 시군구 인구 파싱 결과 부족");
+  }
+  return true;
+}
+
+async function loadPopulationFromKosisDirect() {
+  const apiKey = getKosisApiKey();
+  if (!apiKey) return false;
 
   const params = new URLSearchParams({
     method: "getList",
@@ -781,6 +974,7 @@ async function loadPopulationFromKosis() {
     orgId: "101",
     tblId: "DT_1B040A3",
     objL1: "ALL",
+    objL2: "ALL",
     itmId: "T20",
     prdSe: "Y",
     newEstPrdCnt: "1",
@@ -788,62 +982,72 @@ async function loadPopulationFromKosis() {
     jsonVD: "Y"
   });
 
-  const url =
-    "https://kosis.kr/openapi/Param/statisticsParameterData.do?" +
-    params.toString();
+  const response = await fetch(
+    "https://kosis.kr/openapi/Param/statisticsParameterData.do?" + params.toString(),
+    { cache: "no-store" }
+  );
+  if (!response.ok) throw new Error("KOSIS direct HTTP " + response.status);
 
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("KOSIS HTTP " + response.status);
-    }
-
-    const rows = await response.json();
-    if (!Array.isArray(rows) || !rows.length) {
-      throw new Error("KOSIS 응답 데이터 없음");
-    }
-
-    const nextDistrictPopulation = [];
-    const nextProvincePopulation = { ...POPULATION };
-    let latestPeriod = "";
-
-    rows.forEach(row => {
-      if (String(row.ITM_ID || "") !== "T20") return;
-
-      const value = Number(String(row.DT || "").replace(/,/g, ""));
-      if (!Number.isFinite(value)) return;
-
-      latestPeriod = String(row.PRD_DE || latestPeriod || "");
-
-      const parsed = splitKosisAdministrativeName(row.C1_NM);
-      if (!parsed) return;
-
-      if (!parsed.district) {
-        nextProvincePopulation[parsed.province] = value;
-      } else {
-        nextDistrictPopulation.push({
-          지역: parsed.province,
-          시군구: parsed.district,
-          인구: value,
-          기준연도: latestPeriod,
-          출처: "KOSIS"
-        });
-      }
-    });
-
-    if (nextDistrictPopulation.length) {
-      districtPopulation = nextDistrictPopulation;
-    }
-
-    POPULATION = nextProvincePopulation;
-    populationPeriod = latestPeriod || "최신";
-    populationLoadState = "kosis";
-    return true;
-  } catch (error) {
-    console.warn("KOSIS 인구 자동조회 실패 - 기본값 사용:", error);
-    populationLoadState = "fallback";
-    return false;
+  const sourceRows = await response.json();
+  if (!Array.isArray(sourceRows) || !sourceRows.length) {
+    throw new Error("KOSIS direct 응답 데이터 없음");
   }
+
+  const rows = [];
+  let latestPeriod = "";
+
+  sourceRows.forEach(row => {
+    if (String(row.ITM_ID || "") !== "T20") return;
+    const value = Number(String(row.DT || "").replace(/,/g, ""));
+    if (!Number.isFinite(value) || value <= 0) return;
+
+    latestPeriod = String(row.PRD_DE || latestPeriod || "");
+    const l1 = String(row.C1_NM || "").trim();
+    const l2 = String(row.C2_NM || "").trim();
+    const combined = [l1, l2].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+    const parsed = splitKosisAdministrativeName(combined) || splitKosisAdministrativeName(l1);
+    if (!parsed) return;
+
+    rows.push({
+      지역: parsed.province,
+      시군구: parsed.district || l2,
+      인구: value
+    });
+  });
+
+  if (!applyPopulationRows(rows, latestPeriod || "최신", "KOSIS")) {
+    throw new Error("KOSIS direct 시군구 인구 파싱 결과 부족");
+  }
+  return true;
+}
+
+async function loadPopulationData() {
+  const attempts = [
+    ["행정안전부 주민등록 인구", loadPopulationFromMoisCsv],
+    ["KOSIS hosted proxy", loadPopulationFromKosisProxy],
+    ["KOSIS direct", loadPopulationFromKosisDirect]
+  ];
+
+  for (const [label, loader] of attempts) {
+    try {
+      const ok = await loader();
+      if (ok) {
+        console.info("인구 데이터 연결:", populationStatusDetail);
+        return true;
+      }
+    } catch (error) {
+      console.warn(label + " 조회 실패:", error);
+    }
+  }
+
+  populationLoadState = "fallback";
+  populationStatusDetail = "시군구 인구 자동조회 실패";
+  return false;
+}
+
+// 기존 호출명과의 호환성 유지
+async function loadPopulationFromKosis() {
+  return loadPopulationData();
 }
 
 const GEOJSON_URL =
@@ -3948,7 +4152,9 @@ function renderNetworkDecisionSupport(){
 
   const rows = getDecisionRows();
   const benchmark = nationalDensityBenchmark();
-  const validRows = rows.filter(r=>num(r.population)!==null && num(r.population)>=DECISION_MIN_POPULATION);
+  const populationLinkedRows = rows.filter(r=>num(r.population)!==null && num(r.population)>0);
+  const validRows = populationLinkedRows.filter(r=>num(r.population)>=DECISION_MIN_POPULATION);
+  const missingPopulationCount = rows.length - populationLinkedRows.length;
   const shortage = validRows.filter(r=>r.classification.key==="shortage").length;
   const review = validRows.filter(r=>r.classification.key==="review").length;
   const saturated = validRows.filter(r=>r.classification.key==="saturated").length;
@@ -3974,6 +4180,10 @@ function renderNetworkDecisionSupport(){
   const compare = scopeDensity!==null && benchmark ? (scopeDensity/benchmark-1)*100 : null;
 
   document.getElementById("decisionSummaryTitle").textContent = scopeLabel + " 출점 진단 Summary";
+  const decisionSub = document.getElementById("decisionSummarySub");
+  if (decisionSub) {
+    decisionSub.textContent = `인구 5만명 이상 ${validRows.length}개 지역 분석 · 인구연결 ${populationLinkedRows.length}/${rows.length}`;
+  }
   const badge = document.getElementById("decisionOverallBadge");
   badge.textContent = scopeClass.label;
   badge.className = "decision-badge " + scopeClass.key;
@@ -3988,7 +4198,8 @@ function renderNetworkDecisionSupport(){
   ].join("");
 
   document.getElementById("decisionSummaryFoot").textContent =
-    `진단기준: 인구 5만명 이상 지역 · 전국 5만명당 점포 ${benchmark===null?"-":benchmark.toFixed(2)}개 · 70% 이하 부족 / 70~130% 검토 / 130% 이상 포화. 인구 미연결 및 5만명 미만 지역은 진단에서 제외.`;
+    `진단기준: 인구 5만명 이상 지역 · 전국 5만명당 점포 ${benchmark===null?"-":benchmark.toFixed(2)}개 · 70% 이하 부족 / 70~130% 검토 / 130% 이상 포화. ` +
+    `현재 분석 ${validRows.length}개 · 인구 미연결 ${missingPopulationCount}개 · 5만명 미만은 진단 제외. 인구자료: ${populationStatusDetail} (${populationPeriod}).`;
 
   const scored = validRows.map(r=>({
     ...r,
@@ -4004,8 +4215,18 @@ function renderNetworkDecisionSupport(){
   document.getElementById("unservedTitle").textContent =
     (selectedProvince ? selectedProvince + " " : "") + "미출점 인구 상위 TOP 5";
 
-  renderDecisionList("priorityList", scored, "priority");
-  renderDecisionList("unservedList", unserved, "unserved");
+  if (!validRows.length && rows.length) {
+    const message = populationLinkedRows.length
+      ? "인구 5만명 이상 분석대상이 없습니다."
+      : "시군구 인구를 불러오는 중이거나 연결에 실패했습니다.";
+    const p = document.getElementById("priorityList");
+    const u = document.getElementById("unservedList");
+    if (p) p.innerHTML = `<div class="decision-empty">${message}</div>`;
+    if (u) u.innerHTML = `<div class="decision-empty">${message}</div>`;
+  } else {
+    renderDecisionList("priorityList", scored, "priority");
+    renderDecisionList("unservedList", unserved, "unserved");
+  }
 }
 
 
@@ -4632,6 +4853,19 @@ loadData();
 <!-- END NETWORK LAYOUT FIX V4 -->
 
 
+
+
+<style id="store-name-center-v5">
+/* 하단 매장 현황 - 매장명 가운데 정렬 */
+.store-table th:first-child,
+.store-table td.store-name,
+.store-table td:first-child{
+  text-align:center !important;
+}
+.store-table th:first-child .store-sort-btn{
+  justify-content:center !important;
+}
+</style>
 
 </body>
 </html>
