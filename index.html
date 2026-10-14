@@ -3644,186 +3644,18 @@ loadData();
 
 </script>
 
-<!-- NETWORK RANKING ALIGNMENT FIX -->
 
+<!-- NETWORK LAYOUT INTEGRATED FIX V3 -->
 <style>
-/* 시도 / 시군구 현황 전체 너비 */
-.network-region-ranking {
-  width: 100%;
-  min-width: 0;
-  overflow: hidden;
-}
 
-/* 목록의 가로 패딩 통일 */
-#networkRanking {
-  width: 100%;
-  padding: 0 14px 12px;
-  box-sizing: border-box;
-  max-height: 455px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* 제목행 */
-.network-column-header {
-  display: grid;
-  grid-template-columns:
-    minmax(85px,1fr)
-    minmax(70px,1.3fr)
-    55px
-    76px
-    68px;
-  gap: 8px;
-  align-items: center;
-  padding: 11px 22px 11px 14px;
-  background: #f8fafc;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 10px;
-  font-weight: 800;
-  color: #64748b;
-  box-sizing: border-box;
-}
-
-.network-column-header > span:nth-child(n+3) {
-  text-align: right;
-}
-
-/* 데이터 행: 제목행과 동일한 열 구성 */
-#networkRanking .network-rank-row.province,
-#networkRanking .network-rank-row.district {
-  display: grid;
-  grid-template-columns:
-    minmax(85px,1fr)
-    minmax(70px,1.3fr)
-    55px
-    76px
-    68px;
-  gap: 8px;
-  align-items: center;
-  width: 100%;
-  min-height: 36px;
-  margin: 0;
-  padding: 7px 0;
-  border-bottom: 1px solid #edf0f3;
-  box-sizing: border-box;
-}
-
-#networkRanking .network-rank-name {
-  min-width: 0;
-  font-size: 11px;
-  font-weight: 800;
-  text-align: left;
-}
-
-#networkRanking .network-rank-track {
-  width: 100%;
-  min-width: 0;
-  height: 7px;
-}
-
-#networkRanking .network-rank-value,
-#networkRanking .network-rank-population,
-#networkRanking .network-rank-density {
-  font-size: 11px;
-  text-align: right;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-/* 스크롤바 너비 */
-#networkRanking::-webkit-scrollbar {
-  width: 6px;
-}
-
-#networkRanking::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 6px;
-}
-
-/* 작은 PC 및 모바일 */
-@media(max-width:740px) {
-  .network-column-header,
-  #networkRanking .network-rank-row.province,
-  #networkRanking .network-rank-row.district {
-    grid-template-columns:
-      minmax(65px,1fr)
-      minmax(45px,1fr)
-      42px
-      59px
-      55px;
-    gap: 4px;
-  }
-
-  .network-column-header {
-    font-size: 9px;
-    padding-left: 9px;
-    padding-right: 16px;
-  }
-
-  #networkRanking {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-
-  #networkRanking .network-rank-name,
-  #networkRanking .network-rank-value,
-  #networkRanking .network-rank-population,
-  #networkRanking .network-rank-density {
-    font-size: 9px;
-  }
-}
-</style>
-
-<script>
-(function() {
-  const ranking = document.getElementById(
-    "networkRanking"
-  );
-
-  if (!ranking) return;
-
-  const parent = ranking.parentElement;
-
-  // 이미 제목행이 있으면 중복 추가하지 않음
-  if (parent.querySelector(".network-column-header")) {
-    return;
-  }
-
-  const header = document.createElement("div");
-  header.className = "network-column-header";
-
-  const labels = [
-    "지역",
-    "점포 분포",
-    "매장수",
-    "인구",
-    "10만명당"
-  ];
-
-  labels.forEach(label => {
-    const span = document.createElement("span");
-    span.textContent = label;
-    header.appendChild(span);
-  });
-
-  parent.insertBefore(header, ranking);
-})();
-</script>
-
-<!-- END NETWORK RANKING ALIGNMENT FIX -->
-
-<!-- NETWORK MAP LAYOUT FIX V2 -->
-
-<style>
-/* 1. PC 지도와 오른쪽 현황표 높이 통일 */
-
+/* 1. PC 좌우 레이아웃 */
 @media (min-width:1131px) {
 
   .network-layout {
     display:grid !important;
     grid-template-columns:
-      minmax(0,1.58fr)
-      minmax(520px,1fr) !important;
+      minmax(0,1.65fr)
+      minmax(500px,1fr) !important;
     gap:16px !important;
     align-items:stretch !important;
   }
@@ -3832,34 +3664,31 @@ loadData();
     display:flex !important;
     flex-direction:column !important;
     min-width:0;
-    height:100%;
   }
 
   .network-side {
     display:flex !important;
     flex-direction:column !important;
     min-width:0;
-    height:100%;
   }
 
-  /* 지도 영역 확대 */
   .network-map-box {
+    flex:1 1 auto !important;
     height:auto !important;
-    min-height:630px;
-    flex:1 1 auto;
+    min-height:620px !important;
   }
 
   #koreaMap {
+    display:block;
     width:100% !important;
     height:100% !important;
   }
 
-  /* 오른쪽 선택 매장 영역 확장 */
   .network-store-list {
-    flex:1 1 auto;
-    min-height:0;
     display:flex;
     flex-direction:column;
+    flex:1 1 auto;
+    min-height:0;
   }
 
   .network-store-scroll {
@@ -3868,89 +3697,192 @@ loadData();
     min-height:180px;
   }
 
-  /* 하단 범례 */
   .map-legend {
     flex:0 0 auto;
-    min-height:25px;
     margin-top:8px;
   }
 
-  /* 경쟁사 위치 표시 하단 고정 */
   .competitor-toolbar {
     flex:0 0 auto;
+    margin-top:6px !important;
     min-height:32px;
-    margin-top:4px !important;
-    padding:7px 2px 0;
-    border-top:1px solid #e5e7eb;
     display:flex;
     align-items:center;
+    padding:5px 2px 0;
   }
 }
 
-/* 2. 화면 너비가 작은 경우 */
+/* 2. 시도/시군구 데이터 컬럼 공통 */
+.network-region-ranking {
+  min-width:0;
+  overflow:hidden;
+}
 
+.network-column-header,
+#networkRanking .network-rank-row.province,
+#networkRanking .network-rank-row.district {
+  display:grid !important;
+  grid-template-columns:
+    minmax(85px,1fr)
+    minmax(70px,1.3fr)
+    55px
+    76px
+    68px !important;
+  column-gap:8px !important;
+  align-items:center;
+  box-sizing:border-box;
+}
+
+.network-column-header {
+  padding:10px 20px 10px 14px;
+  background:#f8fafc;
+  border-bottom:1px solid #e5e7eb;
+  color:#64748b;
+  font-size:10px;
+  font-weight:800;
+}
+
+.network-column-header span:nth-child(n+3) {
+  text-align:right;
+}
+
+#networkRanking {
+  width:100%;
+  box-sizing:border-box;
+  padding:0 14px 12px;
+  max-height:420px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-gutter:stable;
+}
+
+#networkRanking .network-rank-row {
+  width:100%;
+  min-height:35px;
+  margin:0;
+  padding:7px 0;
+  border-bottom:1px solid #edf0f3;
+}
+
+#networkRanking .network-rank-name {
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-align:left;
+}
+
+#networkRanking .network-rank-value,
+#networkRanking .network-rank-population,
+#networkRanking .network-rank-density {
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+/* 3. 작은 화면 대응 */
 @media (max-width:1130px) {
   .network-map-box {
     height:570px !important;
-    min-height:0;
+    min-height:0 !important;
+  }
+}
+
+@media (max-width:740px) {
+  .network-column-header,
+  #networkRanking .network-rank-row.province,
+  #networkRanking .network-rank-row.district {
+    grid-template-columns:
+      minmax(65px,1fr)
+      minmax(45px,1fr)
+      42px
+      59px
+      55px !important;
+    column-gap:4px !important;
   }
 
-  .competitor-toolbar {
-    margin-bottom:12px;
+  .network-column-header {
+    font-size:9px;
+    padding-left:9px;
+    padding-right:15px;
+  }
+
+  #networkRanking {
+    padding-left:9px;
+    padding-right:9px;
   }
 }
 
 </style>
 
 <script>
-/*
-  지도 크기가 변경되면
-  D3 지도도 변경된 SVG 크기에 맞춰 다시 렌더링
-*/
-
 (function() {
-  let lastWidth = 0;
-  let lastHeight = 0;
-  let rafId = null;
+  const ranking =
+    document.getElementById("networkRanking");
 
-  const box = document.getElementById("networkMapBox");
+  if (!ranking) return;
 
-  if (!box || typeof ResizeObserver === "undefined") {
+  const parent = ranking.parentElement;
+
+  if (!parent.querySelector(".network-column-header")) {
+    const header = document.createElement("div");
+    header.className = "network-column-header";
+
+    ["지역","점포 분포","매장수","인구","10만명당"]
+      .forEach(label => {
+        const span = document.createElement("span");
+        span.textContent = label;
+        header.appendChild(span);
+      });
+
+    parent.insertBefore(header, ranking);
+  }
+
+  // 지도 영역 높이 변경 시 다시 그리기
+  const mapBox =
+    document.getElementById("networkMapBox");
+
+  if (!mapBox || typeof ResizeObserver === "undefined") {
     return;
   }
 
+  let lastWidth = 0;
+  let lastHeight = 0;
+  let frame = null;
+
   const observer = new ResizeObserver(entries => {
     const rect = entries[0].contentRect;
-
     const width = Math.round(rect.width);
     const height = Math.round(rect.height);
 
     if (!width || !height) return;
 
     if (
-      Math.abs(width - lastWidth) < 3 &&
-      Math.abs(height - lastHeight) < 3
-    ) {
-      return;
-    }
+      Math.abs(width-lastWidth) < 3 &&
+      Math.abs(height-lastHeight) < 3
+    ) return;
 
     lastWidth = width;
     lastHeight = height;
 
-    if (rafId) cancelAnimationFrame(rafId);
+    if (frame !== null) cancelAnimationFrame(frame);
 
-    rafId = requestAnimationFrame(() => {
-      if (typeof geoData !== "undefined" && geoData) {
+    frame = requestAnimationFrame(() => {
+      if (
+        typeof geoData !== "undefined" &&
+        geoData &&
+        typeof renderMap === "function"
+      ) {
         renderMap();
       }
     });
   });
 
-  observer.observe(box);
+  observer.observe(mapBox);
 })();
 </script>
+<!-- END NETWORK LAYOUT INTEGRATED FIX V3 -->
 
-<!-- END NETWORK MAP LAYOUT FIX V2 -->
 
 
 </body>
