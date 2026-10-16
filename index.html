@@ -468,12 +468,12 @@ white-space:nowrap;
 
         <div class="competitor-toolbar">
           <label><input type="checkbox" id="showUniqlo" checked>
-            <span class="spot uniqlo"></span> 유니클로 위치
+            <span class="spot uniqlo"></span> 유니클로 위치 (공식 픽업 목록)
           </label>
           <label><input type="checkbox" id="showTopten">
             <span class="spot topten"></span> 탑텐 위치
           </label>
-          <span id="competitorStatus">매장 좌표 로딩 전</span>
+          <span id="competitorStatus">유니클로: 시군구 대표 위치 · 개별 실좌표 아님</span><span style="font-size:10px;color:#b45309">※ 공식 매장픽업 가능 목록 기준 · 전국 전체 영업점과 다를 수 있음 · 상세점은 실제 주소 좌표가 아닌 시군구 기준 모식도</span>
         </div>
       </div>
 
@@ -2307,214 +2307,95 @@ function validMarker(row) {
 
 
 /* ========================================
-   UNIQLO AUTO LOAD (NO EXTRA JSON FILE)
-   - 별도 UniqloStores.json 불필요
-   - OpenStreetMap Overpass API에서 한국 내 UNIQLO/유니클로 매장을
-     좌표와 함께 자동 조회하여 빨간 점으로 표시
-   - 공식 UNIQLO 매장검색 페이지는 JS/CORS 구조 때문에 GitHub Pages
-     정적 HTML에서 직접 전수 수집이 불안정하므로 지도 좌표는 OSM을
-     사용하고, 체크박스/렌더링은 기존 로직을 그대로 사용
+   UNIQLO OFFICIAL FIXED STORE SNAPSHOT
+   Source: uniqlo.com/kr/ko/special-feature/order-and-pick/store
+   Official page is a STORE PICKUP ELIGIBILITY listing;
+   it is NOT warranted as an exhaustive operating-store registry.
+   District classification inferred from store labels; verify before decisions.
+   Official individual coordinates are not available in this dataset.
+   Schematic markers are district-centroid based, NOT storefront locations.
 ======================================== */
+const UNIQLO_SOURCE_URL = "https://www.uniqlo.com/kr/ko/special-feature/order-and-pick/store";
+const UNIQLO_SNAPSHOT_DATE = "2026-10-16";
+const UNIQLO_FIXED_STORES = [{"지역":"서울","시군구":"용산구","매장명":"아이파크몰 용산점","좌표검증":false},{"지역":"서울","시군구":"종로구","매장명":"광화문 D-TOWER점","좌표검증":false},{"지역":"서울","시군구":"구로구","매장명":"아이파크몰 고척점","좌표검증":false},{"지역":"서울","시군구":"강남구","매장명":"신사점","좌표검증":false},{"지역":"서울","시군구":"강남구","매장명":"스타필드 코엑스몰점","좌표검증":false},{"지역":"서울","시군구":"영등포구","매장명":"영등포 타임스퀘어점","좌표검증":false},{"지역":"서울","시군구":"영등포구","매장명":"여의도 아이에프씨몰점","좌표검증":false},{"지역":"서울","시군구":"강서구","매장명":"롯데몰 김포공항점","좌표검증":false},{"지역":"서울","시군구":"강서구","매장명":"마곡 원그로브몰점","좌표검증":false},{"지역":"서울","시군구":"관악구","매장명":"롯데백화점 관악점","좌표검증":false},{"지역":"서울","시군구":"노원구","매장명":"롯데백화점 노원점","좌표검증":false},{"지역":"서울","시군구":"강북구","매장명":"롯데백화점 미아점","좌표검증":false},{"지역":"서울","시군구":"강북구","매장명":"현대백화점 미아점","좌표검증":false},{"지역":"서울","시군구":"광진구","매장명":"롯데백화점 스타시티점","좌표검증":false},{"지역":"서울","시군구":"동대문구","매장명":"롯데백화점 청량리점","좌표검증":false},{"지역":"서울","시군구":"중구","매장명":"동대문점","좌표검증":false},{"지역":"서울","시군구":"중구","매장명":"명동점","좌표검증":false},{"지역":"서울","시군구":"서초구","매장명":"서울고속버스터미널점","좌표검증":false},{"지역":"서울","시군구":"금천구","매장명":"마리오몰점","좌표검증":false},{"지역":"서울","시군구":"동작구","매장명":"사당 파스텔점","좌표검증":false},{"지역":"서울","시군구":"마포구","매장명":"합정 메세나폴리스점","좌표검증":false},{"지역":"서울","시군구":"은평구","매장명":"롯데몰 은평점","좌표검증":false},{"지역":"경기","시군구":"고양시","매장명":"스타필드 고양점","좌표검증":false},{"지역":"경기","시군구":"고양시","매장명":"롯데마트 화정점","좌표검증":false},{"지역":"경기","시군구":"고양시","매장명":"롯데백화점 일산점","좌표검증":false},{"지역":"경기","시군구":"고양시","매장명":"일산 덕이점","좌표검증":false},{"지역":"경기","시군구":"성남시","매장명":"스타필드 시티 위례점","좌표검증":false},{"지역":"경기","시군구":"성남시","매장명":"AK 플라자 분당점","좌표검증":false},{"지역":"경기","시군구":"부천시","매장명":"스타필드 시티 부천점","좌표검증":false},{"지역":"경기","시군구":"부천시","매장명":"롯데백화점 중동점","좌표검증":false},{"지역":"경기","시군구":"부천시","매장명":"현대백화점 중동점","좌표검증":false},{"지역":"경기","시군구":"안성시","매장명":"스타필드 안성점","좌표검증":false},{"지역":"경기","시군구":"안성시","매장명":"안성점","좌표검증":false},{"지역":"경기","시군구":"수원시","매장명":"스타필드 수원점","좌표검증":false},{"지역":"경기","시군구":"수원시","매장명":"타임빌라스 수원점","좌표검증":false},{"지역":"경기","시군구":"수원시","매장명":"수원 망포점","좌표검증":false},{"지역":"경기","시군구":"수원시","매장명":"롯데몰 광교점","좌표검증":false},{"지역":"경기","시군구":"김포시","매장명":"김포 장기점","좌표검증":false},{"지역":"경기","시군구":"용인시","매장명":"롯데몰 수지점","좌표검증":false},{"지역":"경기","시군구":"용인시","매장명":"용인 구성점","좌표검증":false},{"지역":"경기","시군구":"용인시","매장명":"롯데 라이프스타일몰 기흥점","좌표검증":false},{"지역":"경기","시군구":"용인시","매장명":"스타필드 죽전점","좌표검증":false},{"지역":"경기","시군구":"안양시","매장명":"롯데백화점 평촌점","좌표검증":false},{"지역":"경기","시군구":"광명시","매장명":"롯데몰 광명점","좌표검증":false},{"지역":"경기","시군구":"구리시","매장명":"롯데백화점 구리점","좌표검증":false},{"지역":"경기","시군구":"오산시","매장명":"오산 은계점","좌표검증":false},{"지역":"경기","시군구":"남양주시","매장명":"남양주 화도점","좌표검증":false},{"지역":"경기","시군구":"남양주시","매장명":"현대 스페이스원 남양주점","좌표검증":false},{"지역":"경기","시군구":"군포시","매장명":"롯데피트인 산본점","좌표검증":false},{"지역":"경기","시군구":"군포시","매장명":"AK플라자 금정점","좌표검증":false},{"지역":"경기","시군구":"파주시","매장명":"롯데 유스컬쳐빌 파주점","좌표검증":false},{"지역":"경기","시군구":"파주시","매장명":"스타필드 빌리지 운정점","좌표검증":false},{"지역":"경기","시군구":"화성시","매장명":"롯데백화점 동탄점","좌표검증":false},{"지역":"경기","시군구":"광주시","매장명":"경기 광주점","좌표검증":false},{"지역":"경기","시군구":"이천시","매장명":"롯데몰 이천점","좌표검증":false},{"지역":"경기","시군구":"여주시","매장명":"여주점","좌표검증":false},{"지역":"경기","시군구":"포천시","매장명":"포천점","좌표검증":false},{"지역":"경기","시군구":"시흥시","매장명":"신세계 시흥점","좌표검증":false},{"지역":"경기","시군구":"하남시","매장명":"스타필드 하남점","좌표검증":false},{"지역":"인천","시군구":"부평구","매장명":"부평역사점","좌표검증":false},{"지역":"인천","시군구":"부평구","매장명":"인천 구산점","좌표검증":false},{"지역":"인천","시군구":"계양구","매장명":"롯데마트 계양점","좌표검증":false},{"지역":"인천","시군구":"중구","매장명":"인천 항동점","좌표검증":false},{"지역":"인천","시군구":"연수구","매장명":"인천스퀘어1점","좌표검증":false},{"지역":"인천","시군구":"미추홀구","매장명":"롯데백화점 인천점","좌표검증":false},{"지역":"대전","시군구":"서구","매장명":"대전 둔산점","좌표검증":false},{"지역":"대전","시군구":"서구","매장명":"롯데백화점 대전점","좌표검증":false},{"지역":"대전","시군구":"유성구","매장명":"신세계 스타일 마켓 대전점","좌표검증":false},{"지역":"충남","시군구":"서산시","매장명":"서산점","좌표검증":false},{"지역":"충남","시군구":"아산시","매장명":"아산 풍기점","좌표검증":false},{"지역":"충남","시군구":"천안시","매장명":"천안 구성점","좌표검증":false},{"지역":"충남","시군구":"천안시","매장명":"갤러리아 센터시티점","좌표검증":false},{"지역":"충남","시군구":"당진시","매장명":"당진 읍내점","좌표검증":false},{"지역":"충북","시군구":"충주시","매장명":"충주점","좌표검증":false},{"지역":"강원","시군구":"원주시","매장명":"원주점","좌표검증":false},{"지역":"강원","시군구":"강릉시","매장명":"강릉 포남점","좌표검증":false},{"지역":"강원","시군구":"춘천시","매장명":"춘천 M 백화점","좌표검증":false},{"지역":"경북","시군구":"구미시","매장명":"구미 신평점","좌표검증":false},{"지역":"경북","시군구":"안동시","매장명":"안동점","좌표검증":false},{"지역":"경북","시군구":"포항시","매장명":"포항 해도점","좌표검증":false},{"지역":"경북","시군구":"포항시","매장명":"포항 장성점","좌표검증":false},{"지역":"경북","시군구":"경주시","매장명":"경주점","좌표검증":false},{"지역":"부산","시군구":"부산진구","매장명":"삼정타워점","좌표검증":false},{"지역":"부산","시군구":"부산진구","매장명":"롯데백화점 서면점","좌표검증":false},{"지역":"부산","시군구":"해운대구","매장명":"롯데백화점 센텀시티점","좌표검증":false},{"지역":"부산","시군구":"동래구","매장명":"롯데마트 동래점","좌표검증":false},{"지역":"부산","시군구":"사하구","매장명":"부산사하점","좌표검증":false},{"지역":"부산","시군구":"동구","매장명":"부산 범일점","좌표검증":false},{"지역":"부산","시군구":"북구","매장명":"롯데마트 화명점","좌표검증":false},{"지역":"부산","시군구":"기장군","매장명":"롯데몰 동부산점","좌표검증":false},{"지역":"부산","시군구":"중구","매장명":"롯데백화점 광복점","좌표검증":false},{"지역":"대구","시군구":"달서구","매장명":"대구 감삼점","좌표검증":false},{"지역":"대구","시군구":"달서구","매장명":"대구 대천점","좌표검증":false},{"지역":"대구","시군구":"수성구","매장명":"대구 수성점","좌표검증":false},{"지역":"대구","시군구":"수성구","매장명":"대구 신매점","좌표검증":false},{"지역":"대구","시군구":"동구","매장명":"롯데몰 이시아폴리스점","좌표검증":false},{"지역":"대구","시군구":"동구","매장명":"신세계백화점 대구점","좌표검증":false},{"지역":"대구","시군구":"동구","매장명":"대구 혁신도시점","좌표검증":false},{"지역":"대구","시군구":"북구","매장명":"롯데백화점 대구점","좌표검증":false},{"지역":"대구","시군구":"중구","매장명":"동성로점","좌표검증":false},{"지역":"경남","시군구":"창원시","매장명":"롯데백화점 창원점","좌표검증":false},{"지역":"경남","시군구":"창원시","매장명":"롯데마트 마산양덕점","좌표검증":false},{"지역":"경남","시군구":"김해시","매장명":"신세계백화점 김해점","좌표검증":false},{"지역":"경남","시군구":"진주시","매장명":"롯데몰 진주점","좌표검증":false},{"지역":"경남","시군구":"거제시","매장명":"디큐브백화점 거제점","좌표검증":false},{"지역":"경남","시군구":"양산시","매장명":"양산 신기점","좌표검증":false},{"지역":"울산","시군구":"북구","매장명":"울산 진장점","좌표검증":false},{"지역":"울산","시군구":"남구","매장명":"롯데백화점 울산점","좌표검증":false},{"지역":"전북","시군구":"전주시","매장명":"전주 효자점","좌표검증":false},{"지역":"전북","시군구":"전주시","매장명":"전주 고사점","좌표검증":false},{"지역":"전북","시군구":"전주시","매장명":"전주 송천점","좌표검증":false},{"지역":"전북","시군구":"군산시","매장명":"롯데몰 군산점","좌표검증":false},{"지역":"전북","시군구":"익산시","매장명":"익산 영등점","좌표검증":false},{"지역":"광주","시군구":"북구","매장명":"광주 연제점","좌표검증":false},{"지역":"광주","시군구":"광산구","매장명":"광주 비아점","좌표검증":false},{"지역":"광주","시군구":"서구","매장명":"서광주점","좌표검증":false},{"지역":"전남","시군구":"목포시","매장명":"목포 상동점","좌표검증":false},{"지역":"전남","시군구":"광양시","매장명":"LF 스퀘어 광양점","좌표검증":false},{"지역":"전남","시군구":"순천시","매장명":"순천 연향점","좌표검증":false},{"지역":"전남","시군구":"여수시","매장명":"여수 둔덕점","좌표검증":false},{"지역":"제주","시군구":"제주시","매장명":"제주 이도점","좌표검증":false},{"지역":"제주","시군구":"제주시","매장명":"제주 도남점","좌표검증":false},{"지역":"제주","시군구":"서귀포시","매장명":"서귀포점","좌표검증":false}];
+uniqloStores = UNIQLO_FIXED_STORES.map((row, i) => ({...row, id: i, 브랜드: "유니클로", source:"유니클로 공식 매장픽업 목록"}));
 
-const UNIQLO_OVERPASS_ENDPOINTS = [
-  "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter"
-];
-
-async function loadUniqloStoresByCode() {
-  const query = `
-[out:json][timeout:30];
-area["ISO3166-1"="KR"][admin_level=2]->.searchArea;
-(
-  nwr["brand"~"UNIQLO",i](area.searchArea);
-  nwr["name"~"UNIQLO|유니클로",i](area.searchArea);
-);
-out center tags;
-  `.trim();
-
-  let lastError = null;
-
-  for (const endpoint of UNIQLO_OVERPASS_ENDPOINTS) {
-    try {
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 18000);
-
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
-        body: "data=" + encodeURIComponent(query),
-        signal: controller.signal
+function districtKeyLabel(value) {
+  return String(value || "").replace(/\s+/g, "").replace(/특별자치시|특별자치도/g, "");
+}
+function uniqloDistrictMatch(row, feature) {
+  const a = districtKeyLabel(row.시군구);
+  const b = districtKeyLabel(districtName(feature));
+  return a === b || (a.endsWith("시") && b.startsWith(a) && /구$/.test(b));
+}
+function uniqloRowsForFeature(feature, province) {
+  return uniqloStores.filter(row => row.지역 === province && uniqloDistrictMatch(row, feature));
+}
+function renderUniqloClusters(projection, group, province="") {
+  if (!document.getElementById("showUniqlo")?.checked) return;
+  const isDetailed = Boolean(province);
+  const features = isDetailed
+    ? (districtGeoData?.features || []).filter(f => districtProvince(f) === province)
+    : (districtGeoData?.features || []);
+  if (!features.length) {
+    group.append("text").attr("x",12).attr("y",20).attr("fill","#b91c1c")
+      .attr("font-size",11).text("유니클로 표시: 시군구 행정경계 로딩 필요");
+    return;
+  }
+  const markerLayer = group.append("g").attr("class","uniqlo-fixed-layer");
+  const assigned = new Map();
+  for (const row of uniqloStores) {
+    const candidates = features.filter(f => districtProvince(f) === row.지역 && uniqloDistrictMatch(row,f));
+    if (!candidates.length) continue;
+    const target = candidates.find(f => districtKeyLabel(districtName(f)) === districtKeyLabel(row.시군구)) || candidates[0];
+    if (!assigned.has(target)) assigned.set(target,[]);
+    assigned.get(target).push(row);
+  }
+  for (const feature of features) {
+    const region = districtProvince(feature);
+    const matching = assigned.get(feature) || [];
+    if (!matching.length) continue;
+    const center = d3.geoCentroid(feature);
+    const xy = projection(center);
+    if (!xy || !xy.every(Number.isFinite)) continue;
+    if (!isDetailed) {
+      // Whole-country: one aggregate dot (count badge) per city/county/district.
+      const dot=markerLayer.append("g").attr("transform",`translate(${xy[0]},${xy[1]})`);
+      dot.append("circle").attr("r",matching.length>=10?10:matching.length>=3?8:6)
+        .attr("fill","#e02020").attr("stroke","#fff").attr("stroke-width",1.5);
+      if(matching.length>1) dot.append("text").attr("text-anchor","middle").attr("dy",".32em")
+        .attr("fill","white").attr("font-size",8).attr("font-weight",900).text(matching.length);
+      dot.append("title").text(`${region} ${districtName(feature)} | 유니클로 ${matching.length}개 (시군구 대표 위치)`);
+    } else {
+      // Province zoom: every confirmed name appears as an individual dot.
+      // Dots are deterministically offset from DISTRICT centroid, not real coordinates.
+      matching.forEach((row,i)=>{
+        const ang=i*2.399963229728653; const radius=i===0?0:7*Math.sqrt(i);
+        const dx=Math.cos(ang)*radius,dy=Math.sin(ang)*radius;
+        markerLayer.append("circle").attr("class","marker")
+          .attr("cx",xy[0]+dx).attr("cy",xy[1]+dy).attr("r",4.6)
+          .attr("fill","#e02020").attr("stroke","white").attr("stroke-width",1.2)
+          .append("title").text(`${row.매장명} | ${region} ${row.시군구} | 시군구 대표 위치(실제 점포 좌표 아님)`);
       });
-
-      clearTimeout(timer);
-
-      if (!response.ok) {
-        throw new Error("Overpass HTTP " + response.status);
-      }
-
-      const data = await response.json();
-      const seen = new Set();
-
-      const rows = (data.elements || []).map(item => {
-        const lat = item.lat ?? item.center?.lat;
-        const lng = item.lon ?? item.center?.lon;
-        const tags = item.tags || {};
-
-        const name =
-          tags["name:ko"] ||
-          tags.name ||
-          tags.brand ||
-          "UNIQLO";
-
-        const address = [
-          tags["addr:province"],
-          tags["addr:city"],
-          tags["addr:district"],
-          tags["addr:street"],
-          tags["addr:housenumber"]
-        ].filter(Boolean).join(" ");
-
-        return {
-          브랜드: "유니클로",
-          매장명: name,
-          주소: address,
-          lat: Number(lat),
-          lng: Number(lng),
-          source: "OpenStreetMap"
-        };
-      }).filter(validMarker)
-        .filter(row => {
-          const key =
-            row.매장명 + "|" +
-            row.lat.toFixed(5) + "|" +
-            row.lng.toFixed(5);
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        });
-
-      if (rows.length) {
-        uniqloStores = rows;
-        return true;
-      }
-
-      throw new Error("유니클로 좌표 0건");
-    } catch (error) {
-      lastError = error;
-      console.warn("유니클로 자동조회 실패:", endpoint, error);
     }
   }
-
-  console.warn("유니클로 자동조회 최종 실패:", lastError);
-  uniqloStores = [];
-  return false;
 }
-
 function updateCompetitorStatus() {
-  const el = document.getElementById("competitorStatus");
-  if (!el) return;
-
-  const u = uniqloStores.filter(validMarker).length;
-  const t = toptenPoints.filter(validMarker).length;
-
-  el.textContent =
-    `유니클로 ${u}곳 · 탑텐 좌표 ${t}곳` +
-    (u === 0 ? " · 위치 데이터 연결 필요" : "");
+  const el=document.getElementById("competitorStatus");
+  if(!el)return;
+  const topCount=toptenPoints.filter(validMarker).length;
+  el.textContent=`유니클로 공식 픽업 목록 ${uniqloStores.length}개 · 탑텐 좌표 ${topCount}개 · 유니클로 점은 시군구 대표 위치`;
 }
-
-function renderCompetitorMarkers(
-  projection,
-  group,
-  province = ""
-) {
-  const layers = [
-    {
-      id: "showUniqlo",
-      data: uniqloStores,
-      color: "#e02020",
-      brand: "유니클로"
-    },
-    {
-      id: "showTopten",
-      data: toptenPoints,
-      color: "#111827",
-      brand: "탑텐"
-    }
-  ];
-
-  layers.forEach(layer => {
-    const toggle = document.getElementById(layer.id);
-    if (!toggle?.checked) return;
-
-    const data = layer.data
-      .filter(validMarker)
-      .filter(row => {
-        if (!province) return true;
-
-        const lng = Number(
-          row.lng ?? row.lon ?? row.longitude
-        );
-        const lat = Number(
-          row.lat ?? row.latitude
-        );
-
-        const provinceFeature = geoData?.features?.find(
-          feature => geoRegionName(feature) === province
-        );
-
-        if (
-          provinceFeature &&
-          Number.isFinite(lng) &&
-          Number.isFinite(lat)
-        ) {
-          return d3.geoContains(
-            provinceFeature,
-            [lng, lat]
-          );
-        }
-
-        return normalizeRegion(
-          row["지역"] ||
-          row.province ||
-          row.region ||
-          ""
-        ) === province;
-      });
-
-    group.append("g")
-      .selectAll("circle")
-      .data(data)
-      .join("circle")
-      .attr("class", "marker")
-      .attr("cx", row => {
-        const lng = Number(
-          row.lng ?? row.lon ?? row.longitude
-        );
-        const lat = Number(
-          row.lat ?? row.latitude
-        );
-        return projection([lng, lat])?.[0] ?? -100;
-      })
-      .attr("cy", row => {
-        const lng = Number(
-          row.lng ?? row.lon ?? row.longitude
-        );
-        const lat = Number(
-          row.lat ?? row.latitude
-        );
-        return projection([lng, lat])?.[1] ?? -100;
-      })
-      .attr("r", province ? 5 : 3.7)
-      .attr("fill", layer.color)
-      .append("title")
-      .text(row => [
-        layer.brand,
-        row["매장명"] || row.name || "매장",
-        row["주소"] || row.address || ""
-      ].join(" | "));
-  });
+function renderCompetitorMarkers(projection, group, province="") {
+  renderUniqloClusters(projection,group,province);
+  if(!document.getElementById("showTopten")?.checked)return;
+  const provinceFeature=geoData?.features?.find(f=>geoRegionName(f)===province);
+  const rows=toptenPoints.filter(validMarker).filter(row=>!province || (provinceFeature && d3.geoContains(provinceFeature,[Number(row.lng),Number(row.lat)])));
+  group.append("g").selectAll("circle").data(rows).join("circle")
+    .attr("class","marker").attr("cx",r=>projection([Number(r.lng),Number(r.lat)])?.[0]??-100)
+    .attr("cy",r=>projection([Number(r.lng),Number(r.lat)])?.[1]??-100)
+    .attr("r",province?5:3.7).attr("fill","#111827")
+    .append("title").text(r=>`탑텐 | ${r.매장명||""} | ${r.주소||""}`);
 }
 
 /* MAP ENTRY */
@@ -4315,10 +4196,10 @@ async function loadData() {
     if (geoData) renderMap();
   });
 
-  loadUniqloStoresByCode().then(() => {
+  ensureDistrictGeo().then(() => {
     updateCompetitorStatus();
     if (geoData) renderMap();
-  });
+  }).catch(error => console.warn("유니클로 시군구 집계 경계 로딩 실패",error));
 
   coordinatePromise.catch(error =>
     console.warn("탑텐 좌표 자동조회 실패:", error)
