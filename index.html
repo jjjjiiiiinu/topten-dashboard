@@ -357,9 +357,18 @@ white-space:nowrap;
 .v9-rank-store{font-size:11px;font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .v9-rank-store small{display:block;font-size:9px;color:#9ca3af;font-weight:500;overflow:hidden;text-overflow:ellipsis}
 .v9-rank-value{font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* V13: profit ranking shows 2025 margin plus comparable-period 2026 YoY GAP. */
+.v13-profit-head{display:grid;grid-template-columns:minmax(0,1fr) 64px 84px;gap:6px;align-items:center;padding:6px 9px;background:#f8fafc;border-top:1px solid #e5e7eb;color:#64748b;font-size:9px;font-weight:800}
+.v13-profit-head span:not(:first-child){text-align:right;white-space:nowrap}
+.v9-rank-row.v13-profit-row{grid-template-columns:18px minmax(0,1fr) 64px 84px;gap:6px;padding:9px 9px}
+.v13-profit-value,.v13-profit-gap{text-align:right;font-variant-numeric:tabular-nums;font-size:11px;white-space:nowrap}
+.v13-gap-up{color:#dc2626}.v13-gap-down{color:#2563eb}.v13-gap-none{color:#9ca3af}
+@media(max-width:650px){.v13-profit-head{grid-template-columns:minmax(0,1fr) 70px 90px}.v9-rank-row.v13-profit-row{grid-template-columns:18px minmax(0,1fr) 70px 90px}}
 @media(max-width:1280px){.dashboard-grid{grid-template-columns:1fr}.v9-ranking-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.v9-ranking-grid{grid-template-columns:1fr}.v9-channel-block{padding:12px}.lease-standalone .lease-columns{grid-template-columns:1fr}}
 
+.v9-channel-title{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.v12-channel-note{font-size:10px;font-weight:500;color:#9ca3af;letter-spacing:0}
 </style>
 </head>
 
@@ -1937,23 +1946,40 @@ function v9RankingRows(group, metric, direction) {
     .sort((a,b) => (direction === "best" ? b.value-a.value : a.value-b.value))
     .slice(0,3);
 }
+function v13ProfitGap(value) {
+  const n = num(value);
+  if (n === null || !Number.isFinite(n)) return {label:"-", css:"v13-gap-none"};
+  const css = n > 0 ? "v13-gap-up" : n < 0 ? "v13-gap-down" : "v13-gap-none";
+  // Follow the same percentage scaling as the source store table.
+  return {label:signedPercent(value).replace(/%$/, "%p"), css};
+}
 function v9RankingCell(group, metric, direction) {
-  const isSales=metric === "sales";
-  const title=`${isSales ? "월평균 매출" : "영업이익률"} ${direction === "best" ? "TOP 3" : "WORST 3"}`;
-  const rows=v9RankingRows(group,metric,direction);
-  const html=rows.map((item,index)=>{
-    const r=item.row;
-    return `<div class="v9-rank-row" title="${text(r["매장명"])} · ${normalizeRegion(r["지역"])}">
+  const isSales = metric === "sales";
+  const title = `${isSales ? "월평균 매출" : "영업이익률"} ${direction === "best" ? "TOP 3" : "WORST 3"}`;
+  const rows = v9RankingRows(group, metric, direction);
+  const html = rows.map((item,index) => {
+    const r = item.row;
+    const name = text(r["매장명"]);
+    const region = normalizeRegion(r["지역"]);
+    if (isSales) return `<div class="v9-rank-row" title="${name} · ${region}">
       <span class="v9-rank-no">${index+1}</span>
-      <span class="v9-rank-store">${text(r["매장명"])}<small>${normalizeRegion(r["지역"])}</small></span>
-      <strong class="v9-rank-value ${!isSales ? profitClass(item.value) : ""}">${isSales ? million(item.value) : signedPercent(item.value)}</strong>
+      <span class="v9-rank-store">${name}<small>${region}</small></span>
+      <strong class="v9-rank-value">${million(item.value)}</strong>
+    </div>`;
+    const gap = v13ProfitGap(r["동기간_영업이익율_GAP(%p)"]);
+    return `<div class="v9-rank-row v13-profit-row" title="${name} · ${region}">
+      <span class="v9-rank-no">${index+1}</span>
+      <span class="v9-rank-store">${name}<small>${region}</small></span>
+      <strong class="v13-profit-value ${profitClass(item.value)}">${signedPercent(item.value)}</strong>
+      <strong class="v13-profit-gap ${gap.css}">${gap.label}</strong>
     </div>`;
   }).join("");
-  return `<div class="v9-rank-cell ${direction}"><div class="v9-rank-cell-head">${title}<small>${isSales ? "신규점 3개월 이상 운영 · 백만원" : "2025년"}</small></div>${html || '<div class="network-empty">해당 조건 데이터 없음</div>'}</div>`;
+  const headings = isSales ? "" : `<div class="v13-profit-head"><span>매장명</span><span>25년</span><span>26년 GAP(%p)</span></div>`;
+  return `<div class="v9-rank-cell ${direction}"><div class="v9-rank-cell-head">${title}<small>${isSales ? "단위: 백만원" : "25년 기준"}</small></div>${headings}${html || '<div class="network-empty">해당 조건 데이터 없음</div>'}</div>`;
 }
 function renderCategoryRanking() {
   document.getElementById("categoryRanking").innerHTML = ["가두", "유통", "밸런스"].map(group => `
-    <div class="v9-channel-block"><div class="v9-channel-title"><span>${group}</span></div>
+    <div class="v9-channel-block"><div class="v9-channel-title"><span>${group}</span><small class="v12-channel-note">신규점 3개월 이상 운영 기준 (월평균 매출)</small></div>
       <div class="v9-ranking-grid">${v9RankingCell(group,"sales","best")}${v9RankingCell(group,"sales","worst")}${v9RankingCell(group,"profit","best")}${v9RankingCell(group,"profit","worst")}</div>
     </div>`).join("");
 }
