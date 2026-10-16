@@ -333,6 +333,33 @@ white-space:nowrap;
 @media(max-width:1130px){.network-layout{grid-template-columns:minmax(0,1fr)}.network-map-box{height:600px}.network-side{display:grid;grid-template-columns:1fr 1fr}.network-summary{grid-column:1/-1}}
 @media(max-width:740px){.network-layout{padding:10px;gap:12px}.network-side{display:flex}.network-map-box{height:465px}.network-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.network-rank-row.province,.network-rank-row.district,.network-ranking-columns{grid-template-columns:minmax(78px,1fr) minmax(40px,.8fr) 40px 54px 58px;gap:4px}.network-rank-name,.network-rank-value,.network-rank-population,.network-rank-density{font-size:9px}.network-ranking-columns{font-size:8px}.network-store-columns,.network-store-row{grid-template-columns:minmax(100px,1.5fr) 52px 58px 53px 75px 38px;gap:4px;padding-left:9px;padding-right:9px}.network-store-scroll{overflow-x:auto}.network-map-box .map-label{font-size:10px}}
 
+
+/* V9 WIDE LAYOUT */
+.dashboard-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:stretch;margin-bottom:18px}
+.dashboard-grid>.card{min-width:0}
+.lease-standalone .lease-summary{border-top:0}
+.lease-standalone .lease-header{display:none}
+.lease-standalone .total-deposit{margin-top:16px}
+.lease-standalone .lease-columns{gap:12px}
+.ranking-wide-card{margin-bottom:24px}
+.v9-channel-block{padding:13px 18px 17px;border-bottom:1px solid #e5e7eb}
+.v9-channel-block:last-child{border-bottom:0}
+.v9-channel-title{margin-bottom:10px;display:flex;align-items:center;gap:12px;font-size:12px;font-weight:900}
+.v9-channel-title span{background:#111827;color:white;padding:5px 13px;border-radius:999px}
+.v9-channel-title:after{content:"";height:1px;background:#e5e7eb;flex:1}
+.v9-ranking-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.v9-rank-cell{min-width:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.v9-rank-cell-head{padding:10px 11px;background:#f8fafc;font-size:11px;font-weight:900;display:flex;justify-content:space-between;gap:5px}
+.v9-rank-cell-head small{color:#64748b;font-size:9px;font-weight:600}
+.v9-rank-cell.worst .v9-rank-cell-head{background:#fff8f8}
+.v9-rank-row{display:grid;grid-template-columns:18px minmax(0,1fr) auto;align-items:center;gap:7px;padding:9px 9px;min-height:43px;border-top:1px solid #f0f1f3}
+.v9-rank-no{background:#f3f4f6;text-align:center;border-radius:50%;font-size:10px;font-weight:800;width:18px;height:18px;line-height:18px}
+.v9-rank-store{font-size:11px;font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.v9-rank-store small{display:block;font-size:9px;color:#9ca3af;font-weight:500;overflow:hidden;text-overflow:ellipsis}
+.v9-rank-value{font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
+@media(max-width:1280px){.dashboard-grid{grid-template-columns:1fr}.v9-ranking-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.v9-ranking-grid{grid-template-columns:1fr}.v9-channel-block{padding:12px}.lease-standalone .lease-columns{grid-template-columns:1fr}}
+
 </style>
 </head>
 
@@ -404,6 +431,10 @@ white-space:nowrap;
         </table>
       </div>
 
+    </div>
+
+    <div class="card lease-standalone">
+      <div class="card-head"><h3>임차조건 Summary</h3><p>고정임차 · 수수료임차 / 금액 단위 백만원</p></div>
       <div class="lease-summary">
         <div class="lease-header">
           <strong>임차조건 Summary</strong>
@@ -425,14 +456,14 @@ white-space:nowrap;
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="card">
-      <div class="card-head">
-        <h3>26년 월평균 채널별 TOP 3</h3>
-        <p>가두 · 유통 · 밸런스 별도 순위 / 영업이익율 양수 빨강 · 음수 파랑</p>
-      </div>
-      <div id="categoryRanking"></div>
+  <section class="card ranking-wide-card">
+    <div class="card-head">
+      <h3>채널별 매출·영업이익률 BEST / WORST 3</h3>
+      <p>매출: 2026년 월평균 · 영업이익률: 2025년 · WORST는 2025년 12월 31일 이전 오픈점만 포함</p>
     </div>
+    <div id="categoryRanking"></div>
   </section>
 
   <!-- NETWORK -->
@@ -469,9 +500,6 @@ white-space:nowrap;
         <div class="competitor-toolbar">
           <label><input type="checkbox" id="showUniqlo" checked>
             <span class="spot uniqlo"></span> 유니클로 위치 (공식 픽업 목록)
-          </label>
-          <label><input type="checkbox" id="showTopten">
-            <span class="spot topten"></span> 탑텐 위치
           </label>
           <span id="competitorStatus">유니클로: 시군구 대표 위치 · 개별 실좌표 아님</span><span style="font-size:10px;color:#b45309">※ 공식 매장픽업 가능 목록 기준 · 전국 전체 영업점과 다를 수 있음 · 상세점은 실제 주소 좌표가 아닌 시군구 기준 모식도</span>
         </div>
@@ -1866,73 +1894,49 @@ function classifyStore(row) {
   return "유통";
 }
 
-function getTopThreeByGroup(groupName) {
-  return stores
-    .filter(r => classifyStore(r) === groupName)
-    .map(r => ({
-      row: r,
-      sales: num(r["26년_월평균"])
-    }))
-    .filter(item =>
-      item.sales !== null && item.sales > 0
-    )
-    .sort((a, b) => b.sales - a.sales)
-    .slice(0, 3);
+function v9OpenDateValue(value) {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "number") {
+    if (value > 20000 && value < 100000) return new Date(Date.UTC(1899, 11, 30) + Math.floor(value) * 86400000).getTime();
+  }
+  const raw = String(value).trim();
+  const digits = raw.match(/^(\d{4})[.\-/년 ]\s*(\d{1,2})(?:[.\-/월 ]\s*(\d{1,2}))?/);
+  if (digits) return Date.UTC(Number(digits[1]), Number(digits[2])-1, Number(digits[3] || 1));
+  if (/^\d{8}$/.test(raw)) return Date.UTC(Number(raw.slice(0,4)),Number(raw.slice(4,6))-1,Number(raw.slice(6,8)));
+  return null;
 }
-
-function renderRankingSection(groupName) {
-  const data = getTopThreeByGroup(groupName);
-
-  const rows = data.map((item, index) => {
-    const row = item.row;
-    const medals = ["🥇", "🥈", "🥉"];
-
-    return `
-      <div class="rank-row">
-        <div class="rank-badge rank${index + 1}">
-          ${medals[index]}
-        </div>
-        <div class="rank-store">
-          ${text(row["매장명"])}
-          <span class="rank-store-sub">
-            ${normalizeRegion(row["지역"])}
-            · ${text(row["대분류"])}
-          </span>
-        </div>
-        <div class="rank-sales">
-          ${million(row["26년_월평균"])}
-        </div>
-        <div class="${profitClass(row["25년_영업이익율"])}">
-          ${signedPercent(row["25년_영업이익율"])}
-        </div>
-      </div>
-    `;
+function v9RankingRows(group, metric, direction) {
+  const key = metric === "sales" ? "26년_월평균" : "25년_영업이익율";
+  return stores.filter(r => classifyStore(r) === group)
+    .filter(r => {
+      if (direction !== "worst") return true;
+      const opened = v9OpenDateValue(r["오픈일자"]);
+      return opened !== null && opened < Date.UTC(2026, 0, 1);
+    })
+    .map(row => ({row, value:num(row[key])}))
+    .filter(v => v.value !== null && Number.isFinite(v.value) && (metric !== "sales" || v.value > 0))
+    .sort((a,b) => (direction === "best" ? b.value-a.value : a.value-b.value))
+    .slice(0,3);
+}
+function v9RankingCell(group, metric, direction) {
+  const isSales=metric === "sales";
+  const title=`${isSales ? "월평균 매출" : "영업이익률"} ${direction === "best" ? "TOP 3" : "WORST 3"}`;
+  const rows=v9RankingRows(group,metric,direction);
+  const html=rows.map((item,index)=>{
+    const r=item.row;
+    return `<div class="v9-rank-row" title="${text(r["매장명"])} · ${normalizeRegion(r["지역"])}">
+      <span class="v9-rank-no">${index+1}</span>
+      <span class="v9-rank-store">${text(r["매장명"])}<small>${normalizeRegion(r["지역"])}</small></span>
+      <strong class="v9-rank-value ${!isSales ? profitClass(item.value) : ""}">${isSales ? million(item.value) : signedPercent(item.value)}</strong>
+    </div>`;
   }).join("");
-
-  return `
-    <div class="ranking-section">
-      <div class="ranking-title">
-        <div class="ranking-title-left">
-          <span class="ranking-chip">${groupName}</span>
-          <span class="ranking-title-text">월평균 TOP 3</span>
-        </div>
-        <div class="ranking-columns">
-          <div>월평균</div>
-          <div>영업이익율</div>
-        </div>
-      </div>
-      <div class="ranking-list">
-        ${rows || '<div class="network-empty">해당 데이터 없음</div>'}
-      </div>
-    </div>
-  `;
+  return `<div class="v9-rank-cell ${direction}"><div class="v9-rank-cell-head">${title}<small>${isSales ? "백만원" : "2025년"}</small></div>${html || '<div class="network-empty">해당 조건 데이터 없음</div>'}</div>`;
 }
-
 function renderCategoryRanking() {
-  document.getElementById("categoryRanking").innerHTML =
-    ["가두", "유통", "밸런스"]
-      .map(renderRankingSection)
-      .join("");
+  document.getElementById("categoryRanking").innerHTML = ["가두", "유통", "밸런스"].map(group => `
+    <div class="v9-channel-block"><div class="v9-channel-title"><span>${group}</span></div>
+      <div class="v9-ranking-grid">${v9RankingCell(group,"sales","best")}${v9RankingCell(group,"sales","worst")}${v9RankingCell(group,"profit","best")}${v9RankingCell(group,"profit","worst")}</div>
+    </div>`).join("");
 }
 
 /* ========================================
@@ -2411,7 +2415,7 @@ function updateCompetitorStatus() {
   const el=document.getElementById("competitorStatus");
   if(!el)return;
   const topCount=toptenPoints.filter(validMarker).length;
-  el.textContent=`유니클로 공식 픽업 목록 ${uniqloStores.length}개 · 탑텐 좌표 ${topCount}개 · 유니클로 점은 시군구 대표 위치(확대 시 지역명 위쪽)`;
+  el.textContent=`유니클로 공식 픽업 목록 ${uniqloStores.length}개 · 시군구 대표 위치(확대 시 지역명 위쪽 표시, 실제 매장 좌표 아님)`;
 }
 function renderCompetitorMarkers(projection, group, province="") {
   renderUniqloClusters(projection,group,province);
@@ -3837,7 +3841,7 @@ document.querySelectorAll("[data-map-mode]")
 
 /* COMPETITOR VISIBILITY */
 
-["showUniqlo", "showTopten"].forEach(id => {
+["showUniqlo"].forEach(id => {
   document.getElementById(id)
     .addEventListener("change", () => {
       if (geoData) renderMap();
